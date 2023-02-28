@@ -9,7 +9,9 @@
     "lint": "next lint",
     "prettier": "prettier --write .",
     "test": "jest",
-    "pre-commit": "npm run prettier && npm run lint && npm run test"
+    "pre-commit": "npm run prettier && npm run lint && npm run test",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "engineStrict": true,
   "engines": {
@@ -29,10 +31,21 @@
     "typescript": "4.9.5"
   },
   "devDependencies": {
+    "@babel/core": "^7.21.0",
+    "@storybook/addon-actions": "^6.5.16",
+    "@storybook/addon-essentials": "^6.5.16",
+    "@storybook/addon-interactions": "^6.5.16",
+    "@storybook/addon-links": "^6.5.16",
+    "@storybook/builder-webpack5": "^6.5.16",
+    "@storybook/manager-webpack5": "^6.5.16",
+    "@storybook/react": "^6.5.16",
+    "@storybook/testing-library": "^0.0.13",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "autoprefixer": "^10.4.13",
+    "babel-loader": "^8.3.0",
     "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-storybook": "^0.6.11",
     "husky": "^8.0.3",
     "jest": "^29.4.3",
     "jest-environment-jsdom": "^29.4.3",
