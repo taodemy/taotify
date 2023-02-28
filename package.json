@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
-    "test": "jest --watch"
+    "test": "jest",
+    "pre-commit": "npm run prettier && npm run lint && npm run test"
   },
   "engineStrict": true,
   "engines": {
