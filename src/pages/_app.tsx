@@ -1,11 +1,11 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-import MyContext from "contexts/MyContext";
+import { MusicContextProvider } from "contexts/MusicContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MyContext.Provider value={{ name: "John", age: 30, occupation: "Developer" }}>
+    <MusicContextProvider>
       <Component {...pageProps} />
-    </MyContext.Provider>
+    </MusicContextProvider>
   );
 }

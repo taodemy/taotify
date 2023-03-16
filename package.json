@@ -11,7 +11,8 @@
     "test": "jest",
     "pre-commit": "npm run prettier && npm run lint && npm run test",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "build-storybook": "build-storybook",
+    "coverage": "npx jest --coverage"
   },
   "engineStrict": true,
   "engines": {
@@ -42,6 +43,7 @@
     "@storybook/testing-library": "^0.0.13",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
+    "@testing-library/react-hooks": "^8.0.1",
     "autoprefixer": "^10.4.13",
     "babel-loader": "^8.3.0",
     "eslint-config-prettier": "^8.6.0",
