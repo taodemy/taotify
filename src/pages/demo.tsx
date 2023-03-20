@@ -1,5 +1,5 @@
 interface DemoProps {
-  audioUrl:string;
+  audioUrl: string;
 }
 
 const Demo = ({ audioUrl }: DemoProps) => {
@@ -15,7 +15,7 @@ export default Demo;
 
 export async function getServerSideProps() {
   const res = await fetch(
-    `https://netease-cloud-music-api-mu-peach.vercel.app/song/url/v1?id=33894312&level=exhigh`
+    `${process.env.NEXT_MUSIC_SERVER_ADDRESS}/song/url/v1?id=33894312&level=exhigh`
   );
   const data = await res.json();
   const audioUrl = data.data[0].url;
