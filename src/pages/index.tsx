@@ -24,6 +24,39 @@ export default function Home() {
         <p className="text-base">this is base size</p>
         <p className="text-sm">this is small size</p>
         <p className="text-xs">this is extra small size</p>
+        <p className="text-primary">this is default primary color</p>
+        <p className="text-primary-400">this is primary-400 color</p>
+        <p className="text-primary-300">this is primary-300 color</p>
+        <p className="text-primary-200">this is primary-200 color</p>
+        <p className="text-primary-100">this is primary-100 color</p>
+        <p className="text-secondary">this is default secondary color</p>
+        <p className="text-secondary-400">this is secondary-400 color</p>
+        <p className="text-secondary-300">this is secondary-300 color</p>
+        <p className="text-secondary-200">this is secondary-200 color</p>
+        <p className="text-secondary-100">this is secondary-100 color</p>
+        <p className="text-ternary">this is default ternary color</p>
+        <p className="text-ternary-400">this is ternary-400 color</p>
+        <p className="text-ternary-300">this is ternary-300 color</p>
+        <p className="text-ternary-200">this is ternary-200 color</p>
+        <p className="text-ternary-100">this is ternary-100 color</p>
+        <p className="text-warning">this is default warning color</p>
+        <p className="text-warning-400">this is warning-400 color</p>
+        <p className="text-warning-300">this is warning-300 color</p>
+        <p className="text-warning-200">this is warning-200 color</p>
+        <p className="text-warning-100">this is warning-100 color</p>
+        <p className="text-info">this is default info color</p>
+        <p className="text-info-400">this is info-400 color</p>
+        <p className="text-info-300">this is info-300 color</p>
+        <p className="text-info-200">this is info-200 color</p>
+        <p className="text-info-100">this is info-100 color</p>
+        <p className="bg-dark-400">this is dark-400 background color</p>
+        <p className="bg-dark-300">this is dark-300 background color</p>
+        <p className="bg-dark-200">this is dark-200 background color</p>
+        <p className="bg-dark-100">this is dark-100 background color</p>
+        <p className="bg-light-400">this is light-400 background color</p>
+        <p className="bg-light-300">this is light-300 background color</p>
+        <p className="bg-light-200">this is light-200 background color</p>
+        <p className="bg-light-100">this is light-100 background color</p>
       </main>
     </>
   );
