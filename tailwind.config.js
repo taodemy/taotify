@@ -51,6 +51,83 @@ module.exports = {
         100: "#A3A3A3",
       },
     },
+    fontSize: {
+      xs: [
+        "8px",
+        {
+          lineHeight: "12px",
+          letterSpacing: "-0.5em",
+          fontWeight: "300",
+        },
+      ],
+      sm: [
+        "12px",
+        {
+          lineHeight: "14px",
+          letterSpacing: "-0.75em",
+          fontWeight: "300",
+        },
+      ],
+      base: [
+        "14px",
+        {
+          lineHeight: "18px",
+          letterSpacing: "-0.875em",
+          fontWeight: "400",
+        },
+      ],
+      lg: [
+        "16px",
+        {
+          lineHeight: "20px",
+          letterSpacing: "-1em",
+          fontWeight: "300",
+        },
+      ],
+      xl: [
+        "16px",
+        {
+          lineHeight: "20px",
+          letterSpacing: "-1em",
+          fontWeight: "400",
+        },
+      ],
+      "2xl": [
+        "20px",
+        {
+          lineHeight: "28px",
+          letterSpacing: "-1.25em",
+          fontWeight: "300",
+        },
+      ],
+      "3xl": [
+        "24px",
+        {
+          lineHeight: "32px",
+          letterSpacing: "-1.5em",
+          fontWeight: "300",
+        },
+      ],
+      "4xl": [
+        "32px",
+        {
+          lineHeight: "48px",
+          letterSpacing: "-2em",
+          fontWeight: "400",
+        },
+      ],
+      "5xl": [
+        "56px",
+        {
+          lineHeight: "72px",
+          letterSpacing: "7em",
+          fontWeight: "500",
+        },
+      ],
+    },
+    fontFamily: {
+      sans: ["Roboto", "sans-serif"],
+    },
     extend: {},
   },
   plugins: [],
