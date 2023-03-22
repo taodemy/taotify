@@ -56,7 +56,6 @@ module.exports = {
         "8px",
         {
           lineHeight: "12px",
-          letterSpacing: "-0.5em",
           fontWeight: "300",
         },
       ],
@@ -64,7 +63,6 @@ module.exports = {
         "12px",
         {
           lineHeight: "14px",
-          letterSpacing: "-0.75em",
           fontWeight: "300",
         },
       ],
@@ -72,7 +70,6 @@ module.exports = {
         "14px",
         {
           lineHeight: "18px",
-          letterSpacing: "-0.875em",
           fontWeight: "400",
         },
       ],
@@ -80,7 +77,6 @@ module.exports = {
         "16px",
         {
           lineHeight: "20px",
-          letterSpacing: "-1em",
           fontWeight: "300",
         },
       ],
@@ -88,7 +84,6 @@ module.exports = {
         "16px",
         {
           lineHeight: "20px",
-          letterSpacing: "-1em",
           fontWeight: "400",
         },
       ],
@@ -96,7 +91,6 @@ module.exports = {
         "20px",
         {
           lineHeight: "28px",
-          letterSpacing: "-1.25em",
           fontWeight: "300",
         },
       ],
@@ -104,7 +98,6 @@ module.exports = {
         "24px",
         {
           lineHeight: "32px",
-          letterSpacing: "-1.5em",
           fontWeight: "300",
         },
       ],
@@ -112,7 +105,6 @@ module.exports = {
         "32px",
         {
           lineHeight: "48px",
-          letterSpacing: "-2em",
           fontWeight: "400",
         },
       ],
@@ -120,7 +112,6 @@ module.exports = {
         "56px",
         {
           lineHeight: "72px",
-          letterSpacing: "7em",
           fontWeight: "500",
         },
       ],
