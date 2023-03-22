@@ -49,10 +49,12 @@ export default function Home() {
         <p className="text-info-300">this is info-300 color</p>
         <p className="text-info-200">this is info-200 color</p>
         <p className="text-info-100">this is info-100 color</p>
+        <p className="bg-dark">this is dark default background color</p>
         <p className="bg-dark-400">this is dark-400 background color</p>
         <p className="bg-dark-300">this is dark-300 background color</p>
         <p className="bg-dark-200">this is dark-200 background color</p>
         <p className="bg-dark-100">this is dark-100 background color</p>
+        <p className="light-400">this is light default background color</p>
         <p className="bg-light-400">this is light-400 background color</p>
         <p className="bg-light-300">this is light-300 background color</p>
         <p className="bg-light-200">this is light-200 background color</p>

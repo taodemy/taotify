@@ -39,12 +39,14 @@ module.exports = {
         100: "#EBB38F",
       },
       dark: {
+        DEFAULT: "#282B2D",
         400: "#35393B",
         300: "#43484C",
         200: "#52585C",
         100: "#60676C",
       },
       light: {
+        DEFAULT: "#FEFEFE",
         400: "#E8E8E8",
         300: "#D9D9D9",
         200: "#BFBFBF",
