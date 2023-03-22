@@ -59,6 +59,7 @@ export default function Home() {
         <p className="bg-light-300">this is light-300 background color</p>
         <p className="bg-light-200">this is light-200 background color</p>
         <p className="bg-light-100">this is light-100 background color</p>
+        <p className="bg-gradient-to-r from-primary">this is a fading color</p>
       </main>
     </>
   );
