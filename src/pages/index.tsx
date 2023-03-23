@@ -15,6 +15,18 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main>
+        <br />
+        <button
+          type="button"
+          className="bg-gradient-to-r from-primary to-primary px-2 py-1 rounded-full text-light text-base hover:from-primary-400 hover:to-primary-400 active:from-primary"
+        >
+          button
+        </button>
+
+        <button type="button" className="bg-gradient-to-r hover:from-secondary">
+          Hover me
+        </button>
+        <br />
         <h1>this is h1</h1>
         <h2>this is h2</h2>
         <h3>this is h3</h3>
@@ -54,12 +66,14 @@ export default function Home() {
         <p className="bg-dark-300">this is dark-300 background color</p>
         <p className="bg-dark-200">this is dark-200 background color</p>
         <p className="bg-dark-100">this is dark-100 background color</p>
-        <p className="light-400">this is light default background color</p>
+        <p className="bg-light">this is light default background color</p>
         <p className="bg-light-400">this is light-400 background color</p>
         <p className="bg-light-300">this is light-300 background color</p>
         <p className="bg-light-200">this is light-200 background color</p>
         <p className="bg-light-100">this is light-100 background color</p>
-        <p className="bg-gradient-to-r from-primary">this is a fading color</p>
+        <p className=" transition duration-500 bg-gradient-to-r from-primary hover:from-sencondary">
+          this is a fading color
+        </p>
       </main>
     </>
   );
