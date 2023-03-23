@@ -78,7 +78,7 @@ module.exports = {
         },
       ],
       lg: [
-        "16px",
+        "1rem",
         {
           lineHeight: "20px",
           fontWeight: "300",
