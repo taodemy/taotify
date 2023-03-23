@@ -57,21 +57,21 @@ module.exports = {
     },
     fontSize: {
       xs: [
-        "8px",
+        "0.5rem",
         {
           lineHeight: "12px",
           fontWeight: "300",
         },
       ],
       sm: [
-        "12px",
+        "0.75rem",
         {
           lineHeight: "14px",
           fontWeight: "300",
         },
       ],
       base: [
-        "14px",
+        "0.875rem",
         {
           lineHeight: "18px",
           fontWeight: "400",
@@ -85,35 +85,35 @@ module.exports = {
         },
       ],
       xl: [
-        "16px",
+        "1rem",
         {
           lineHeight: "20px",
           fontWeight: "400",
         },
       ],
       "2xl": [
-        "20px",
+        "1.25rem",
         {
           lineHeight: "28px",
           fontWeight: "300",
         },
       ],
       "3xl": [
-        "24px",
+        "1.5rem",
         {
           lineHeight: "32px",
           fontWeight: "300",
         },
       ],
       "4xl": [
-        "32px",
+        "2rem",
         {
           lineHeight: "48px",
           fontWeight: "400",
         },
       ],
       "5xl": [
-        "56px",
+        "3.5rem",
         {
           lineHeight: "72px",
           fontWeight: "500",
