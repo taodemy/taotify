@@ -8,15 +8,18 @@ type MusicListProps = {
 
 export default function MusicList({ list }: MusicListProps) {
   const context = useContext(MusicContext);
-  //load this music list to play
-  //not good to load here, better to have a trigger to start loading
-  context.setMusicList(list);
+
+  //if user decided to play this musiclist, load this list and selected index to context
+  const loadMusicList = (index = 0) => {
+    context.setMusicList(list);
+    context.setMusicIndex(index);
+  };
 
   return (
     <table className="w-full">
       <tbody>
         {list.map((e, i) => (
-          <ListItem key={i} music={e} index={i} />
+          <ListItem key={i} music={e} index={i} loadMusicList={loadMusicList} />
         ))}
       </tbody>
     </table>
