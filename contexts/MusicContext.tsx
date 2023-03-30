@@ -3,14 +3,14 @@ import React, { createContext, useState } from "react";
 interface MusicContextProps {
   musicIndex: number;
   setMusicIndex: React.Dispatch<React.SetStateAction<number>>;
-  musicList: Song[];
-  setMusicList: React.Dispatch<React.SetStateAction<Song[]>>;
+  musicList: Music[];
+  setMusicList: React.Dispatch<React.SetStateAction<Music[]>>;
   noResourceAlert: boolean;
   setNoResourceAlert: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultValues = {
-  musicIndex: 0,
+  musicIndex: -1,
   setMusicIndex: () => null,
   musicList: [],
   setMusicList: () => null,
@@ -25,8 +25,8 @@ interface Props {
 }
 
 export const MusicContextProvider = ({ children }: Props) => {
-  const [musicIndex, setMusicIndex] = useState(0);
-  const [musicList, setMusicList] = useState<Song[]>([]);
+  const [musicIndex, setMusicIndex] = useState(-1);
+  const [musicList, setMusicList] = useState<Music[]>([]);
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(false);
 
   return (

@@ -7,7 +7,7 @@ import getNewSongs from "utils/getNewSongs";
 import getAudioUrl from "utils/getAudioUrl";
 
 type HomeProps = {
-  newSongs: Array<Song>;
+  newSongs: Array<Music>;
 };
 
 export default function Home({ newSongs }: HomeProps) {
@@ -42,7 +42,7 @@ export async function getStaticProps() {
 
   //should use concurrent? not much faster I feel
   const urls = await Promise.all(
-    newSongs.map(async (item: Song) => getAudioUrl(item.id, "standard"))
+    newSongs.map(async (item: Music) => getAudioUrl(item.id, "standard"))
   );
   for (let i = 0; i < newSongs.length; i++) {
     newSongs[i].audioUrl = urls[i];

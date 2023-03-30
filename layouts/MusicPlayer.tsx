@@ -5,7 +5,11 @@ export default function MusicPlayer() {
   const context = useContext(MusicContext);
   //get new audio url after music list update context
   const audioUrl =
-    context.musicList.length === 0 ? "" : context.musicList[context.musicIndex].audioUrl;
+    //when there is music in list and user choose which one to play
+    //then go get the url
+    context.musicList.length === 0 || context.musicIndex === -1
+      ? ""
+      : context.musicList[context.musicIndex].audioUrl;
 
   //when music end, update context with next index
   const handleEnd = () => {

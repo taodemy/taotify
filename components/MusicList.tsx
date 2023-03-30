@@ -3,21 +3,20 @@ import React, { useContext, useEffect, useState } from "react";
 import ListItem from "./ListItem";
 
 type MusicListProps = {
-  list: Array<Song>;
+  list: Array<Music>;
 };
 
 export default function MusicList({ list }: MusicListProps) {
   const context = useContext(MusicContext);
   //load this music list to play
-  //if this is a page or the only music list, it's ok to load music here when user reach this page or play this list
-  //if this is just one of many music lists, better to load music somewhere outside
+  //not good to load here, better to have a trigger to start loading
   context.setMusicList(list);
 
   return (
     <table className="w-full">
       <tbody>
         {list.map((e, i) => (
-          <ListItem key={i} song={e} index={i} />
+          <ListItem key={i} music={e} index={i} />
         ))}
       </tbody>
     </table>
