@@ -9,7 +9,7 @@
     "lint": "next lint",
     "prettier": "prettier --write .",
     "test": "jest --coverage",
-    "tailwind":"npx tailwindcss build -o ./src/styles/tailwind.css",
+    "tailwind": "npx tailwindcss build -o ./src/styles/tailwind.css",
     "pre-commit": "npm run prettier && npm run lint && npm run test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
@@ -31,7 +31,6 @@
     "next": "13.2.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-icons": "^4.8.0",
     "typescript": "4.9.5"
   },
   "devDependencies": {
