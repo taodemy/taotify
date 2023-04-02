@@ -33,12 +33,10 @@ describe("Button", () => {
   });
 
   it("calls onClick prop when clicked", () => {
-    /*===================================*/
     const clickHandler = jest.fn();
     render(<Button onClick={clickHandler} />);
     const button = screen.getByRole("button");
     fireEvent.click(button);
     expect(clickHandler).toBeCalled();
-    /*===================================*/
   });
 });
