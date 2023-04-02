@@ -3,34 +3,34 @@ export type ButtonProps = {
   size?: "tiny" | "small" | "normal" | "large";
   outline?: boolean;
   variant?: "normal" | "icon";
-  handleClick?: () => void;
+  onClick?: () => void;
 };
 const Button = ({
   variant = "normal",
   color = "primary",
   outline = false,
   size = "normal",
-  handleClick,
+  onClick,
   children,
   ...otherProps
 }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const btn = "rounded-full font-[Roboto] text-light flex justify-center items-center";
+  const btn = "rounded-full font-[Roboto] flex justify-center items-center";
   const buttonColor = {
     primary: outline
-      ? "border border-primary bg-transparent hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100"
-      : `bg-primary hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100`,
+      ? "text-light border border-primary bg-transparent hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100"
+      : `text-light bg-primary hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100`,
     secondary: outline
-      ? "border border-secondary bg-transparent hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100"
-      : "bg-secondary hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100",
+      ? "text-light border border-secondary bg-transparent hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100"
+      : "text-light bg-secondary hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100",
     ternary: outline
-      ? "border border-ternary bg-transparent hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100"
-      : "bg-ternary hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100",
+      ? "text-light border border-ternary bg-transparent hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100"
+      : "text-light bg-ternary hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100",
     warning: outline
-      ? "border border-warning bg-transparent hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100"
-      : "bg-warning hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100",
+      ? "text-light border border-warning bg-transparent hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100"
+      : "text-light bg-warning hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100",
     info: outline
-      ? "border border-info bg-transparent hover:bg-info-400 active:bg-info-400 disabled:bg-info-100"
-      : "bg-info hover:bg-info-400 active:bg-info-400 disabled:bg-info-100",
+      ? "text-light border border-info bg-transparent hover:bg-info-400 active:bg-info-400 disabled:bg-info-100"
+      : "text-light bg-info hover:bg-info-400 active:bg-info-400 disabled:bg-info-100",
     light: outline
       ? "border border-light bg-transparent hover:bg-light-400 hover:text-dark active:bg-light-400 disabled:bg-light-100 text-light"
       : "bg-light text-dark hover:bg-light-400 active:bg-light-400 disabled:bg-light-100 disabled:text-dark-200",
@@ -64,9 +64,9 @@ const Button = ({
 
   return variant === "normal" ? (
     <button
-      className={`${btn} ${buttonColor[color]} ${buttonSize[size]} `}
+      className={` ${buttonColor[color]} ${buttonSize[size]} ${btn} `}
       {...otherProps}
-      onClick={handleClick}
+      onClick={onClick}
     >
       {children}
     </button>
@@ -78,7 +78,7 @@ const Button = ({
       viewBox="0 0 32 32"
       version="1.1"
       role="icon"
-      onClick={handleClick}
+      onClick={onClick}
       xmlns="http://www.w3.org/2000/svg"
     >
       <path

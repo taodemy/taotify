@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Button from "@ui/Button";
 import "@testing-library/jest-dom";
 
@@ -30,5 +30,15 @@ describe("Button", () => {
     expect(button).toBeInTheDocument();
     expect(button).toHaveStyle(`background: "transparent"`);
     expect(button.classList).toContain("border-primary");
+  });
+
+  it("calls onClick prop when clicked", () => {
+    /*===================================*/
+    const clickHandler = jest.fn();
+    render(<Button onClick={clickHandler} />);
+    const button = screen.getByRole("button");
+    fireEvent.click(button);
+    expect(clickHandler).toBeCalled();
+    /*===================================*/
   });
 });
