@@ -4,20 +4,22 @@ type ButtonProps = {
   size?: "tiny" | "small" | "normal" | "large";
   outline?: boolean;
   variant?: "normal" | "icon";
+  label?: string;
   onClick?: () => void;
 };
+
 const Button = ({
   variant = "normal",
   color = "primary",
   outline = false,
   size = "normal",
   onClick,
-  children,
+  label = "button",
   ...otherProps
 }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   const btn = "text-base rounded-full font-[Roboto] flex justify-center items-center";
   const buttonClass = (color: ButtonColor) => {
-    const className = outline
+    const buttonClassName = outline
       ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
       : ` text-light bg-${color} hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-100 disabled:text-light-400`;
     if (color === "light")
@@ -28,7 +30,7 @@ const Button = ({
       return outline
         ? `text-dark border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
         : ` text-light bg-${color}-400 hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-200 disabled:text-light-200`;
-    return className;
+    return buttonClassName;
   };
   const buttonColor = {
     primary: buttonClass("primary"),
@@ -69,7 +71,7 @@ const Button = ({
       {...otherProps}
       onClick={onClick}
     >
-      {children}
+      {label}
     </button>
   ) : (
     <svg
