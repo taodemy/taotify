@@ -1,5 +1,6 @@
-export type ButtonProps = {
-  color?: "primary" | "secondary" | "ternary" | "warning" | "info" | "light" | "dark";
+type ButtonColor = "primary" | "secondary" | "ternary" | "warning" | "info" | "light" | "dark";
+type ButtonProps = {
+  color?: ButtonColor;
   size?: "tiny" | "small" | "normal" | "large";
   outline?: boolean;
   variant?: "normal" | "icon";
@@ -14,36 +15,36 @@ const Button = ({
   children,
   ...otherProps
 }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
-  const btn = "rounded-full font-[Roboto] flex justify-center items-center";
+  const btn = "text-base rounded-full font-[Roboto] flex justify-center items-center";
+  const buttonClass = (color: ButtonColor) => {
+    const className = outline
+      ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
+      : ` text-light bg-${color} hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-100 disabled:text-light-400`;
+    if (color === "light")
+      return outline
+        ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
+        : ` text-dark bg-${color}-400 hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-200 disabled:text-dark-200`;
+    if (color === "dark")
+      return outline
+        ? `text-dark border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
+        : ` text-light bg-${color}-400 hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-200 disabled:text-light-200`;
+    return className;
+  };
   const buttonColor = {
-    primary: outline
-      ? "text-light border border-primary bg-transparent hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100"
-      : `text-light bg-primary hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100`,
-    secondary: outline
-      ? "text-light border border-secondary bg-transparent hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100"
-      : "text-light bg-secondary hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100",
-    ternary: outline
-      ? "text-light border border-ternary bg-transparent hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100"
-      : "text-light bg-ternary hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100",
-    warning: outline
-      ? "text-light border border-warning bg-transparent hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100"
-      : "text-light bg-warning hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100",
-    info: outline
-      ? "text-light border border-info bg-transparent hover:bg-info-400 active:bg-info-400 disabled:bg-info-100"
-      : "text-light bg-info hover:bg-info-400 active:bg-info-400 disabled:bg-info-100",
-    light: outline
-      ? "border border-light bg-transparent hover:bg-light-400 hover:text-dark active:bg-light-400 disabled:bg-light-100 text-light"
-      : "bg-light text-dark hover:bg-light-400 active:bg-light-400 disabled:bg-light-100 disabled:text-dark-200",
-    dark: outline
-      ? "border border-dark bg-transparent hover:bg-dark-400 hover:text-light active:bg-dark-400 disabled:bg-dark-100 text-dark"
-      : "bg-dark text-light hover:bg-dark-400 active:bg-dark-400 disabled:bg-dark-100 disabled:text-light-200",
+    primary: buttonClass("primary"),
+    secondary: buttonClass("secondary"),
+    ternary: buttonClass("ternary"),
+    warning: buttonClass("warning"),
+    info: buttonClass("info"),
+    light: buttonClass("light"),
+    dark: buttonClass("dark"),
   };
 
   const buttonSize = {
-    tiny: "w-[63px] h-[20px] text-[14px] leading-[20px] py-[1px] px-[4px]",
-    small: "w-[71px] h-[24px] leading-[24px] py-[3px] px-[8px]",
-    normal: "w-[79px] h-[30px] leading-[30px] py-[6px] px-[12px]",
-    large: "w-[103px] h-[42px] leading-[42px] py-[12px] px-[24px]",
+    tiny: "py-[1px] px-[4px]",
+    small: "py-[3px] px-[8px]",
+    normal: "py-[6px] px-[12px]",
+    large: "py-[12px] px-[24px]",
   };
 
   const iconColor = {
@@ -72,19 +73,16 @@ const Button = ({
     </button>
   ) : (
     <svg
+      xmlns="http://www.w3.org/2000/svg"
       width={iconSize[size]}
       height={iconSize[size]}
       cursor="pointer"
-      viewBox="0 0 32 32"
-      version="1.1"
       role="icon"
       onClick={onClick}
-      xmlns="http://www.w3.org/2000/svg"
+      fill={iconColor[color]}
+      viewBox="0 0 24 24"
     >
-      <path
-        fill={iconColor[color]}
-        d="M16 0c-8.836 0-16 7.163-16 16s7.163 16 16 16c8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 30.032c-7.72 0-14-6.312-14-14.032s6.28-14 14-14 14 6.28 14 14-6.28 14.032-14 14.032zM21.657 10.344c-0.39-0.39-1.023-0.39-1.414 0l-4.242 4.242-4.242-4.242c-0.39-0.39-1.024-0.39-1.415 0s-0.39 1.024 0 1.414l4.242 4.242-4.242 4.242c-0.39 0.39-0.39 1.024 0 1.414s1.024 0.39 1.415 0l4.242-4.242 4.242 4.242c0.39 0.39 1.023 0.39 1.414 0s0.39-1.024 0-1.414l-4.242-4.242 4.242-4.242c0.391-0.391 0.391-1.024 0-1.414z"
-      ></path>
+      <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm3.707,12.293a1,1,0,1,1-1.414,1.414L12,13.414,9.707,15.707a1,1,0,0,1-1.414-1.414L10.586,12,8.293,9.707A1,1,0,0,1,9.707,8.293L12,10.586l2.293-2.293a1,1,0,0,1,1.414,1.414L13.414,12Z" />
     </svg>
   );
 };
