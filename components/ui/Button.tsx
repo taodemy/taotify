@@ -20,15 +20,15 @@ const Button = ({
   const btn = "text-base rounded-full font-[Roboto] flex justify-center items-center";
   const buttonClass = (color: ButtonColor) => {
     const buttonClassName = outline
-      ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
-      : ` text-light bg-${color} hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-100 disabled:text-light-400`;
+      ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400 disabled:text-light-100`
+      : `text-light bg-${color} hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-100 disabled:text-light-400 text-info`;
     if (color === "light")
       return outline
-        ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
+        ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400 disabled:text-light-100`
         : ` text-dark bg-${color}-400 hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-200 disabled:text-dark-200`;
     if (color === "dark")
       return outline
-        ? `text-dark border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400`
+        ? `text-dark border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400 disabled:text-light-100`
         : ` text-light bg-${color}-400 hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-200 disabled:text-light-200`;
     return buttonClassName;
   };
