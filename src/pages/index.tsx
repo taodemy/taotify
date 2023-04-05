@@ -1,6 +1,6 @@
-import FriendsActivity from "components/FriendsActivity";
-import NewReleases from "components/NewReleases";
-import RecentlyPlayed from "components/RecentlyPlayed";
+import FriendsActivity from "@/components/FriendsActivity";
+import NewReleases from "@/components/NewReleases";
+import RecentlyPlayed from "@/components/RecentlyPlayed";
 import Head from "next/head";
 
 export default function Home() {
