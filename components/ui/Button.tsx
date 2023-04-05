@@ -18,28 +18,46 @@ const Button = ({
   ...otherProps
 }: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
   const btn = "text-base rounded-full font-[Roboto] flex justify-center items-center";
-  const buttonClass = (color: ButtonColor) => {
-    const buttonClassName = outline
-      ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400 disabled:text-light-100`
-      : `text-light bg-${color} hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-100 disabled:text-light-400 text-info`;
-    if (color === "light")
-      return outline
-        ? `text-light border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400 disabled:text-light-100`
-        : ` text-dark bg-${color}-400 hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-200 disabled:text-dark-200`;
-    if (color === "dark")
-      return outline
-        ? `text-dark border border-${color} bg-transparent hover:bg-${color}-400 active:bg-${color}-400 disabled:text-light-100`
-        : ` text-light bg-${color}-400 hover:bg-${color}-400 active:bg-${color}-400 disabled:bg-${color}-200 disabled:text-light-200`;
-    return buttonClassName;
+  const getButtonClass = (color: ButtonColor) => {
+    switch (color) {
+      case "primary":
+        return outline
+          ? "text-light border border-primary bg-transparent hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100 disabled:text-light-100"
+          : `text-light bg-primary hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100`;
+      case "secondary":
+        return outline
+          ? "text-light border border-secondary bg-transparent hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100"
+          : "text-light bg-secondary hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100";
+      case "ternary":
+        return outline
+          ? "text-light border border-ternary bg-transparent hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100"
+          : "text-light bg-ternary hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100";
+      case "warning":
+        return outline
+          ? "text-light border border-warning bg-transparent hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100"
+          : "text-light bg-warning hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100";
+      case "info":
+        return outline
+          ? "text-light border border-info bg-transparent hover:bg-info-400 active:bg-info-400 disabled:bg-info-100"
+          : "text-light bg-info hover:bg-info-400 active:bg-info-400 disabled:bg-info-100";
+      case "light":
+        return;
+      case "dark":
+        return outline
+          ? "border border-dark bg-transparent hover:bg-dark-400 hover:text-light active:bg-dark-400 disabled:bg-dark-100 text-dark"
+          : "bg-dark text-light hover:bg-dark-400 active:bg-dark-400 disabled:bg-dark-100 disabled:text-light-200";
+      default:
+        break;
+    }
   };
   const buttonColor = {
-    primary: buttonClass("primary"),
-    secondary: buttonClass("secondary"),
-    ternary: buttonClass("ternary"),
-    warning: buttonClass("warning"),
-    info: buttonClass("info"),
-    light: buttonClass("light"),
-    dark: buttonClass("dark"),
+    primary: getButtonClass("primary"),
+    secondary: getButtonClass("secondary"),
+    ternary: getButtonClass("ternary"),
+    warning: getButtonClass("warning"),
+    info: getButtonClass("info"),
+    light: getButtonClass("light"),
+    dark: getButtonClass("dark"),
   };
 
   const buttonSize = {
