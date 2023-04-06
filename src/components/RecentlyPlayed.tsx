@@ -6,4 +6,6 @@ export default function RecentlyPlayed() {
       Recently played
     </div>
   )
+
 }
+
