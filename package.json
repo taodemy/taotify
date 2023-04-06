@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "prettier": "prettier --write .",
-    "test": "jest",
+    "test": "jest --coverage",
     "pre-commit": "npm run prettier && npm run lint && npm run test",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
