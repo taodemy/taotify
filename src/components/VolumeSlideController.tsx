@@ -1,10 +1,7 @@
 import React, { useRef, useState } from "react";
-interface Props {
-  widthUnit: number;
-  heightUnit: number;
-}
-export default function VolumeSlideController({ widthUnit, heightUnit }: Props) {
-  const halfThumb = (heightUnit * 0.25) / 2;
+
+export default function VolumeSlideController() {
+  const halfThumb = (5 * 0.25) / 2;
   const [volumeLevel, setVolumeLevel] = useState<number>(50);
   const volumeSlider = useRef<HTMLDivElement>(null);
   const handleDragSlideStart = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -28,10 +25,10 @@ export default function VolumeSlideController({ widthUnit, heightUnit }: Props) 
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
   return (
-    <div className={`absolute right-10 bottom-5 w-${widthUnit} mx-auto`}>
+    <div className={`w-52 absolute right-10 bottom-5 mx-auto`}>
       <div
         ref={volumeSlider}
-        className={`relative h-${heightUnit} rounded cursor-pointer bg-primary-100`}
+        className={`relative h-5 rounded cursor-pointer bg-primary-100`}
         onClick={handleDragSlideMove}
       >
         <div
@@ -39,7 +36,7 @@ export default function VolumeSlideController({ widthUnit, heightUnit }: Props) 
           style={{ width: `${volumeLevel}%` }}
         ></div>
         <div
-          className={`absolute w-${heightUnit} h-${heightUnit} rounded-full bg-primary-200 top-1/2 transform -translate-y-1/2 cursor-pointer`}
+          className={`absolute w-5 h-5 rounded-full bg-primary-200 top-1/2 transform -translate-y-1/2 cursor-pointer`}
           style={{ left: `calc(${volumeLevel}% - ${halfThumb}rem)` }}
           onMouseDown={handleDragSlideStart}
         ></div>
