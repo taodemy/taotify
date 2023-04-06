@@ -1,8 +1,8 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import { Roboto } from "next/font/google";
-import { MusicContextProvider } from "contexts/MusicContext";
-import GlobalLayout from "layouts";
+import { MusicContextProvider } from "@/contexts/MusicContext";
+import GlobalLayout from "@/layouts";
 
 
 const roboto = Roboto({

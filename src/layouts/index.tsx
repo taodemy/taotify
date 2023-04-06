@@ -1,6 +1,6 @@
-import MusicPlayer from "layouts/MusicPlayer";
-import SearchBar from "layouts/SearchBar";
-import SideBar from "layouts/SideBar";
+import MusicPlayer from "@/layouts/MusicPlayer";
+import SearchBar from "@/layouts/SearchBar";
+import SideBar from "@/layouts/SideBar";
 import { ReactNode } from "react";
 
 interface LayoutProps {
