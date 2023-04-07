@@ -1,12 +1,5 @@
-type ButtonColor = "primary" | "secondary" | "ternary" | "warning" | "info" | "light" | "dark";
-type ButtonProps = {
-  color?: ButtonColor;
-  size?: "tiny" | "small" | "normal" | "large";
-  outline?: boolean;
-  variant?: "normal" | "icon";
-  label?: string;
-  onClick?: () => void;
-};
+import { ButtonColor, ButtonProps } from "@/interface/button";
+import CloseIcon from "./CloseIcon";
 
 const btn = "text-base rounded-full font-[Roboto] flex justify-center items-center";
 const getButtonClass = (color: ButtonColor, outline: boolean) => {
@@ -67,7 +60,7 @@ const Button = ({
   onClick,
   label = "button",
   ...otherProps
-}: ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>) => {
+}: ButtonProps) => {
   const buttonColor = {
     primary: getButtonClass("primary", outline),
     secondary: getButtonClass("secondary", outline),
@@ -94,6 +87,7 @@ const Button = ({
     light: "#FEFEFE",
     dark: "#282B2D",
   };
+  
   const iconSize = {
     tiny: "26px",
     small: "32px",
@@ -103,25 +97,21 @@ const Button = ({
 
   return variant === "normal" ? (
     <button
-      className={` ${buttonColor[color]} ${buttonSize[size]} ${btn} `}
+      className={`${buttonColor[color]} ${buttonSize[size]} ${btn} `}
       {...otherProps}
       onClick={onClick}
     >
       {label}
     </button>
   ) : (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width={iconSize[size]}
-      height={iconSize[size]}
-      cursor="pointer"
-      role="icon"
-      onClick={onClick}
-      fill={iconColor[color]}
-      viewBox="0 0 24 24"
-    >
-      <path d="M12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm3.707,12.293a1,1,0,1,1-1.414,1.414L12,13.414,9.707,15.707a1,1,0,0,1-1.414-1.414L10.586,12,8.293,9.707A1,1,0,0,1,9.707,8.293L12,10.586l2.293-2.293a1,1,0,0,1,1.414,1.414L13.414,12Z" />
-    </svg>
+    <>
+      <CloseIcon
+        width={iconSize[size]}
+        height={iconSize[size]}
+        onClick={onClick}
+        fill={iconColor[color]}
+      ></CloseIcon>
+    </>
   );
 };
 
