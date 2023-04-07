@@ -1,39 +1,32 @@
 import { ButtonColor, ButtonProps } from "@/interface/button";
 import CloseIcon from "./CloseIcon";
 
-const btn = "text-base rounded-full font-[Roboto] flex justify-center items-center";
+const btn = " text-light text-base rounded-full font-[Roboto] flex justify-center items-center";
 const getButtonClass = (color: ButtonColor, outline: boolean) => {
   switch (color) {
     case "primary":
-      return `text-light active:bg-primary-400 ${
-        outline
-          ? "border border-primary hover:bg-primary disabled:bg-primary-100 disabled:text-light-100"
-          : "bg-primary hover:bg-primary-400 disabled:bg-primary-100 disabled:text-light-400"
-      }`;
+      return outline
+        ? "border border-primary hover:bg-primary active:bg-primary disabled:text-light-100"
+        : "bg-primary hover:bg-primary-400 active:bg-primary-400 disabled:bg-primary-100 disabled:text-light-400";
     case "secondary":
-      return `text-light active:bg-secondary-400 ${
-        outline
-          ? "border border-secondary bg-transparent hover:bg-secondary-400 disabled:text-secondary-100"
-          : "bg-secondary hover:bg-secondary-400 disabled:bg-secondary-100 disabled:text-light-400"
-      }`;
+      return outline
+        ? "border border-secondary hover:bg-secondary active:bg-secondary disabled:text-secondary-100"
+        : "bg-secondary hover:bg-secondary-400 active:bg-secondary-400 disabled:bg-secondary-100 disabled:text-light-400";
     case "ternary":
-      return `text-light active:bg-ternary-400 ${
-        outline
-          ? "border border-ternary hover:bg-ternary disabled:bg-ternary-100 disabled:text-light-100"
-          : "bg-ternary hover:bg-ternary-400 disabled:bg-ternary-100 disabled:text-light-400"
-      }`;
+      return outline
+        ? "border border-ternary hover:bg-ternary active:bg-ternary disabled:text-light-100"
+        : "bg-ternary hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100 disabled:text-light-400";
+
     case "warning":
-      return `text-light active:bg-warning-400 ${
-        outline
-          ? "border border-warning hover:bg-warning disabled:bg-warning-100 disabled:text-light-100"
-          : "bg-warning hover:bg-warning-400 disabled:bg-warning-100 disabled:text-light-400"
-      }`;
+      return outline
+        ? "border border-warning hover:bg-warning active:bg-warning disabled:text-light-100"
+        : "bg-warning hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100 disabled:text-light-400";
+
     case "info":
-      return `text-light active:bg-info-400 ${
-        outline
-          ? "border border-info hover:bg-info disabled:bg-info-100 disabled:text-light-100"
-          : "bg-info hover:bg-info-400 disabled:bg-info-100 disabled:text-light-400"
-      }`;
+      return outline
+        ? "border border-info hover:bg-info active:bg-info disabled:text-light-100"
+        : "bg-info hover:bg-info-400 active:bg-info-400 disabled:bg-info-100 disabled:text-light-400";
+
     case "light":
       return `hover:bg-light-400 hover:text-dark active:bg-light-400 active:text-dark ${
         outline
@@ -87,7 +80,7 @@ const Button = ({
     light: "#FEFEFE",
     dark: "#282B2D",
   };
-  
+
   const iconSize = {
     tiny: "26px",
     small: "32px",
