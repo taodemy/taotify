@@ -25,20 +25,23 @@ export default function VolumeSlideController() {
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
   return (
-    <div className={`w-52 absolute right-10 bottom-5 mx-auto`}>
+    <div className={`w-52 absolute right-10 bottom-5 mx-auto`} data-testid="volumeSlideContainer">
       <div
         ref={volumeSlider}
         className={`relative h-5 rounded cursor-pointer bg-primary-100`}
         onClick={handleDragSlideMove}
+        data-testid="volumeSlideBar"
       >
         <div
           className="absolute inset-y-0 bg-primary-400"
           style={{ width: `${volumeLevel}%` }}
+          data-testid="volumeSlideProgress"
         ></div>
         <div
           className={`absolute w-5 h-5 rounded-full bg-primary-200 top-1/2 transform -translate-y-1/2 cursor-pointer`}
           style={{ left: `calc(${volumeLevel}% - ${halfThumb}rem)` }}
           onMouseDown={handleDragSlideStart}
+          data-testid="volumeSlideThumb"
         ></div>
       </div>
     </div>
