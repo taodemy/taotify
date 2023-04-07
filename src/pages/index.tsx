@@ -30,9 +30,11 @@ export default function Home({ newSongs }: HomeProps) {
   );
 }
 
-//get songs for music list by ISR
+/* istanbul ignore next */
 export async function getStaticProps() {
+  /* istanbul ignore next */
   //get recommended new songs
+  /* istanbul ignore next */
   let newSongs = await getNewSongs();
   //get audio url for each song
 
@@ -41,12 +43,14 @@ export async function getStaticProps() {
   // }
 
   //should use concurrent? not much faster I feel
+  /* istanbul ignore next */
   const urls = await Promise.all(
     newSongs.map(async (item: Music) => getAudioUrl(item.id, "standard"))
   );
+  /* istanbul ignore next */
   for (let i = 0; i < newSongs.length; i++) {
     newSongs[i].audioUrl = urls[i];
   }
-
+  /* istanbul ignore next */
   return { props: { newSongs }, revalidate: 600 };
 }

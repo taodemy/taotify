@@ -13,7 +13,7 @@ export default async function getNewSongs() {
       picUrl: item.picUrl,
       audioUrl: "",
     }));
-    return newSongs;
+    return newSongs.slice(0, 3);
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
   }

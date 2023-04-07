@@ -1,22 +1,51 @@
+import MusicList from "@/components/MusicList";
 import React from "react";
-import ReactDOM from "react-dom";
-import { createRenderer } from "react-test-renderer/shallow";
-import MusicList from "@component/MusicList";
+import { render } from "@testing-library/react";
+import "@testing-library/jest-dom";
 
 describe("List component", () => {
-  beforeEach(() => {
-    render(<MusicList />);
-  });
-  it("renders list items correctly", () => {
-    const items = ["Item 1", "Item 2", "Item 3"];
-    const renderer = createRenderer();
-    renderer.render(<List items={items} />);
-    const result = renderer.getRenderOutput();
-    expect(result.type).toBe("ul");
-    expect(result.props.children.length).toBe(items.length);
-    result.props.children.forEach((item, index) => {
-      expect(item.type).toBe("li");
-      expect(item.props.children).toBe(items[index]);
+  const music1 = {
+    id: 1,
+    name: "testSong1",
+    artist: "testArtist",
+    album: "testAlbum",
+    picUrl: "testPicUrl",
+    audioUrl: "testaudioUrl",
+  };
+  const music2 = {
+    id: 2,
+    name: "testSong2",
+    artist: "testArtist",
+    album: "testAlbum",
+    picUrl: "testPicUrl",
+    audioUrl: "testaudioUrl",
+  };
+  const music3 = {
+    id: 3,
+    name: "testSong3",
+    artist: "testArtist",
+    album: "testAlbum",
+    picUrl: "testPicUrl",
+    audioUrl: "testaudioUrl",
+  };
+  const musicListArr = [music1, music2, music3];
+
+  test("renders items correctly", () => {
+    const { getByText } = render(<MusicList list={musicListArr} />);
+    musicListArr.forEach((item) => {
+      const text = getByText(item.name);
+      expect(text).toBeInTheDocument();
     });
   });
+
+  // test("renders list items based on input items", () => {
+  //   const { getByRole } = renderer.create(<MusicList list={musicListArr} />);
+  //   const list = getByRole("list");
+  //   expect(list.children.length).toBe(items.length);
+  // items.forEach((item, index) => {
+  //   const listItem = getByRole('listitem', { name: item });
+  //   expect(listItem).toBeInTheDocument();
+  //   expect(listItem.textContent).toBe(item);
+  // });
+  // });
 });
