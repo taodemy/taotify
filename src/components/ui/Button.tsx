@@ -54,7 +54,8 @@ const getButtonClass = (color: ButtonColor, outline: boolean) => {
           : "bg-dark-400 text-light disabled:bg-dark-200 disabled:text-light-200"
       }`;
     default:
-      break;
+      const _exhaustiveCheck: never = color;
+      return _exhaustiveCheck;
   }
 };
 
