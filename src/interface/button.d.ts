@@ -19,4 +19,4 @@ export type Props = {
   onClick?: () => void;
 };
 
-interface ButtonProps extends Props, React.ButtonHTMLAttributes<HTMLButtonElement> {}
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & Props
