@@ -5,7 +5,7 @@ export default async function getNewSongs() {
       throw new Error("Network response was not ok");
     }
     const data = await res.json();
-    let newSongs = data.result.map((item: NewSong) => ({
+    const newSongs = data.result.map((item: NewSong) => ({
       id: item.id,
       name: item.song.name,
       artist: item.song.artists[0].name,
@@ -13,7 +13,7 @@ export default async function getNewSongs() {
       picUrl: item.picUrl,
       audioUrl: "",
     }));
-    return newSongs.slice(0, 3);
+    return newSongs.slice(0, 5);
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
   }

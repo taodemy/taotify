@@ -35,7 +35,7 @@ export async function getStaticProps() {
   /* istanbul ignore next */
   //get recommended new songs
   /* istanbul ignore next */
-  let newSongs = await getNewSongs();
+  const newSongs = await getNewSongs();
   //get audio url for each song
 
   // for (let song of newSongs) {
