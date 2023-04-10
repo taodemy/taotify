@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import volumeUtils from "@/utils/volumeUtils/volumeUtils";
 
 export default function VolumeSlideController() {
   const halfThumb = (5 * 0.25) / 2;
@@ -10,14 +11,9 @@ export default function VolumeSlideController() {
     document.addEventListener("mouseup", handleDragSlideEnd);
   };
   const handleDragSlideMove = (event: MouseEvent | React.MouseEvent<HTMLDivElement>) => {
-    if (!volumeSlider.current) {
-      return;
-    }
-    const rect = volumeSlider.current.getBoundingClientRect();
+    const rect = volumeSlider.current!.getBoundingClientRect();
     const width = event.clientX - rect.left;
-    let newVolumeLevel = (width / rect.width) * 100;
-    newVolumeLevel = newVolumeLevel < 0 ? 0 : newVolumeLevel;
-    newVolumeLevel = newVolumeLevel > 100 ? 100 : newVolumeLevel;
+    const newVolumeLevel = volumeUtils.calculateVolume(width, rect.width);
     setVolumeLevel(newVolumeLevel);
   };
   const handleDragSlideEnd = () => {
