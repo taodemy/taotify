@@ -39,7 +39,7 @@ export /* istanbul ignore next */ async function getStaticProps() {
   );
 
   urls.forEach((url, index) => {
-    if (url.status === "fulfilled") newSongs[index].audioUrl = url.value;
+    if (url.status) newSongs[index].audioUrl = url.audioUrl;
   });
 
   return { props: { newSongs }, revalidate: 600 };

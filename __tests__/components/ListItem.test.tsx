@@ -19,7 +19,9 @@ describe("In ListItem test, ", () => {
     const fn = jest.fn();
     const { getByText, getByRole } = render(
       <table>
-        <ListItem music={music} index={testIndex} loadMusicList={fn} />
+        <tbody>
+          <ListItem music={music} index={testIndex} loadMusicList={fn} />
+        </tbody>
       </table>
     );
     const button = getByRole("button");

@@ -15,7 +15,7 @@ export default function MusicList({ list }: MusicListProps) {
     setMusicIndex(index);
   };
 
-  return (
+  return list.length > 0 ? (
     <table className="w-full">
       <tbody>
         {list.map((e, i) => (
@@ -23,5 +23,7 @@ export default function MusicList({ list }: MusicListProps) {
         ))}
       </tbody>
     </table>
+  ) : (
+    <div>Ops, The music list components went wrong</div>
   );
 }

@@ -8,8 +8,9 @@ export default async function getAudioUrl(id: number, level: string) {
     }
     const data = await res.json();
     const audioUrl = data.data[0].url;
-    return audioUrl;
+    return { audioUrl, status: true };
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
+    return { audioUrl: "", status: false };
   }
 }
