@@ -1,4 +1,5 @@
 import Head from "next/head";
+import Image from "next/image";
 
 export default function Design() {
   return (
@@ -13,7 +14,7 @@ export default function Design() {
         <br />
         <button
           type="button"
-          className="bg-gradient-to-r from-primary to-primary px-2 py-1 rounded-full text-light text-base hover:from-primary-400 hover:to-primary-400 active:from-primary"
+          className="px-2 py-1 text-base rounded-full bg-gradient-to-r from-primary to-primary text-light hover:from-primary-400 hover:to-primary-400 active:from-primary"
         >
           button
         </button>
@@ -22,6 +23,8 @@ export default function Design() {
           Hover me
         </button>
         <br />
+        <img src="/vercel.svg" alt="vercel img" className="w-16 h-16" />
+        <Image src="/vercel.svg" alt="vercel img" width={100} height={100} />
         <h1>this is h1</h1>
         <h2>this is h2</h2>
         <h3>this is h3</h3>
@@ -66,7 +69,7 @@ export default function Design() {
         <p className="bg-light-300">this is light-300 background color</p>
         <p className="bg-light-200">this is light-200 background color</p>
         <p className="bg-light-100">this is light-100 background color</p>
-        <p className=" transition duration-500 bg-gradient-to-r from-primary hover:from-sencondary">
+        <p className="transition duration-500 bg-gradient-to-r from-primary hover:from-sencondary">
           this is a fading color
         </p>
       </main>
