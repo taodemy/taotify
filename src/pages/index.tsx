@@ -32,25 +32,21 @@ export default function Home({ newSongs }: HomeProps) {
 
 /* istanbul ignore next */
 export async function getStaticProps() {
-  /* istanbul ignore next */
   //get recommended new songs
   /* istanbul ignore next */
   const newSongs = await getNewSongs();
-  //get audio url for each song
-
-  // for (let song of newSongs) {
-  //   song.audioUrl = await getAudioUrl(song.id, "standard");
-  // }
 
   //should use concurrent? not much faster I feel
   /* istanbul ignore next */
   const urls = await Promise.all(
     newSongs.map(async (item: Music) => getAudioUrl(item.id, "standard"))
   );
+
   /* istanbul ignore next */
-  for (let i = 0; i < newSongs.length; i++) {
-    newSongs[i].audioUrl = urls[i];
-  }
+  urls.forEach((url, index) => {
+    if (url.status === "fulfilled") newSongs[index].audioUrl = url.value;
+  });
+
   /* istanbul ignore next */
   return { props: { newSongs }, revalidate: 600 };
 }

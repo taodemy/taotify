@@ -11,11 +11,11 @@ interface MusicContextProps {
 
 const defaultValues = {
   musicIndex: -1,
-  setMusicIndex: () => null,
+  setMusicIndex: () => {},
   musicList: [],
-  setMusicList: () => null,
+  setMusicList: () => {},
   noResourceAlert: false,
-  setNoResourceAlert: () => null,
+  setNoResourceAlert: () => {},
 };
 
 export const MusicContext = createContext<MusicContextProps>(defaultValues);

@@ -2,19 +2,16 @@ import { MusicContext } from "@/contexts/MusicContext";
 import React, { useContext } from "react";
 
 export default function MusicPlayer() {
-  const context = useContext(MusicContext);
+  const { musicList, musicIndex, setMusicIndex } = useContext(MusicContext);
   //get new audio url after music list update context
   const audioUrl =
     //when there is music in list and user choose which one to play
     //then go get the url
-    context.musicList.length === 0 || context.musicIndex === -1
-      ? ""
-      : context.musicList[context.musicIndex].audioUrl;
+    musicList.length === 0 || musicIndex === -1 ? "" : musicList[musicIndex].audioUrl;
 
   //when music end, update context with next index
   const handleEnd = () => {
-    if (context.musicIndex < context.musicList.length - 1)
-      context.setMusicIndex((prev) => prev + 1);
+    if (musicIndex < musicList.length - 1) setMusicIndex((prev) => prev + 1);
   };
 
   return (

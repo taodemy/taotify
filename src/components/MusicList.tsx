@@ -7,12 +7,12 @@ type MusicListProps = {
 };
 
 export default function MusicList({ list }: MusicListProps) {
-  const context = useContext(MusicContext);
+  const { setMusicList, setMusicIndex } = useContext(MusicContext);
 
   //if user decided to play this musiclist, load this list and selected index to context
   const loadMusicList = (index = 0) => {
-    context.setMusicList(list);
-    context.setMusicIndex(index);
+    setMusicList(list);
+    setMusicIndex(index);
   };
 
   return (
