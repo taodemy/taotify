@@ -1,41 +1,82 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import { Button } from "./Button";
-
-// More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
+import Button from "../components/ui/Button";
 export default {
-  title: "Example/Button",
+  title: "ui/Button",
   component: Button,
-  // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
-  argTypes: {
-    backgroundColor: { control: "color" },
-  },
 } as ComponentMeta<typeof Button>;
 
-// More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) => <Button {...args}>BUTTON</Button>;
 
 export const Primary = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
-  primary: true,
-  label: "Button",
+  color: "primary",
+  size: "normal",
 };
 
 export const Secondary = Template.bind({});
 Secondary.args = {
-  label: "Button",
+  color: "secondary",
+  size: "normal",
 };
 
-export const Large = Template.bind({});
-Large.args = {
-  size: "large",
-  label: "Button",
+export const Ternary = Template.bind({});
+Ternary.args = {
+  color: "ternary",
+  size: "normal",
+};
+
+export const Warning = Template.bind({});
+Warning.args = {
+  color: "warning",
+  size: "normal",
+};
+
+export const Info = Template.bind({});
+Info.args = {
+  color: "info",
+  size: "normal",
+};
+
+export const Light = Template.bind({});
+Light.args = {
+  color: "light",
+  size: "normal",
+};
+
+export const Dark = Template.bind({});
+Dark.args = {
+  color: "dark",
+  size: "normal",
+};
+
+export const Tiny = Template.bind({});
+Tiny.args = {
+  color: "primary",
+  size: "tiny",
 };
 
 export const Small = Template.bind({});
 Small.args = {
+  color: "primary",
   size: "small",
-  label: "Button",
+};
+
+export const Large = Template.bind({});
+Large.args = {
+  color: "primary",
+  size: "large",
+};
+
+export const Outline = Template.bind({});
+Outline.args = {
+  color: "primary",
+  size: "normal",
+  outline: true,
+};
+
+export const Icon = Template.bind({});
+Icon.args = {
+  variant: "icon",
 };
