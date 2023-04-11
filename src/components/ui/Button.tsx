@@ -25,17 +25,14 @@ const getButtonClass = (color: ButtonColor, outline: boolean) => {
       return outline
         ? "border border-ternary hover:bg-ternary active:bg-ternary disabled:text-light-100"
         : "bg-ternary hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100 disabled:text-light-400";
-
     case "warning":
       return outline
         ? "border border-warning hover:bg-warning active:bg-warning disabled:text-light-100"
         : "bg-warning hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100 disabled:text-light-400";
-
     case "info":
       return outline
         ? "border border-info hover:bg-info active:bg-info disabled:text-light-100"
         : "bg-info hover:bg-info-400 active:bg-info-400 disabled:bg-info-100 disabled:text-light-400";
-
     case "light":
       return `hover:bg-light-400 hover:text-dark active:bg-light-400 active:text-dark ${
         outline
@@ -49,8 +46,6 @@ const getButtonClass = (color: ButtonColor, outline: boolean) => {
           : "bg-dark-400 text-light disabled:bg-dark-200 disabled:text-light-200"
       }`;
     default:
-      const _exhaustiveCheck: never = color;
-      return _exhaustiveCheck;
   }
 };
 
@@ -112,6 +107,7 @@ const Button = ({
         height={iconSize[size]}
         onClick={onClick}
         fill={iconColor[color]}
+        role="icon"
       ></CloseIcon>
     </>
   );
