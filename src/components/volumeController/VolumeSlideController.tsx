@@ -1,31 +1,47 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
+import { VolumeContext } from "@/contexts/VolumeContext";
 
 export default function VolumeSlideController() {
   const halfThumb = (5 * 0.25) / 2;
-  const [volumeLevel, setVolumeLevel] = useState<number>(50);
+  const { volumeLevel, setVolumeLevel, backtrackVolumeLevel, setBacktrackVolumeLevel } =
+    useContext(VolumeContext);
   const volumeSlider = useRef<HTMLDivElement>(null);
+  const handleClickSlideMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const newVolumeLevel = getNewVolumeLevel(event);
+    setVolumeLevel(newVolumeLevel);
+    if (newVolumeLevel > 0 && newVolumeLevel <= 100) {
+      setBacktrackVolumeLevel(newVolumeLevel);
+    }
+  };
   const handleDragSlideStart = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
     document.addEventListener("mousemove", handleDragSlideMove);
     document.addEventListener("mouseup", handleDragSlideEnd);
   };
-  const handleDragSlideMove = (event: MouseEvent | React.MouseEvent<HTMLDivElement>) => {
-    const rect = volumeSlider.current!.getBoundingClientRect();
-    const width = event.clientX - rect.left;
-    const newVolumeLevel = volumeUtils.calculateVolume(width, rect.width);
+  const handleDragSlideMove = (event: MouseEvent) => {
+    const newVolumeLevel = getNewVolumeLevel(event);
     setVolumeLevel(newVolumeLevel);
+    if (newVolumeLevel > backtrackVolumeLevel) {
+      setBacktrackVolumeLevel(newVolumeLevel);
+    }
   };
   const handleDragSlideEnd = () => {
     document.removeEventListener("mousemove", handleDragSlideMove);
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
+  const getNewVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>): number => {
+    const rect = volumeSlider.current!.getBoundingClientRect();
+    const width = event.clientX - rect.left;
+    const newVolumeLevel = volumeUtils.calculateVolume(width, rect.width);
+    return newVolumeLevel;
+  };
   return (
-    <div className={`w-52 absolute right-10 bottom-5 mx-auto`} data-testid="volumeSlideContainer">
+    <div className={`w-52 mx-auto`} data-testid="volumeSlideContainer">
       <div
         ref={volumeSlider}
         className={`relative h-5 rounded cursor-pointer bg-primary-100`}
-        onClick={handleDragSlideMove}
+        onClick={handleClickSlideMove}
         data-testid="volumeSlideBar"
       >
         <div
