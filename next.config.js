@@ -4,6 +4,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  env: {
+    NEXT_MUSIC_SERVER_ADDRESS: process.env.NEXT_MUSIC_SERVER_ADDRESS,
+  },
 };
 
 module.exports = nextConfig;
