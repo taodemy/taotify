@@ -1,4 +1,4 @@
-import { MusicContext } from "@/contexts/MusicContext";
+import { MusicContext } from "../contexts/MusicContext";
 import React, { useContext } from "react";
 import ListItem from "./ListItem";
 

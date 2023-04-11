@@ -37,15 +37,4 @@ describe("List component", () => {
       expect(text).toBeInTheDocument();
     });
   });
-
-  // test("renders list items based on input items", () => {
-  //   const { getByRole } = renderer.create(<MusicList list={musicListArr} />);
-  //   const list = getByRole("list");
-  //   expect(list.children.length).toBe(items.length);
-  // items.forEach((item, index) => {
-  //   const listItem = getByRole('listitem', { name: item });
-  //   expect(listItem).toBeInTheDocument();
-  //   expect(listItem.textContent).toBe(item);
-  // });
-  // });
 });

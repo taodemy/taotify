@@ -1,10 +1,10 @@
-import FriendsActivity from "@/components/FriendsActivity";
-import NewReleases from "@/components/NewReleases";
-import RecentlyPlayed from "@/components/RecentlyPlayed";
-import MusicList from "@/components/MusicList";
+import FriendsActivity from "../components/FriendsActivity";
+import NewReleases from "../components/NewReleases";
+import RecentlyPlayed from "../components/RecentlyPlayed";
+import MusicList from "../components/MusicList";
 import Head from "next/head";
-import getNewSongs from "@/utils/getNewSongs";
-import getAudioUrl from "@/utils/getAudioUrl";
+import getNewSongs from "../utils/getNewSongs";
+import getAudioUrl from "../utils/getAudioUrl";
 
 type HomeProps = {
   newSongs: Array<Music>;
