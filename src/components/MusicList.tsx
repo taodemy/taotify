@@ -3,23 +3,23 @@ import React, { useContext } from "react";
 import ListItem from "./ListItem";
 
 type MusicListProps = {
-  list: Array<Music>;
+  musicList: Array<Music>;
 };
 
-export default function MusicList({ list }: MusicListProps) {
+export default function MusicList({ musicList }: MusicListProps) {
   const { setMusicList, setMusicIndex } = useContext(MusicContext);
 
   //if user decided to play this musiclist, load this list and selected index to context
   const loadMusicList = (index = 0) => {
-    setMusicList(list);
+    setMusicList(musicList);
     setMusicIndex(index);
   };
 
-  return list.length > 0 ? (
+  return musicList.length > 0 ? (
     <table className="w-full">
       <tbody>
-        {list.map((e, i) => (
-          <ListItem key={i} music={e} index={i} loadMusicList={loadMusicList} />
+        {musicList.map((music, index) => (
+          <ListItem key={index} music={music} index={index} loadMusicList={loadMusicList} />
         ))}
       </tbody>
     </table>

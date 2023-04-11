@@ -24,7 +24,7 @@ export default function Home({ newSongs }: HomeProps) {
         <FriendsActivity />
         <NewReleases />
         {/* only for music list demo*/}
-        <MusicList list={newSongs} />
+        <MusicList musicList={newSongs} />
       </main>
     </>
   );

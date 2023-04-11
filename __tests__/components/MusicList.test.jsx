@@ -31,7 +31,7 @@ describe("List component", () => {
   const musicListArr = [music1, music2, music3];
 
   test("renders items correctly", () => {
-    const { getByText } = render(<MusicList list={musicListArr} />);
+    const { getByText } = render(<MusicList musicList={musicListArr} />);
     musicListArr.forEach((item) => {
       const text = getByText(item.name);
       expect(text).toBeInTheDocument();
