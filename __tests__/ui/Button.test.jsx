@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Button from "@ui/Button";
+import Button, { getButtonClass } from "@ui/Button";
 import "@testing-library/jest-dom";
 
 describe("Button", () => {
@@ -38,5 +38,13 @@ describe("Button", () => {
     const button = screen.getByRole("button");
     fireEvent.click(button);
     expect(clickHandler).toBeCalled();
+  });
+});
+
+describe("getButtonClass", () => {
+  it("should throw an error for invalid colors", () => {
+    expect(() => getButtonClass("invalid-color", false)).toThrowError(
+      "the color invalid-color is not defined in button color Type"
+    );
   });
 });

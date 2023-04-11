@@ -11,7 +11,7 @@ type ButtonProps = {
 } & React.ComponentProps<"button">;
 
 const btn = " text-light text-base rounded-full font-[Roboto] flex justify-center items-center";
-const getButtonClass = (color: ButtonColor, outline: boolean) => {
+export const getButtonClass = (color: ButtonColor, outline: boolean) => {
   switch (color) {
     case "primary":
       return outline
@@ -46,6 +46,7 @@ const getButtonClass = (color: ButtonColor, outline: boolean) => {
           : "bg-dark-400 text-light disabled:bg-dark-200 disabled:text-light-200"
       }`;
     default:
+      throw new Error(`the color ${color} is not defined in button color Type`);
   }
 };
 
