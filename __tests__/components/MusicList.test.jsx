@@ -28,11 +28,11 @@ describe("List component", () => {
     picUrl: "testPicUrl",
     audioUrl: "testaudioUrl",
   };
-  const musicListArr = [music1, music2, music3];
+  const testMusicList = { id: 0, type: "newSongs", tracks: [music1, music2, music3] };
 
   test("renders items correctly", () => {
-    const { getByText } = render(<MusicList musicList={musicListArr} />);
-    musicListArr.forEach((item) => {
+    const { getByText } = render(<MusicList musicList={testMusicList} />);
+    testMusicList.tracks.forEach((item) => {
       const text = getByText(item.name);
       expect(text).toBeInTheDocument();
     });

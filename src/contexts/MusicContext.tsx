@@ -1,19 +1,19 @@
 import React, { createContext, useState } from "react";
 
 interface MusicContextProps {
-  musicIndex: number;
-  setMusicIndex: React.Dispatch<React.SetStateAction<number>>;
-  musicList: Music[];
-  setMusicList: React.Dispatch<React.SetStateAction<Music[]>>;
+  playingIndex: number;
+  setPlayingIndex: React.Dispatch<React.SetStateAction<number>>;
+  playingQueue: MusicList | null;
+  setPlayingQueue: React.Dispatch<React.SetStateAction<MusicList | null>>;
   noResourceAlert: boolean;
   setNoResourceAlert: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const defaultValues = {
-  musicIndex: -1,
-  setMusicIndex: () => {},
-  musicList: [],
-  setMusicList: () => {},
+  playingIndex: -1,
+  setPlayingIndex: () => {},
+  playingQueue: null,
+  setPlayingQueue: () => {},
   noResourceAlert: false,
   setNoResourceAlert: () => {},
 };
@@ -25,17 +25,17 @@ interface Props {
 }
 
 export const MusicContextProvider = ({ children }: Props) => {
-  const [musicIndex, setMusicIndex] = useState(-1);
-  const [musicList, setMusicList] = useState<Music[]>([]);
+  const [playingIndex, setPlayingIndex] = useState(-1);
+  const [playingQueue, setPlayingQueue] = useState<MusicList | null>(null);
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(false);
 
   return (
     <MusicContext.Provider
       value={{
-        musicIndex,
-        setMusicIndex,
-        musicList,
-        setMusicList,
+        playingIndex,
+        setPlayingIndex,
+        playingQueue,
+        setPlayingQueue,
         noResourceAlert,
         setNoResourceAlert,
       }}

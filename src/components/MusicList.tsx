@@ -3,27 +3,28 @@ import React, { useContext } from "react";
 import ListItem from "./ListItem";
 
 type MusicListProps = {
-  musicList: Array<Music>;
+  musicList: MusicList;
 };
 
 export default function MusicList({ musicList }: MusicListProps) {
-  const { setMusicList, setMusicIndex } = useContext(MusicContext);
+  const { playingQueue, setPlayingIndex, setPlayingQueue } = useContext(MusicContext);
 
-  //if user decided to play this musiclist, load this list and selected index to context
   const loadMusicList = (index = 0) => {
-    setMusicList(musicList);
-    setMusicIndex(index);
+    if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
+      setPlayingQueue(musicList);
+    }
+    setPlayingIndex(index);
   };
 
-  return musicList.length > 0 ? (
+  return musicList.tracks.length > 0 ? (
     <table className="w-full">
       <tbody>
-        {musicList.map((music, index) => (
+        {musicList.tracks.map((music, index) => (
           <ListItem key={index} music={music} index={index} loadMusicList={loadMusicList} />
         ))}
       </tbody>
     </table>
   ) : (
-    <div>Ops, The music list components went wrong</div>
+    <div>Ops, failed to load the music</div>
   );
 }

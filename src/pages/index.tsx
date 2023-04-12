@@ -7,10 +7,10 @@ import getNewSongs from "../utils/getNewSongs";
 import getAudioUrl from "../utils/getAudioUrl";
 
 type HomeProps = {
-  newSongs: Array<Music>;
+  newSongsList: MusicList;
 };
 
-export default function Home({ newSongs }: HomeProps) {
+export default function Home({ newSongsList }: HomeProps) {
   return (
     <>
       <Head>
@@ -24,7 +24,7 @@ export default function Home({ newSongs }: HomeProps) {
         <FriendsActivity />
         <NewReleases />
         {/* only for music list demo*/}
-        <MusicList musicList={newSongs} />
+        <MusicList musicList={newSongsList} />
       </main>
     </>
   );
@@ -42,5 +42,7 @@ export /* istanbul ignore next */ async function getStaticProps() {
     if (url.status) newSongs[index].audioUrl = url.audioUrl;
   });
 
-  return { props: { newSongs }, revalidate: 600 };
+  const newSongsList = { id: 0, type: "newSongs", tracks: newSongs };
+
+  return { props: { newSongsList }, revalidate: 600 };
 }

@@ -26,11 +26,11 @@ const music3 = {
   picUrl: "testPicUrl",
   audioUrl: "testaudioUrl",
 };
-const musicListArr = [music1, music2, music3];
+const testMusicList = { id: 0, type: "newSongs", tracks: [music1, music2, music3] };
 
 describe("Home", () => {
   beforeEach(() => {
-    render(<Home newSongs={musicListArr} />);
+    render(<Home newSongsList={testMusicList} />);
   });
 
   it("renders a heading", () => {
