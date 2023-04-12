@@ -2,6 +2,9 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import Button from "@ui/Button";
 import "@testing-library/jest-dom";
 
+/*=====================================================*/
+// test color
+/*=====================================================*/
 describe("Button", () => {
   it("should render button with primary color", () => {
     render(<Button color="primary" label="button" />);
@@ -52,21 +55,9 @@ describe("Button", () => {
     expect(button.classList).toContain("bg-dark-400");
   });
 
-  it("should render the icon when variant is set to icon", () => {
-    render(<Button variant="icon" size="large" />);
-    const icon = screen.getByRole("icon");
-    expect(icon).toBeInTheDocument();
-    expect(icon.outerHTML).toContain("svg");
-  });
-
-  it("calls onClick prop when clicked", () => {
-    const clickHandler = jest.fn();
-    render(<Button onClick={clickHandler} />);
-    const button = screen.getByRole("button");
-    fireEvent.click(button);
-    expect(clickHandler).toBeCalled();
-  });
-
+  /*=====================================================*/
+  // test outline color
+  /*=====================================================*/
   it("should render outline when outline attribute is true", () => {
     render(<Button outline label="button" />);
     const button = screen.getByRole("button", { name: /button/i });
@@ -123,4 +114,31 @@ describe("Button", () => {
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-dark-100");
   });
+});
+
+/*=====================================================*/
+// test icon variant
+/*=====================================================*/
+it("should render the icon when variant is set to icon", () => {
+  render(<Button variant="icon" size="large" />);
+  const button = screen.getByRole("button");
+  const icon = button.firstChild as SVGElement;
+  expect(icon).toBeInTheDocument();
+  expect(icon.outerHTML).toContain("svg");
+});
+
+it("calls onClick prop when button is clicked", () => {
+  const clickHandler = jest.fn();
+  render(<Button onClick={clickHandler} />);
+  const button = screen.getByRole("button");
+  fireEvent.click(button);
+  expect(clickHandler).toBeCalled();
+});
+
+it("calls onClick prop when icon is clicked", () => {
+  const clickHandler = jest.fn();
+  render(<Button variant="icon" onClick={clickHandler} />);
+  const button = screen.getByRole("button");
+  fireEvent.click(button);
+  expect(clickHandler).toBeCalled();
 });
