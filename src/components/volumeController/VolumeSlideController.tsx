@@ -9,6 +9,8 @@ export default function VolumeSlideController() {
   const volumeSlider = useRef<HTMLDivElement>(null);
   const handleDragSlideStart = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
+    const newVolumeLevel = updateVolumeLevel(event);
+    setVolumeLevel(newVolumeLevel);
     document.addEventListener("mousemove", handleDragSlideMove);
     document.addEventListener("mouseup", handleDragSlideEnd);
   };
