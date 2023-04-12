@@ -5,19 +5,6 @@ import "@testing-library/jest-dom";
 
 describe("VolumeSlideController", () => {
   beforeEach(() => {
-    Element.prototype.getBoundingClientRect = jest.fn(() => {
-      return {
-        width: 100,
-        height: 50,
-        top: 0,
-        left: 0,
-        bottom: 0,
-        right: 0,
-        x: 0,
-        y: 0,
-        toJSON: () => {},
-      };
-    });
     render(<VolumeSlideController />);
   });
 
