@@ -86,7 +86,7 @@ const Button = ({
       {label}
     </button>
   ) : (
-    <button onClick={onClick} aria-label="close button">
+    <button onClick={onClick} aria-label="close">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
