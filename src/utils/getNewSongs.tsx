@@ -13,8 +13,9 @@ export default async function getNewSongs() {
       picUrl: item.picUrl,
       audioUrl: "",
     }));
-    return newSongs.slice(0, 5);
+    return { newSongs: newSongs.slice(0, 5), status: true };
   } catch (error) {
     console.error("There was a problem with the fetch operation:", error);
+    return { newSongs: [], status: false };
   }
 }

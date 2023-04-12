@@ -30,7 +30,7 @@ const musicListArr = [music1, music2, music3];
 
 describe("Home", () => {
   beforeEach(() => {
-    render(<Home newSongs={musicListArr} />);
+    render(<Home newSongsWithUrls={musicListArr} />);
   });
 
   it("renders a heading", () => {
