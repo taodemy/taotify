@@ -14,20 +14,20 @@ describe("VolumeController", () => {
     const mockCalculateVolume = jest
       .spyOn(volumeUtils, "calculateVolume")
       .mockImplementation(() => 100);
-    fireEvent.click(volumeSlideBar);
+    fireEvent.mouseDown(volumeSlideBar);
     expect(volumeSlideProgress).toHaveStyle("width: 100%");
     mockCalculateVolume.mockRestore();
   });
 
   it("should handle drag successfully", () => {
-    const volumeSlideThumb = screen.getByTestId("volumeSlideThumb");
+    const volumeSlideBar = screen.getByTestId("volumeSlideBar");
     const volumeSlideProgress = screen.getByTestId("volumeSlideProgress");
     const mockCalculateVolume = jest
       .spyOn(volumeUtils, "calculateVolume")
       .mockImplementation(() => 100);
-    fireEvent.mouseDown(volumeSlideThumb);
-    fireEvent.mouseMove(volumeSlideThumb);
-    fireEvent.mouseUp(volumeSlideThumb);
+    fireEvent.mouseDown(volumeSlideBar);
+    fireEvent.mouseMove(volumeSlideBar);
+    fireEvent.mouseUp(volumeSlideBar);
     expect(volumeSlideProgress).toHaveStyle("width: 100%");
     mockCalculateVolume.mockRestore();
   });
