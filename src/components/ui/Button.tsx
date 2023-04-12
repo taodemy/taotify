@@ -57,23 +57,12 @@ const Button = ({
   label = "button",
   ...otherProps
 }: ButtonProps) => {
-  // const buttonColor = {
-  //   primary: getButtonClass("primary", outline),
-  //   secondary: getButtonClass("secondary", outline),
-  //   ternary: getButtonClass("ternary", outline),
-  //   warning: getButtonClass("warning", outline),
-  //   info: getButtonClass("info", outline),
-  //   light: getButtonClass("light", outline),
-  //   dark: getButtonClass("dark", outline),
-  // };
-
   const buttonSize = {
     tiny: "py-[1px] px-[4px]",
     small: "py-[3px] px-[8px]",
     normal: "py-[6px] px-[12px]",
     large: "py-[12px] px-[24px]",
   };
-
   const iconColor = {
     primary: "#8B3ECF",
     secondary: "#3972E6",
@@ -83,7 +72,6 @@ const Button = ({
     light: "#FEFEFE",
     dark: "#282B2D",
   };
-
   const iconSize = {
     tiny: "26px",
     small: "32px",
@@ -100,15 +88,13 @@ const Button = ({
       {label}
     </button>
   ) : (
-    <>
-      <CloseIcon
-        width={iconSize[size]}
-        height={iconSize[size]}
-        onClick={onClick}
-        fill={iconColor[color]}
-        role="icon"
-      ></CloseIcon>
-    </>
+    <CloseIcon
+      width={iconSize[size]}
+      height={iconSize[size]}
+      onClick={onClick}
+      fill={iconColor[color]}
+      role="icon"
+    />
   );
 };
 
