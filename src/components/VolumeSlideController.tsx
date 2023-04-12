@@ -21,10 +21,14 @@ export default function VolumeSlideController() {
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
   const updateVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>) => {
-    const rect = volumeSlider.current!.getBoundingClientRect();
-    const width = event.clientX - rect.left;
-    const newVolumeLevel = volumeUtils.calculateVolume(width, rect.width);
-    return newVolumeLevel;
+    if (volumeSlider.current) {
+      const rect = volumeSlider.current.getBoundingClientRect();
+      const width = event.clientX - rect.left;
+      const newVolumeLevel = volumeUtils.calculateVolume(width, rect.width);
+      return newVolumeLevel;
+    } else {
+      return 0;
+    }
   };
   return (
     <div className={`w-52 absolute right-10 bottom-5 mx-auto`} data-testid="volumeSlideContainer">
