@@ -1,16 +1,12 @@
 const getNewSongs = async () => {
   try {
-    const res = await fetch(`${process.env.NEXT_MUSIC_SERVER_ADDRESS}/personalized/newsong`);
-    const data = await res.json();
-    const musicData = data.result.map((song) => ({
-      id: song.song.id,
-      name: song.name,
-      artist: song.song.artists,
-      album: song.song.album,
-      picUrl: song.picUrl,
-      musicUrl: "",
-    }));
-    return musicData;
+    const response = await fetch(`${process.env.NEXT_MUSIC_SERVER_ADDRESS}/personalized/newsong`);
+
+    if (!response.ok) {
+      throw new Error(`This is an HTTP error: The status is ${response.status}`);
+    }
+    const data = await response.json();
+    return data.result;
   } catch (error) {
     console.log(error);
   }
