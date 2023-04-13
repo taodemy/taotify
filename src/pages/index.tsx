@@ -5,12 +5,13 @@ import MusicList from "../components/MusicList";
 import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
 import getAudioUrl from "../utils/getAudioUrl";
+import songListFilter from "../utils/songListFilter";
 
 type HomeProps = {
-  newSongsWithUrls: Array<Music>;
+  newSongsList: MusicList;
 };
 
-export default function Home({ newSongsWithUrls }: HomeProps) {
+export default function Home({ newSongsList }: HomeProps) {
   return (
     <>
       <Head>
@@ -24,7 +25,7 @@ export default function Home({ newSongsWithUrls }: HomeProps) {
         <FriendsActivity />
         <NewReleases />
         {/* only for music list demo*/}
-        <MusicList musicList={newSongsWithUrls} />
+        <MusicList musicList={newSongsList} />
       </main>
     </>
   );
@@ -37,12 +38,7 @@ export /* istanbul ignore next */ async function getStaticProps() {
   const urls = await Promise.all(
     newSongs.map(async (item: Music) => getAudioUrl(item.id, "standard"))
   );
-  const newSongsWithUrls: Array<Music> = [];
-  urls.forEach((url, index) => {
-    if (url.status) {
-      newSongs[index].audioUrl = url.audioUrl;
-      newSongsWithUrls.push(newSongs[index]);
-    }
-  });
-  return { props: { newSongsWithUrls }, revalidate: 600 };
+  const newSongsWithUrls = songListFilter(urls, newSongs);
+  const newSongsList = { id: 0, type: "newSongs", tracks: newSongsWithUrls };
+  return { props: { newSongsList }, revalidate: 600 };
 }

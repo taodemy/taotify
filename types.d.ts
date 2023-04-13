@@ -1,3 +1,9 @@
+type MusicList = {
+  id: number;
+  type: "newSongs" | "playlist" | "album";
+  tracks: Music[];
+};
+
 type Music = {
   id: number;
   name: string;

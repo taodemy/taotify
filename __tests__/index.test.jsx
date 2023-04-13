@@ -1,36 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import Home, { getStaticProps } from "../src/pages/index";
 import "@testing-library/jest-dom";
-
-const music1 = {
-  id: 1,
-  name: "testSong",
-  artist: "testArtist",
-  album: "testAlbum",
-  picUrl: "testPicUrl",
-  audioUrl: "testaudioUrl",
-};
-const music2 = {
-  id: 2,
-  name: "testSong",
-  artist: "testArtist",
-  album: "testAlbum",
-  picUrl: "testPicUrl",
-  audioUrl: "testaudioUrl",
-};
-const music3 = {
-  id: 3,
-  name: "testSong",
-  artist: "testArtist",
-  album: "testAlbum",
-  picUrl: "testPicUrl",
-  audioUrl: "testaudioUrl",
-};
-const musicListArr = [music1, music2, music3];
+import { musicList } from "../mockData/mockData";
 
 describe("Home", () => {
   beforeEach(() => {
-    render(<Home newSongsWithUrls={musicListArr} />);
+    render(<Home newSongsList={musicList} />);
   });
 
   it("renders a heading", () => {
