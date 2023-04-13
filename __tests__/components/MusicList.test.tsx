@@ -42,6 +42,15 @@ const renderMusicList = (index: number, queue: MusicList | null) => {
   );
 };
 
+const renderMusicList2 = () => {
+  return render(
+    <MusicContextProvider>
+      <MusicList musicList={testMusicList} />
+      <MusicPlayer />
+    </MusicContextProvider>
+  );
+};
+
 describe("Music List", () => {
   it("renders items correctly", async () => {
     render(<MusicList musicList={testMusicList} />);
@@ -58,7 +67,7 @@ describe("Music List", () => {
   });
 
   it("click list item to load new list", async () => {
-    renderMusicList(0, testMusicList2);
+    renderMusicList2();
     const clickableElement = screen.getAllByRole("button")[0];
     fireEvent.click(clickableElement);
     const audio = screen.getByRole("audio");
