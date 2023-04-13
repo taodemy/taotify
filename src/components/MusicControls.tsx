@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
-
 import useMusicControl from "@/hooks/useMusicControl";
+import { MusicControlProps } from "@/hooks/useMusicControl";
 
 const MusicControls = ({
   audioRef,

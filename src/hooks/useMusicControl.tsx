@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 
+export type MusicControlProps = {
+  audioRef: HTMLAudioElement | any;
+  musicData: SongProps[];
+  trackIndex: number;
+  setTrackIndex: any;
+  setCurrentMusic: any;
+};
+
 const useMusicControl = ({
   trackIndex,
   musicData,
@@ -20,6 +28,7 @@ const useMusicControl = ({
   };
 
   const handlePrevious = () => {
+    setIsPlaying(false);
     if (trackIndex === 0) {
       let lastTrackIndex = musicData.length - 1;
       setTrackIndex(lastTrackIndex);
@@ -31,12 +40,15 @@ const useMusicControl = ({
   };
 
   const handleNext = () => {
+    setIsPlaying(false);
     if (trackIndex >= musicData.length - 1) {
       setTrackIndex(0);
       setCurrentMusic(musicData[0]);
+      setIsPlaying(true);
     } else {
       setTrackIndex((prev: number) => prev + 1);
       setCurrentMusic(musicData[trackIndex + 1]);
+      setIsPlaying(true);
     }
   };
 

@@ -1,12 +1,4 @@
-type MusicControlProps = {
-  audioRef: HTMLAudioElement | any;
-  musicData: SongProps[];
-  trackIndex: number;
-  setTrackIndex: any;
-  setCurrentMusic: any;
-};
-
-type Song = {
+type SongProps = {
   name: string;
   id: number;
   position: number;
