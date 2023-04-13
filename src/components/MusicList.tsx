@@ -9,7 +9,7 @@ type MusicListProps = {
 export default function MusicList({ musicList }: MusicListProps) {
   const { playingQueue, setPlayingIndex, setPlayingQueue } = useContext(MusicContext);
 
-  const loadMusicList = (index = 0) => {
+  const loadMusicList = (index: number) => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setPlayingQueue(musicList);
     }

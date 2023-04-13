@@ -13,7 +13,7 @@ export default function MusicPlayer() {
 
   return (
     <div className=" w-[100vw] h-[100px] bg-secondary-100 fixed bottom-0 left-0 border-2">
-      <audio src={audioUrl} controls autoPlay onEnded={handleEnd}></audio>
+      <audio src={audioUrl} role="audio" controls autoPlay onEnded={handleEnd}></audio>
     </div>
   );
 }
