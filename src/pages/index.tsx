@@ -31,9 +31,9 @@ export default function Home({ newSongsWithUrls }: HomeProps) {
 }
 
 export /* istanbul ignore next */ async function getStaticProps() {
-  const newSongsSet = await getNewSongs();
-  if (!newSongsSet.status) return { props: { newSongs: [] }, revalidate: 600 };
-  const newSongs = newSongsSet.newSongs;
+  const response = await getNewSongs();
+  if (!response.status) return { props: { newSongs: [] }, revalidate: 600 };
+  const { newSongs } = response;
   const urls = await Promise.all(
     newSongs.map(async (item: Music) => getAudioUrl(item.id, "standard"))
   );

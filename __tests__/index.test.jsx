@@ -68,6 +68,5 @@ beforeEach(() => {
 
 it("fetches data from the API", async () => {
   const { props } = await getStaticProps();
-  console.log(props);
   expect(props).toEqual({ newSongs: [] });
 });
