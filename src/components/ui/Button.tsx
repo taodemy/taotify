@@ -1,5 +1,3 @@
-import CloseIcon from "./CloseIcon";
-
 type ButtonColor = "primary" | "secondary" | "ternary" | "warning" | "info" | "light" | "dark";
 type ButtonProps = {
   color?: ButtonColor;
@@ -25,17 +23,14 @@ const getButtonClass = (color: ButtonColor, outline: boolean) => {
       return outline
         ? "border border-ternary hover:bg-ternary active:bg-ternary disabled:text-light-100"
         : "bg-ternary hover:bg-ternary-400 active:bg-ternary-400 disabled:bg-ternary-100 disabled:text-light-400";
-
     case "warning":
       return outline
         ? "border border-warning hover:bg-warning active:bg-warning disabled:text-light-100"
         : "bg-warning hover:bg-warning-400 active:bg-warning-400 disabled:bg-warning-100 disabled:text-light-400";
-
     case "info":
       return outline
         ? "border border-info hover:bg-info active:bg-info disabled:text-light-100"
         : "bg-info hover:bg-info-400 active:bg-info-400 disabled:bg-info-100 disabled:text-light-400";
-
     case "light":
       return `hover:bg-light-400 hover:text-dark active:bg-light-400 active:text-dark ${
         outline
@@ -48,9 +43,6 @@ const getButtonClass = (color: ButtonColor, outline: boolean) => {
           ? "border border-dark-100 text-dark disabled:border-dark-100 disabled:text-light-100"
           : "bg-dark-400 text-light disabled:bg-dark-200 disabled:text-light-200"
       }`;
-    default:
-      const _exhaustiveCheck: never = color;
-      return _exhaustiveCheck;
   }
 };
 
@@ -63,23 +55,12 @@ const Button = ({
   label = "button",
   ...otherProps
 }: ButtonProps) => {
-  const buttonColor = {
-    primary: getButtonClass("primary", outline),
-    secondary: getButtonClass("secondary", outline),
-    ternary: getButtonClass("ternary", outline),
-    warning: getButtonClass("warning", outline),
-    info: getButtonClass("info", outline),
-    light: getButtonClass("light", outline),
-    dark: getButtonClass("dark", outline),
-  };
-
   const buttonSize = {
     tiny: "py-[1px] px-[4px]",
     small: "py-[3px] px-[8px]",
     normal: "py-[6px] px-[12px]",
     large: "py-[12px] px-[24px]",
   };
-
   const iconColor = {
     primary: "#8B3ECF",
     secondary: "#3972E6",
@@ -89,7 +70,6 @@ const Button = ({
     light: "#FEFEFE",
     dark: "#282B2D",
   };
-
   const iconSize = {
     tiny: "26px",
     small: "32px",
@@ -99,21 +79,25 @@ const Button = ({
 
   return variant === "normal" ? (
     <button
-      className={`${buttonColor[color]} ${buttonSize[size]} ${btn} `}
+      className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn} `}
       {...otherProps}
       onClick={onClick}
     >
       {label}
     </button>
   ) : (
-    <>
-      <CloseIcon
+    <button onClick={onClick} aria-label="close">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
         width={iconSize[size]}
         height={iconSize[size]}
-        onClick={onClick}
         fill={iconColor[color]}
-      ></CloseIcon>
-    </>
+      >
+        <title>close icon</title>
+        <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm3.707 12.293a1 1 0 11-1.414 1.414L12 13.414l-2.293 2.293a1 1 0 01-1.414-1.414L10.586 12 8.293 9.707a1 1 0 011.414-1.414L12 10.586l2.293-2.293a1 1 0 011.414 1.414L13.414 12z" />
+      </svg>
+    </button>
   );
 };
 
