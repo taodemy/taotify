@@ -1,11 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import Home, { getStaticProps } from "../src/pages/index";
 import "@testing-library/jest-dom";
-import { musicList } from "../mockData/mockData";
+import { mockPlayList } from "../mockData/mockData";
 
 describe("Home", () => {
   beforeEach(() => {
-    render(<Home newSongsList={musicList} />);
+    render(<Home newSongsList={mockPlayList} />);
   });
 
   it("renders a heading", () => {
@@ -43,5 +43,5 @@ beforeEach(() => {
 
 it("fetches data from the API", async () => {
   const { props } = await getStaticProps();
-  expect(props).toEqual({ newSongs: [] });
+  expect(props).toEqual({ newSongsList: [] });
 });

@@ -1,23 +1,27 @@
 import React from "react";
+import { Song } from "types";
 
 type ListItemProps = {
-  music: Music;
+  song: Song;
   index: number;
   loadMusicList: (index: number) => void;
 };
 
-export default function ListItem({ music, index, loadMusicList }: ListItemProps) {
+export default function ListItem({ song, index, loadMusicList }: ListItemProps) {
   return (
     <tr className="flex">
       <td className="border">
-        <img className="h-12 w-12" src={music.picUrl} alt={music.name} />
+        <img className="h-12 w-12" src={song.album.picUrl} alt={song.name} />
       </td>
-      {/* if user click any music, tell musiclist that user decided to play this list*/}
       <td className="border w-1/5" onClick={() => loadMusicList(index)} role="button">
-        {music.name}
+        {song.name}
       </td>
-      <td className="border w-1/5">{music.artist}</td>
-      <td className="border w-1/5">{music.album}</td>
+      <td className="border w-1/5">
+        {song.artists.map((artist, index) => (
+          <p key={index}>{artist.name}</p>
+        ))}
+      </td>
+      <td className="border w-1/5">{song.album.name}</td>
     </tr>
   );
 }

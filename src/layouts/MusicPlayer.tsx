@@ -4,10 +4,10 @@ import React, { useContext } from "react";
 export default function MusicPlayer() {
   const { playingQueue, playingIndex, setPlayingIndex } = useContext(MusicContext);
 
-  const audioUrl = playingIndex === -1 ? "" : playingQueue?.tracks[playingIndex].audioUrl;
+  const audioUrl = playingQueue?.songs[playingIndex].mp3Url || "";
 
   const handleEnd = () => {
-    if (playingQueue?.tracks && playingIndex < playingQueue.tracks.length - 1)
+    if (playingQueue?.songs && playingIndex < playingQueue.songs.length - 1)
       setPlayingIndex((prev) => prev + 1);
   };
 

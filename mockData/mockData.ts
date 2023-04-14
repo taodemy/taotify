@@ -1,57 +1,38 @@
-export const tracks = [
+import { PlayList, Song } from "types";
+
+export const mockUrls = [
+  { mp3Url: "url", status: true },
+  { mp3Url: "url", status: true },
+  { mp3Url: null, status: false },
+];
+
+export const mockSongs: Song[] = [
   {
+    name: "song1",
     id: 1,
-    name: "testSong",
-    artist: "testArtist",
-    album: "testAlbum",
-    picUrl: "testPicUrl",
-    audioUrl: "testaudioUrl",
+    album: { name: "album1", id: 1, picUrl: "picUrl1" },
+    mp3Url: "url1",
+    artists: [
+      { name: "artist1", id: 1 },
+      { name: "artist2", id: 2 },
+    ],
   },
   {
+    name: "song2",
     id: 2,
-    name: "testSong",
-    artist: "testArtist",
-    album: "testAlbum",
-    picUrl: "testPicUrl",
-    audioUrl: "testaudioUrl",
+    album: { name: "album2", id: 2, picUrl: "picUrl2" },
+    mp3Url: "url2",
+    artists: [],
   },
   {
+    name: "song3",
     id: 3,
-    name: "testSong",
-    artist: "testArtist",
-    album: "testAlbum",
-    picUrl: "testPicUrl",
-    audioUrl: "testaudioUrl",
+    album: { name: "album3", id: 3, picUrl: "picUrl3" },
+    mp3Url: "url3",
+    artists: [],
   },
 ];
 
-export const urls = [
-  { status: true, audioUrl: "http://example.com/song1.mp3" },
-  { status: false, audioUrl: "" },
-  { status: true, audioUrl: "http://example.com/song3.mp3" },
-];
+export const mockPlayList: PlayList = { id: 0, type: "newSongs", songs: mockSongs };
 
-export const musicList = {
-  id: Number,
-  type: "newSongs",
-  tracks: tracks,
-};
-
-export const tracksWithUrl: Music[] = [
-  {
-    id: 1,
-    name: "testSong",
-    artist: "testArtist",
-    album: "testAlbum",
-    picUrl: "testPicUrl",
-    audioUrl: "http://example.com/song1.mp3",
-  },
-  {
-    id: 3,
-    name: "testSong",
-    artist: "testArtist",
-    album: "testAlbum",
-    picUrl: "testPicUrl",
-    audioUrl: "http://example.com/song3.mp3",
-  },
-];
+export const mockEmptyPlayList: PlayList = { id: 0, type: "album", songs: [] };

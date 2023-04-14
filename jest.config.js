@@ -16,8 +16,8 @@ const customJestConfig = {
   testPathIgnorePatterns: ["<rootDir>/node_modules/"],
   coveragePathIgnorePatterns: [
     "/node_modules/",
-    "/src/utils/getAudioUrl.tsx",
-    "/src/utils/getNewSongs.tsx",
+    "/src/utils/getMp3Url.ts",
+    "/src/utils/getNewSongs.ts",
   ],
   // If you're using [Module Path Aliases](https://nextjs.org/docs/advanced-features/module-path-aliases),
   // you will have to add the moduleNameMapper in order for jest to resolve your absolute paths.

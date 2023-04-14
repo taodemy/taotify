@@ -4,11 +4,12 @@ import RecentlyPlayed from "../components/RecentlyPlayed";
 import MusicList from "../components/MusicList";
 import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
-import getAudioUrl from "../utils/getAudioUrl";
-import songListFilter from "../utils/songListFilter";
+import getMp3Url from "../utils/getMp3Url";
+import getPlayableSongs from "../utils/getPlayableSongs";
+import { Song, PlayList } from "types";
 
 type HomeProps = {
-  newSongsList: MusicList;
+  newSongsList: PlayList;
 };
 
 export default function Home({ newSongsList }: HomeProps) {
@@ -33,12 +34,15 @@ export default function Home({ newSongsList }: HomeProps) {
 
 export /* istanbul ignore next */ async function getStaticProps() {
   const response = await getNewSongs();
-  if (!response.status) return { props: { newSongs: [] }, revalidate: 600 };
+  if (!response.status) return { props: { newSongsList: [] }, revalidate: 600 };
+
   const { newSongs } = response;
+
   const urls = await Promise.all(
-    newSongs.map(async (item: Music) => getAudioUrl(item.id, "standard"))
+    newSongs.map(async (item: Song) => getMp3Url(item.id, "standard"))
   );
-  const newSongsWithUrls = songListFilter(urls, newSongs);
-  const newSongsList = { id: 0, type: "newSongs", tracks: newSongsWithUrls };
+  const playableSongs = getPlayableSongs(urls, newSongs);
+
+  const newSongsList = { id: 0, type: "newSongs", songs: playableSongs };
   return { props: { newSongsList }, revalidate: 600 };
 }

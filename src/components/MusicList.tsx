@@ -1,9 +1,10 @@
 import { MusicContext } from "../contexts/MusicContext";
 import React, { useContext } from "react";
 import ListItem from "./ListItem";
+import { PlayList } from "types";
 
 type MusicListProps = {
-  musicList: MusicList;
+  musicList: PlayList;
 };
 
 export default function MusicList({ musicList }: MusicListProps) {
@@ -16,15 +17,15 @@ export default function MusicList({ musicList }: MusicListProps) {
     setPlayingIndex(index);
   };
 
-  return musicList.tracks.length > 0 ? (
+  return musicList.songs.length > 0 ? (
     <table className="w-full">
       <tbody>
-        {musicList.tracks.map((music, index) => (
-          <ListItem key={index} music={music} index={index} loadMusicList={loadMusicList} />
+        {musicList.songs.map((song, index) => (
+          <ListItem key={index} song={song} index={index} loadMusicList={loadMusicList} />
         ))}
       </tbody>
     </table>
   ) : (
-    <div>Ops, failed to load the music</div>
+    <div>Ops, failed to load this music list</div>
   );
 }

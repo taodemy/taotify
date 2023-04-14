@@ -2,27 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import MusicPlayer from "@/layouts/MusicPlayer";
 import { MusicContextProvider } from "@/contexts/MusicContext";
+import { mockPlayList } from "mockData/mockData";
+import { PlayList } from "types";
 
-const music1 = {
-  id: 1,
-  name: "testSong1",
-  artist: "testArtist",
-  album: "testAlbum",
-  picUrl: "testPicUrl",
-  audioUrl: "url1",
-};
-const music2 = {
-  id: 2,
-  name: "testSong2",
-  artist: "testArtist",
-  album: "testAlbum",
-  picUrl: "testPicUrl",
-  audioUrl: "url2",
-};
-
-const testMusicList: MusicList = { id: 0, type: "album", tracks: [music1, music2] };
-
-const renderMusicPlayer = (index: number, queue: MusicList) => {
+const renderMusicPlayer = (index: number, queue: PlayList) => {
   return render(
     <MusicContextProvider index={index} queue={queue}>
       <MusicPlayer />
@@ -32,7 +15,7 @@ const renderMusicPlayer = (index: number, queue: MusicList) => {
 
 describe("Music Player", () => {
   it("should handle playing end properly", async () => {
-    renderMusicPlayer(0, testMusicList);
+    renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url2");
