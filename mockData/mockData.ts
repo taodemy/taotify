@@ -1,11 +1,5 @@
 import { PlayList, Song } from "types";
 
-export const mockUrls = [
-  { mp3Url: "url", status: true },
-  { mp3Url: "url", status: true },
-  { mp3Url: null, status: false },
-];
-
 export const mockSongs: Song[] = [
   {
     name: "song1",
