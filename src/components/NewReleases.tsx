@@ -1,9 +1,5 @@
-import React from 'react'
+import React from "react";
 
 export default function NewReleases() {
-  return (
-    <div>
-      New releases for you
-    </div>
-  )
+  return <div>New releases for you</div>;
 }

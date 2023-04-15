@@ -1,10 +1,11 @@
 import { render, screen } from "@testing-library/react";
-import Home from "../src/pages/index";
+import Home, { getStaticProps } from "../src/pages/index";
 import "@testing-library/jest-dom";
+import { mockPlayList } from "../mockData/mockData";
 
 describe("Home", () => {
   beforeEach(() => {
-    render(<Home />);
+    render(<Home newSongsList={mockPlayList} />);
   });
 
   it("renders a heading", () => {
@@ -26,4 +27,21 @@ describe("Home", () => {
     const NewReleasesTitle = screen.getByText(/new releases for you/i);
     expect(NewReleasesTitle).toBeInTheDocument();
   });
+});
+
+describe("getStaticProps", () => {
+  global.fetch = jest.fn(() =>
+    Promise.resolve({
+      json: () => Promise.resolve([]),
+    })
+  );
+});
+
+beforeEach(() => {
+  fetch.mockClear();
+});
+
+it("fetches data from the API", async () => {
+  const { props } = await getStaticProps();
+  expect(props).toEqual({ newSongsList: [] });
 });
