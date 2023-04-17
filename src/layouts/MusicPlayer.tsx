@@ -12,7 +12,7 @@ export default function MusicPlayer() {
   };
 
   return (
-    <div className=" w-[100vw] h-[100px] bg-secondary-100 fixed bottom-0 left-0 border-2">
+    <div className="fixed bottom-0 left-0 h-[100px] w-[100vw] border-2 bg-secondary-100">
       <audio src={audioUrl} role="audio" controls autoPlay onEnded={handleEnd}></audio>
     </div>
   );
