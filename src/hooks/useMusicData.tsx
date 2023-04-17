@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Song } from "types";
 
 const useMusicData = (apiAddress: string) => {
-  const [musicData, setMusicData] = useState<SongProps[]>([]);
+  const [musicData, setMusicData] = useState<Song[]>([]);
   const [currentMusic, setCurrentMusic] = useState({
     id: 0,
     name: "",

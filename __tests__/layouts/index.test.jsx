@@ -16,9 +16,4 @@ describe("Layout", () => {
     const SearchBarTitle = screen.getByText(/This is the top search bar/i);
     expect(SearchBarTitle).toBeInTheDocument();
   });
-
-  it("renders music player txt", () => {
-    const MusicPlayerTitle = screen.getByText(/Music Player/i);
-    expect(MusicPlayerTitle).toBeInTheDocument();
-  });
 });

@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
+import { Song } from "types";
 
 export type MusicControlProps = {
   audioRef: HTMLAudioElement | any;
-  musicData: SongProps[];
+  musicData: Song[];
   trackIndex: number;
   setTrackIndex: any;
   setCurrentMusic: any;

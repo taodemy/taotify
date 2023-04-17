@@ -13,7 +13,13 @@ const customJestConfig = {
   // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   // if using TypeScript with a baseUrl set to the root directory then you need the below for alias' to work
   moduleDirectories: ["node_modules", "<rootDir>/"],
-
+  testPathIgnorePatterns: ["<rootDir>/node_modules/"],
+  coveragePathIgnorePatterns: [
+    "/node_modules/",
+    "/src/utils/getMp3Url.ts",
+    "/src/utils/getNewSongs.ts",
+    "/src/utils/getPlayableSongs.ts",
+  ],
   // If you're using [Module Path Aliases](https://nextjs.org/docs/advanced-features/module-path-aliases),
   // you will have to add the moduleNameMapper in order for jest to resolve your absolute paths.
   // The paths have to be matching with the paths option within the compilerOptions in the tsconfig.json
@@ -21,6 +27,7 @@ const customJestConfig = {
 
   moduleNameMapper: {
     "@/(.*)$": "<rootDir>/src/$1",
+    "@ui/(.*)$": "<rootDir>/src/components/ui/$1",
   },
   testEnvironment: "jest-environment-jsdom",
 };

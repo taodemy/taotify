@@ -5,8 +5,7 @@ import "@testing-library/jest-dom/extend-expect";
 jest.mock("isomorphic-fetch");
 
 test("renders an audio element with the provided audioUrl prop", async () => {
-  const audioUrl =
-  `${process.env.NEXT_MUSIC_SERVER_ADDRESS}/song/url/v1?id=33894312&level=exhigh`;
+  const audioUrl = `${process.env.NEXT_MUSIC_SERVER_ADDRESS}/song/url/v1?id=33894312&level=exhigh`;
   const { getByRole } = render(<Demo audioUrl={audioUrl} />);
   const audioElement = await waitFor(() => getByRole("audio", { hidden: true }));
   const sourceElement = audioElement.querySelector("source");
