@@ -3,21 +3,21 @@ import { Song } from "types";
 
 export type MusicControlProps = {
   audioRef: HTMLAudioElement | any;
-  musicData: Song[];
-  trackIndex: number;
-  setTrackIndex: any;
-  setCurrentMusic: any;
+  musicData: Song[] | "";
+  playingIndex: number;
+  setPlayingIndex: React.Dispatch<React.SetStateAction<number>>;
+  isPlaying: boolean;
+  setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const useMusicControl = ({
-  trackIndex,
+  playingIndex,
   musicData,
-  setTrackIndex,
-  setCurrentMusic,
+  setPlayingIndex,
   audioRef,
+  isPlaying,
+  setIsPlaying,
 }: MusicControlProps) => {
-  const [isPlaying, setIsPlaying] = useState(false);
-
   useEffect(() => {
     {
       isPlaying ? audioRef.current.play() : audioRef.current.pause();
@@ -29,26 +29,20 @@ const useMusicControl = ({
   };
 
   const handlePrevious = () => {
-    setIsPlaying(false);
-    if (trackIndex === 0) {
+    if (playingIndex === 0) {
       let lastTrackIndex = musicData.length - 1;
-      setTrackIndex(lastTrackIndex);
-      setCurrentMusic(musicData[lastTrackIndex]);
+      setPlayingIndex(lastTrackIndex);
     } else {
-      setTrackIndex((prev: number) => prev - 1);
-      setCurrentMusic(musicData[trackIndex - 1]);
+      setPlayingIndex((prev: number) => prev - 1);
     }
   };
 
   const handleNext = () => {
-    setIsPlaying(false);
-    if (trackIndex >= musicData.length - 1) {
-      setTrackIndex(0);
-      setCurrentMusic(musicData[0]);
+    if (playingIndex >= musicData.length - 1) {
+      setPlayingIndex(0);
       setIsPlaying(true);
     } else {
-      setTrackIndex((prev: number) => prev + 1);
-      setCurrentMusic(musicData[trackIndex + 1]);
+      setPlayingIndex((prev: number) => prev + 1);
       setIsPlaying(true);
     }
   };

@@ -1,37 +1,32 @@
-import React, { useRef, useState, useContext } from "react";
+import React, { useRef, useContext } from "react";
 import MusicControls from "@/components/MusicControls";
-import useMusicData from "@/hooks/useMusicData";
 import useMusicSource from "@/hooks/useMusicSource";
-import { APITypes } from "@/constant/api";
 import { MusicContext } from "@/contexts/MusicContext";
 
 export default function MusicPlayer() {
-  const [trackIndex, setTrackIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { musicData, currentMusic, setCurrentMusic } = useMusicData(APITypes.NEWSONG);
-  const { musicUrl } = useMusicSource(currentMusic.id, "exhigh");
-  const { playingQueue, playingIndex, setPlayingIndex } = useContext(MusicContext);
-  const audioUrl = playingQueue?.songs[playingIndex].mp3Url || "";
+  const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
+    useContext(MusicContext);
+  const musicData = playingQueue?.songs || "";
+  const musicId = playingQueue?.songs[playingIndex].id || 0;
+  const { musicUrl } = useMusicSource(musicId, "exhigh");
+
   const handleEnd = () => {
     if (playingQueue?.songs && playingIndex < playingQueue.songs.length - 1)
       setPlayingIndex((prev) => prev + 1);
   };
 
   return (
-    <div
-      className=" w-[100vw] h-[100px] bg-secondary-100 fixed bottom-0 left-0 border-2"
-      onClick={() => console.log(musicUrl)}
-    >
-      Music Player
+    <div className=" w-[100vw] h-[100px] bg-secondary-100 fixed bottom-0 left-0 border-2">
       <div>
-        <audio src={audioUrl} role="audio" controls autoPlay onEnded={handleEnd} />
-        <audio src={musicUrl} ref={audioRef} />
+        <audio src={musicUrl} ref={audioRef} onEnded={handleEnd} autoPlay />
         <MusicControls
           audioRef={audioRef}
           musicData={musicData}
-          trackIndex={trackIndex}
-          setTrackIndex={setTrackIndex}
-          setCurrentMusic={setCurrentMusic}
+          playingIndex={playingIndex}
+          setPlayingIndex={setPlayingIndex}
+          isPlaying={isPlaying}
+          setIsPlaying={setIsPlaying}
         />
       </div>
     </div>

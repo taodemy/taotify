@@ -8,7 +8,7 @@ type MusicListProps = {
 };
 
 export default function MusicList({ musicList }: MusicListProps) {
-  const { playingQueue, setPlayingIndex, setPlayingQueue } = useContext(MusicContext);
+  const { playingQueue, setPlayingIndex, setPlayingQueue, setIsPlaying } = useContext(MusicContext);
 
   const loadMusicList = (index: number) => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
@@ -21,7 +21,13 @@ export default function MusicList({ musicList }: MusicListProps) {
     <table className="w-full">
       <tbody>
         {musicList.songs.map((song, index) => (
-          <ListItem key={index} song={song} index={index} loadMusicList={loadMusicList} />
+          <ListItem
+            key={index}
+            song={song}
+            index={index}
+            loadMusicList={loadMusicList}
+            setIsPlaying={setIsPlaying}
+          />
         ))}
       </tbody>
     </table>

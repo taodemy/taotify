@@ -5,7 +5,7 @@ const useMusicSource = (musicId: number, quality: string) => {
   const getMusicSource = async () => {
     try {
       const response = await fetch(
-        `${process.env.NEXT_MUSIC_SERVER_ADDRESS}/song/url/v1?id=${musicId}&level=${quality}`
+        `${process.env.NEXT_PUBLIC_MUSIC_API}/song/url/v1?id=${musicId}&level=${quality}`
       );
       if (!response.ok) {
         throw new Error(`This is an HTTP error: The status is ${response.status}`);
@@ -23,7 +23,7 @@ const useMusicSource = (musicId: number, quality: string) => {
     getMusicSource();
   }, [musicId, quality]);
 
-  return { getMusicSource, musicUrl };
+  return { musicUrl };
 };
 
 export default useMusicSource;
