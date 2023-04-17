@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 const useMusicSource = (musicId: number, quality: string) => {
   const [musicUrl, setMusicUrl] = useState();
@@ -21,7 +21,7 @@ const useMusicSource = (musicId: number, quality: string) => {
 
   useEffect(() => {
     getMusicSource();
-  }, [musicId]);
+  }, [musicId, quality]);
 
   return { getMusicSource, musicUrl };
 };

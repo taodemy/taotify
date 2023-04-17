@@ -1,11 +1,13 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import MusicControls from "@/components/MusicControls";
-import useNewMusic from "@/hooks/useMusic";
+import useMusicData from "@/hooks/useMusicData";
 import useMusicSource from "@/hooks/useMusicSource";
+import { APITypes } from "@/constant/api";
+
 export default function MusicPlayer() {
   const [trackIndex, setTrackIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement>(null);
-  const { musicData, currentMusic, setCurrentMusic } = useNewMusic("/personalized/newsong");
+  const { musicData, currentMusic, setCurrentMusic } = useMusicData(APITypes.NEWSONG);
   const { musicUrl } = useMusicSource(currentMusic.id, "exhigh");
 
   return (

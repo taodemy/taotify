@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
-const useNewMusic = (address: string) => {
+const useMusicData = (apiAddress: string) => {
   const [musicData, setMusicData] = useState<SongProps[]>([]);
   const [currentMusic, setCurrentMusic] = useState({
     id: 0,
@@ -12,7 +12,7 @@ const useNewMusic = (address: string) => {
   });
   const getMusicList = async () => {
     try {
-      const response = await fetch(`${process.env.NEXT_MUSIC_SERVER_ADDRESS}${address}`);
+      const response = await fetch(`${process.env.NEXT_MUSIC_SERVER_ADDRESS}${apiAddress}`);
 
       if (!response.ok) {
         throw new Error(`This is an HTTP error: The status is ${response.status}`);
@@ -29,9 +29,9 @@ const useNewMusic = (address: string) => {
 
   useEffect(() => {
     getMusicList();
-  }, []);
+  }, [apiAddress]);
 
   return { getMusicList, musicData, currentMusic, setCurrentMusic };
 };
 
-export default useNewMusic;
+export default useMusicData;
