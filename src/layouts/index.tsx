@@ -9,11 +9,13 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div>
+    <div className="flex h-screen w-screen">
       <SideBar />
-      <SearchBar />
-      <main>{children}</main>
-      <MusicPlayer />
+      <div className="flex h-full w-[calc(100vw-320px)] flex-col">
+        <SearchBar />
+        <main className="mb-[120px] h-[calc(100vh-120px)] w-full">{children}</main>
+        <MusicPlayer />
+      </div>
     </div>
   );
 };

@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SearchBar() {
   return (
-    <div className="fixed top-0 right-0 h-[100px] w-[90vw] border-2 border-dashed">
+    <div className="fixed top-0 left-[320px] h-[64px] w-full border-2 border-dotted bg-light">
       This is the top search bar
     </div>
   );
