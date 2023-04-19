@@ -2,6 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo '🏗️👷 Styling, testing and building your project before committing'
+npm run pre-commit
 
 # Check tsconfig standards
 npm run check-types ||
