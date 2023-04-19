@@ -14,7 +14,7 @@ import { RiUserVoiceLine} from "react-icons/ri";
 
 export default function SideBar() {
   return (
-    <aside className="w-[10vw] h-[100vh] fixed top-0 left-0 border-2 border-dashed border-black">
+    <aside className="flex h-[100vh] w-[320px] flex-col bg-black text-white">
       <Logo />
       <section className="my-5">
         MENU
