@@ -8,7 +8,7 @@ import { BsRepeat } from "react-icons/bs";
 const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick }: any) => {
   return (
     <div className="flex h-16 w-full items-center justify-between text-light">
-      <BiHeart className="h-5 w-5" />
+      <BiHeart className="h-6 w-6" />
 
       <div className="flex w-full items-center gap-2">
         <div className="flex flex-1 justify-end gap-2">
@@ -17,7 +17,7 @@ const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick }
           </button>
           <button
             type="button"
-            className="flex h-8 w-8 items-center justify-center"
+            className="hidden h-8 w-8 items-center justify-center md:flex"
             onClick={onPrevClick}
           >
             <IoPlayBackOutline className="h-4 w-4" />
@@ -25,7 +25,7 @@ const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick }
         </div>
 
         {isPlaying ? (
-          <button type="button" className="items-center justify-center " onClick={onPlayPauseClick}>
+          <button type="button" className="items-center justify-center" onClick={onPlayPauseClick}>
             <BiPauseCircle className="h-10 w-10" />
           </button>
         ) : (
@@ -37,7 +37,7 @@ const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick }
         <div className="flex flex-1 justify-start gap-2">
           <button
             type="button"
-            className="flex h-8 w-8 items-center justify-center"
+            className="hidden h-8 w-8 items-center justify-center md:flex"
             onClick={onNextClick}
           >
             <FiFastForward className="h-4 w-4" />

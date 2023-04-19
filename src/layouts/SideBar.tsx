@@ -2,7 +2,7 @@ import React from "react";
 
 export default function SideBar() {
   return (
-    <aside className="flex h-[100vh] w-[320px] flex-col bg-black text-white">
+    <aside className="hidden h-[100vh] flex-col bg-black text-white md:flex md:w-[64px] lg:flex lg:w-[320px]">
       This is the left SideBar
     </aside>
   );
