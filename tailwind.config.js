@@ -127,6 +127,19 @@ module.exports = {
           100: "#A3A3A3",
         },
       },
+      dropShadow: {
+        xsm: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+      },
+      screens: {
+        phone: "430px",
+        // => @media (min-width: 430px) { ... }
+
+        ipad: "768px",
+        // => @media (min-width: 768px) { ... }
+
+        desktop: "1440px",
+        // => @media (min-width: 1440px) { ... }
+      },
     },
   },
   plugins: [],
