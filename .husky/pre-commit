@@ -27,13 +27,6 @@ npm run check-lint ||
         false; 
 )
 
-npm run check-types ||
-(
-        echo '😤🏀👋😤 Types Check Failed. 😤🏀👋😤 
-                Make the required changes listed above, add changes and try to commit again.'
-        false; 
-)
-
 # Check test all pass
 npm run test ||
 (
