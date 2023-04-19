@@ -24,12 +24,12 @@ export default function ListItem({ song, index, loadMusicList }: ListItemProps) 
         {/*only for display functionality, remove it when styling this*/}
         <div>{song.id === playingQueue?.songs[playingIndex].id ? "onplay" : ""}</div>
       </td>
-      <td className="border w-1/5">
+      <td className="w-1/5 border">
         {song.artists.map((artist, index) => (
           <p key={index}>{artist.name}</p>
         ))}
       </td>
-      <td className="border w-1/5">{song.album.name}</td>
+      <td className="w-1/5 border">{song.album.name}</td>
     </tr>
   );
 }

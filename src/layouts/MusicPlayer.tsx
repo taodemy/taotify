@@ -60,7 +60,7 @@ export default function MusicPlayer() {
   }, [audioUrl]);
 
   return (
-    <div className="flex w-[100vw] h-[100px] bg-secondary-100 fixed bottom-0 left-0 border-2">
+    <div className="flex fixed bottom-0 h-[120px] w-[calc(100vw-320px)] border px-4">
       <PlayControls loopMode={loopMode} toggleLoopMode={toggleLoopMode} />
       <ProgressBar
         currentTime={currentTime}

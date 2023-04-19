@@ -20,7 +20,7 @@ export default function Home({ newSongsList }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=" mt-[100px] ml-[200px]">
+      <main className="mt-[100px] ml-[100px]">
         <RecentlyPlayed />
         <FriendsActivity />
         <NewReleases />
