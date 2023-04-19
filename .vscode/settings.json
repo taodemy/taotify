@@ -1,4 +1,20 @@
 {
+  "git.ignoreLimitWarning": true,
   "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.format": true
+  },
+  "tailwindCSS.emmetCompletions": true,
+  "editor.inlineSuggest.enabled": true,
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+  "css.validate": false,
+  "tailwindCSS.experimental.classRegex": [
+    "[\"'`]([^\"'`]*).*?[\"'`]",
+    "([\"'])(?:tw|tw-s|tw-state)\\(([^)]+)\\1"
+  ],
+  "typescript.tsdk": "node_modules\\typescript\\lib"
 }
