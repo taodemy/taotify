@@ -12,6 +12,9 @@
     "strings": true
   },
   "css.validate": false,
-  "tailwindCSS.experimental.classRegex": ["([\"'])(?:tw|tw-s|tw-state)\\(([^)]+)\\1"],
+  "tailwindCSS.experimental.classRegex": [
+    "[\"'`]([^\"'`]*).*?[\"'`]",
+    "([\"'])(?:tw|tw-s|tw-state)\\(([^)]+)\\1"
+  ],
   "typescript.tsdk": "node_modules\\typescript\\lib"
 }
