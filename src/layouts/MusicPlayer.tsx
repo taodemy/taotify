@@ -5,7 +5,7 @@ import React, { useContext } from "react";
 import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
 
-export default function MusicPlayer() {
+const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex } = useContext(MusicContext);
 
   const audioUrl = playingQueue?.songs[playingIndex].mp3Url || "";
@@ -48,4 +48,6 @@ export default function MusicPlayer() {
       </div>
     </section>
   );
-}
+};
+
+export default MusicPlayer;
