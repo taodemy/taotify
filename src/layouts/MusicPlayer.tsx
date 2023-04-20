@@ -1,12 +1,11 @@
 import ProgressBar from "@/components/ui/ProgressBar";
 import { MusicContext } from "@/contexts/MusicContext";
 import Image from "next/image";
-import React, { useContext, useRef } from "react";
+import React, { useContext } from "react";
 import CoverImage from "@/components/ui/CoverImage";
 import AudioControls from "@/components/AudioControls";
 
 export default function MusicPlayer() {
-  const audioPlayer = useRef<HTMLAudioElement>(null);
   const { playingQueue, playingIndex, setPlayingIndex } = useContext(MusicContext);
 
   const audioUrl = playingQueue?.songs[playingIndex].mp3Url || "";
@@ -28,7 +27,7 @@ export default function MusicPlayer() {
       </div>
 
       <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:px-4 md:py-2">
-        <audio ref={audioPlayer} src={audioUrl} onEnded={handleEnd} />
+        <audio src={audioUrl} role="audio" autoPlay onEnded={handleEnd} />
         <div className="flex flex-col items-center justify-center gap-1 lg:justify-start">
           <CoverImage src="/sample_cover.png" />
           <div className="hidden items-center justify-center gap-1 px-2 text-light md:flex md:flex-col lg:hidden">

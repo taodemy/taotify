@@ -13,7 +13,7 @@ const renderMusicPlayer = (index: number, queue: PlayList) => {
   );
 };
 
-describe("Music Player", () => {
+describe("Music Player Bar", () => {
   it("should handle playing end properly", async () => {
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
