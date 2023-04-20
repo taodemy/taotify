@@ -7,8 +7,9 @@ export default function MusicPlayer() {
   const { playingQueue, playingIndex, setPlayingIndex } = useContext(MusicContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
-  const [loopMode, setLoopMode] = useState("none");
+  const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
   const [audioUrl, setAudioUrl] = useState("");
+  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const handlePlayEnd = () => {
@@ -19,11 +20,9 @@ export default function MusicPlayer() {
       return;
     }
 
-    if (playingIndex < playingQueue.songs.length - 1) {
-      setPlayingIndex((prev) => prev + 1);
-    } else {
-      if (loopMode === "all") setPlayingIndex(0);
-    }
+    if (playingIndex === playingQueue.songs.length - 1 && loopMode === "all") setPlayingIndex(0);
+    if (playingIndex === playingQueue.songs.length - 1 && loopMode === "none") setIsPlaying(false);
+    if (playingIndex < playingQueue.songs.length - 1) setPlayingIndex((prev) => prev + 1);
   };
 
   const handleDurationChange = () => {
@@ -50,14 +49,14 @@ export default function MusicPlayer() {
   }, [playingQueue, playingIndex]);
 
   useEffect(() => {
-    if (!audioUrl) return;
+    if (!isPlaying) return;
 
     const intervalId = setInterval(() => {
       setCurrentTime(Math.ceil(audioRef.current?.currentTime || 0));
     }, 1000);
 
     return () => clearInterval(intervalId);
-  }, [audioUrl]);
+  }, [isPlaying, audioUrl]);
 
   return (
     <div className="flex fixed bottom-0 h-[120px] w-[calc(100vw-320px)] border px-4">
@@ -73,6 +72,8 @@ export default function MusicPlayer() {
         role="audio"
         controls
         autoPlay
+        onPlaying={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
         onDurationChange={handleDurationChange}
         onEnded={handlePlayEnd}
       ></audio>
