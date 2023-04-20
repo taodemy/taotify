@@ -6,7 +6,10 @@ interface ProgressBarProps {
 }
 const ProgressBar = ({ processTime, currentTime }: ProgressBarProps) => {
   return (
-    <div className="relative flex h-[14px] w-full items-center justify-center gap-4 text-light">
+    <div
+      className="relative flex h-[14px] w-full items-center justify-center gap-4 text-light"
+      role="progressbar"
+    >
       <p className="text-sm">{processTime}</p>
       <div className="relative h-[4px] flex-1 rounded-full bg-dark-100">
         <div className="absolute h-[4px] w-1/2 flex-1 rounded-full bg-light" />
