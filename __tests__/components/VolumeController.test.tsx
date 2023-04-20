@@ -1,5 +1,5 @@
 import { render, fireEvent, screen } from "@testing-library/react";
-import volumeUtils from "../../../src/utils/volumeUtils/volumeUtils";
+import volumeUtils from "@/utils/volumeUtils/volumeUtils";
 import "@testing-library/jest-dom";
 import VolumeController from "@/components/volumeController/VolumeController";
 
