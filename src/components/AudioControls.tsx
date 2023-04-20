@@ -5,7 +5,19 @@ import { IoPlayBackOutline } from "react-icons/io5";
 import { TbArrowsShuffle } from "react-icons/tb";
 import { BsRepeat } from "react-icons/bs";
 
-const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick }: any) => {
+interface AudioControlsProps {
+  isPlaying?: boolean;
+  onPlayPauseClick?: () => void;
+  onPrevClick?: () => void;
+  onNextClick?: () => void;
+}
+
+const AudioControls = ({
+  isPlaying,
+  onPlayPauseClick,
+  onPrevClick,
+  onNextClick,
+}: AudioControlsProps) => {
   return (
     <div className="flex h-16 w-full items-center justify-between text-light">
       <button type="button" className="flex h-8 w-8 items-center justify-center">
