@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import ProgressBar from "@/components/ui/ProgressBar";
+import ProgressBar from "@/components/ProgressBar";
 import "@testing-library/jest-dom";
 
 describe("Progress bar", () => {

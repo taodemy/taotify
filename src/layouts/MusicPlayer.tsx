@@ -1,8 +1,8 @@
-import ProgressBar from "@/components/ui/ProgressBar";
+import ProgressBar from "@/components/ProgressBar";
 import { MusicContext } from "@/contexts/MusicContext";
 import Image from "next/image";
 import React, { useContext } from "react";
-import CoverImage from "@/components/ui/CoverImage";
+import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
 
 export default function MusicPlayer() {
@@ -17,13 +17,8 @@ export default function MusicPlayer() {
 
   return (
     <section className="fixed bottom-[72px] h-[78px] w-full md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
-      <div className="relative h-full drop-shadow-xsm">
-        <Image
-          src="/bg_player.png"
-          alt="Player background image"
-          fill
-          style={{ objectFit: "cover" }}
-        />
+      <div className="relative h-full drop-shadow-bgImgShadow">
+        <Image src="/bg_player.png" alt="Player background image" fill />
       </div>
 
       <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:px-4 md:py-2">

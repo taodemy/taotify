@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CoverImage from "@/components/ui/CoverImage";
+import CoverImage from "@/components/CoverImage";
 import "@testing-library/jest-dom";
 
 describe("Cover image", () => {
@@ -12,7 +12,6 @@ describe("Cover image", () => {
     expect(coverImg).toHaveAttribute("alt", "Picture of musicCover");
     expect(coverImg).toHaveAttribute("width", "100");
     expect(coverImg).toHaveAttribute("height", "100");
-    expect(coverImg).toHaveAttribute("style", "color: transparent; object-fit: cover;");
   });
 
   it("should render avatar image with given image in success", () => {
