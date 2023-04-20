@@ -4,7 +4,6 @@ import { Roboto } from "next/font/google";
 import { MusicContextProvider } from "@/contexts/MusicContext";
 import GlobalLayout from "@/layouts";
 
-
 const roboto = Roboto({
   weight: ["300", "400", "500"],
   subsets: ["latin"],

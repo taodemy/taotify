@@ -1,9 +1,17 @@
-import FriendsActivity from "@/components/FriendsActivity";
-import NewReleases from "@/components/NewReleases";
-import RecentlyPlayed from "@/components/RecentlyPlayed";
+import FriendsActivity from "../components/FriendsActivity";
+import NewReleases from "../components/NewReleases";
+import RecentlyPlayed from "../components/RecentlyPlayed";
+import MusicList from "../components/MusicList";
 import Head from "next/head";
+import getNewSongs from "../utils/getNewSongs";
+import getPlayableSongs from "../utils/getPlayableSongs";
+import { PlayList } from "types";
 
-export default function Home() {
+type HomeProps = {
+  newSongsList: PlayList;
+};
+
+export default function Home({ newSongsList }: HomeProps) {
   return (
     <>
       <Head>
@@ -12,11 +20,25 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=" mt-[100px] ml-[200px]">
+      <main className="mt-[100px] ml-[100px]">
         <RecentlyPlayed />
         <FriendsActivity />
         <NewReleases />
+        {/* only for music list demo*/}
+        <MusicList musicList={newSongsList} />
       </main>
     </>
   );
+}
+
+export /* istanbul ignore next */ async function getStaticProps() {
+  const response = await getNewSongs();
+  if (!response.status) return { props: { newSongsList: [] }, revalidate: 600 };
+
+  const { newSongs } = response;
+
+  const playableSongs = await getPlayableSongs(newSongs);
+
+  const newSongsList = { id: 0, type: "newSongs", songs: playableSongs };
+  return { props: { newSongsList }, revalidate: 600 };
 }
