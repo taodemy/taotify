@@ -3,9 +3,11 @@ export default function formatTime(time: number) {
   const minutes = roundedMinutes % 60;
   const seconds = time % 60;
 
-  const formatedHours =
+  const formattedHours =
     roundedMinutes / 60 >= 1 ? `${Math.floor(roundedMinutes / 60).toString()}:` : "";
-  const formatedMinutes = formatedHours && minutes < 10 ? `0${minutes}` : minutes.toString();
-  const formatedSeconds = seconds >= 10 ? seconds.toString() : `0${seconds}`;
-  return `${formatedHours}${formatedMinutes}:${formatedSeconds}`;
+  const formattedMinutes = formattedHours
+    ? minutes.toString().padStart(2, "0")
+    : minutes.toString();
+  const formattedSeconds = seconds.toString().padStart(2, "0");
+  return `${formattedHours}${formattedMinutes}:${formattedSeconds}`;
 }

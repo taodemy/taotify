@@ -49,4 +49,15 @@ describe("Music Player", () => {
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url2");
   });
+
+  it("should loop single song when loop single mode", async () => {
+    const mockLoad = jest.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const loopButton = screen.getByRole("button", { name: /loop/i });
+    fireEvent.click(loopButton);
+    fireEvent.ended(audio);
+    expect(audio).toHaveAttribute("src", "url1");
+    mockLoad.mockRestore();
+  });
 });
