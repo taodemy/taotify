@@ -60,4 +60,25 @@ describe("Music Player", () => {
     expect(audio).toHaveAttribute("src", "url1");
     mockLoad.mockRestore();
   });
+
+  it("should start timer when audio on playing", async () => {
+    jest.useFakeTimers();
+    jest.spyOn(global, "setInterval");
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    fireEvent.playing(audio);
+    expect(setInterval).toHaveBeenCalledTimes(1);
+    jest.clearAllTimers();
+  });
+
+  it("should clear timer when audio on pause", async () => {
+    jest.useFakeTimers();
+    jest.spyOn(global, "clearInterval");
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    fireEvent.playing(audio);
+    fireEvent.pause(audio);
+    expect(clearInterval).toHaveBeenCalledTimes(1);
+    jest.clearAllTimers();
+  });
 });
