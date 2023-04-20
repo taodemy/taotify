@@ -8,7 +8,9 @@ import { BsRepeat } from "react-icons/bs";
 const AudioControls = ({ isPlaying, onPlayPauseClick, onPrevClick, onNextClick }: any) => {
   return (
     <div className="flex h-16 w-full items-center justify-between text-light">
-      <BiHeart className="h-6 w-6" />
+      <button type="button" className="flex h-8 w-8 items-center justify-center">
+        <BiHeart className="h-6 w-6" />
+      </button>
 
       <div className="flex w-full items-center gap-2">
         <div className="flex flex-1 justify-end gap-2">
