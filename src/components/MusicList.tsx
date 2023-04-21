@@ -1,7 +1,7 @@
 import { MusicContext } from "../contexts/MusicContext";
 import React, { useContext } from "react";
 import ListItem from "./ListItem";
-import { PlayList } from "types";
+import { PlayList, Song } from "types";
 
 type MusicListProps = {
   musicList: PlayList;
@@ -10,11 +10,14 @@ type MusicListProps = {
 export default function MusicList({ musicList }: MusicListProps) {
   const { playingQueue, setPlayingIndex, setPlayingQueue } = useContext(MusicContext);
 
-  const loadMusicList = (index: number) => {
+  const loadMusicList = (index: number, song: Song) => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setPlayingQueue(musicList);
+      setPlayingIndex(index);
+    } else {
+      const currentIndex = playingQueue.songs.indexOf(song);
+      setPlayingIndex(currentIndex);
     }
-    setPlayingIndex(index);
   };
 
   return musicList.songs.length > 0 ? (
