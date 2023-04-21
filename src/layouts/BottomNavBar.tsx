@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const BottomNavBar = () => {
   return (
-    <section className="fixed bottom-[0px] h-[72px] w-full border md:hidden">
+    <section className="fixed bottom-[0px] h-[72px] w-full border transition-all duration-300 ease-in-out md:hidden">
       <div className="relative h-full drop-shadow-bgImgShadow">
         <Image src="/bg_player.png" alt="Player background image" fill />
       </div>
