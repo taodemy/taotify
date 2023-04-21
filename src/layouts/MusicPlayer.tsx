@@ -16,7 +16,7 @@ const MusicPlayer = () => {
   };
 
   return (
-    <section className="fixed bottom-[72px] h-[78px] w-full transition-all duration-300 ease-in-out md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
+    <section className="fixed bottom-[72px] h-[78px] w-full transition-all duration-200 ease-in-out md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
       <div className="relative h-full drop-shadow-bgImgShadow">
         <Image src="/bg_player.png" alt="Player background image" fill />
       </div>
