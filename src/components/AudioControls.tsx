@@ -24,10 +24,10 @@ const AudioControls = ({
         <BiHeart className="h-6 w-6" />
       </button>
 
-      <div className="flex w-full items-center gap-2">
+      <div className="flex items-center gap-6">
         <div className="flex flex-1 justify-end gap-2">
           <button type="button" className="flex h-8 w-8 items-center justify-center">
-            <FiSkipBack className="h-4 w-4" />
+            <FiSkipBack className="h-3 w-3" />
           </button>
           <button
             type="button"
@@ -40,11 +40,11 @@ const AudioControls = ({
 
         {isPlaying ? (
           <button type="button" className="items-center justify-center" onClick={onPlayPauseClick}>
-            <BiPauseCircle className="h-10 w-10" />
+            <BiPauseCircle className="h-8 w-8" />
           </button>
         ) : (
           <button type="button" className="items-center justify-center" onClick={onPlayPauseClick}>
-            <BiPlayCircle className="h-10 w-10" />
+            <BiPlayCircle className="h-8 w-8" />
           </button>
         )}
 
@@ -57,7 +57,7 @@ const AudioControls = ({
             <FiFastForward className="h-4 w-4" />
           </button>
           <button type="button" className="flex h-8 w-8 items-center justify-center">
-            <FiSkipForward className="h-4 w-4" />
+            <FiSkipForward className="h-3 w-3" />
           </button>
         </div>
       </div>

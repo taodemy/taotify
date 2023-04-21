@@ -21,13 +21,13 @@ const MusicPlayer = () => {
         <Image src="/bg_player.png" alt="Player background image" fill />
       </div>
 
-      <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:px-4 md:py-2">
+      <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2">
         <audio src={audioUrl} role="audio" autoPlay onEnded={handleEnd} />
         <div className="flex flex-col items-center justify-center gap-1 lg:justify-start">
           <CoverImage src="/sample_cover.png" />
           <div className="hidden items-center justify-center gap-1 px-2 text-light md:flex md:flex-col lg:hidden">
             <p className="text-base">This is love</p>
-            <p className="text-sm">By Jaxson Westervelt</p>
+            <p className="text-sm">Jaxson Westervelt</p>
           </div>
         </div>
 
@@ -36,11 +36,11 @@ const MusicPlayer = () => {
           <p className="text-sm">By Jaxson Westervelt</p>
         </div>
 
-        <div className="flex flex-grow flex-col items-center gap-1 self-stretch py-1 md:items-start md:gap-2 md:p-[10px]">
+        <div className="flex flex-grow flex-col items-center gap-1 py-1 md:justify-center md:gap-2 md:p-[10px]">
           <div className="flex items-center justify-center gap-1 px-2 text-light md:hidden">
             <p className="text-sm">This is love</p>
             <p className="text-sm"> - </p>
-            <p className="text-xs">By Jaxson Westervelt</p>
+            <p className="text-xs">Jaxson Westervelt</p>
           </div>
           <AudioControls />
           <ProgressBar processTime="00:00" currentTime="04:00" />
