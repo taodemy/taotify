@@ -36,8 +36,8 @@ const Search = <T extends ISearchProps>({ onSubmit, onClick }: T) => {
         <label className="sr-only">
           Search for music, album and artist
           <AiOutlineSearch
-            aria-label = "search icon"
-            data-testid = "search icon"
+            aria-label="search icon"
+            data-testid="search icon"
             className="h-6 w-6 justify-self-end text-light-400 sm:hidden"
             onClick={expendMaskLayer}
           ></AiOutlineSearch>
