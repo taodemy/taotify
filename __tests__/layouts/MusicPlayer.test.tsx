@@ -14,6 +14,17 @@ const renderMusicPlayer = (index: number, queue: PlayList) => {
 };
 
 describe("Music Player Bar", () => {
+  beforeEach(() => {
+    jest.spyOn(window, "clearInterval");
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
   it("should handle playing end properly", async () => {
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");

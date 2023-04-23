@@ -2,7 +2,7 @@ import { BiPlayCircle, BiPauseCircle, BiHeart } from "react-icons/bi";
 import { FiFastForward, FiSkipForward, FiSkipBack } from "react-icons/fi";
 import { IoPlayBackOutline } from "react-icons/io5";
 import { TbArrowsShuffle } from "react-icons/tb";
-import { BsRepeat } from "react-icons/bs";
+import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { useContext, useEffect, useState } from "react";
@@ -99,11 +99,15 @@ const AudioControls = ({
       <div className="flex items-center justify-center gap-6 py-[2px] text-light">
         <button
           type="button"
-          className="flex h-8 w-8 items-center justify-center focus:text-red-500"
+          className="flex h-8 w-8 items-center justify-center"
           onClick={() => setIsShuffle((prev) => !prev)}
           role="shuffle"
         >
-          <TbArrowsShuffle className="h-5 w-5" />
+          {isShuffle === true ? (
+            <TbArrowsShuffle className="h-5 w-5 text-primary" />
+          ) : (
+            <TbArrowsShuffle className="h-5 w-5" />
+          )}
         </button>
         <button
           type="button"
@@ -111,7 +115,13 @@ const AudioControls = ({
           onClick={toggleLoopMode}
           role="loop"
         >
-          <BsRepeat className="h-5 w-5" />
+          {loopMode === "none" ? (
+            <BsRepeat className="h-5 w-5" />
+          ) : loopMode === "single" ? (
+            <BsRepeat1 className="h-5 w-5 text-primary" />
+          ) : (
+            <BsRepeat className="h-5 w-5 text-primary" />
+          )}
         </button>
       </div>
     </div>
