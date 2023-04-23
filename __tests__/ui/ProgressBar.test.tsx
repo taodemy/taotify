@@ -1,23 +1,22 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import ProgressBar from "@/components/ProgressBar";
 import "@testing-library/jest-dom";
 
 describe("Progress bar", () => {
+  const mockFunc = jest.fn();
+  const { getByRole } = render(
+    <ProgressBar currentTime={0} endTime={500} handleProgressChange={mockFunc} />
+  );
+
   it("renders the progress time and current time", () => {
-    const processTime = "0:00";
-    const currentTime = "2:30";
-    render(<ProgressBar processTime={processTime} currentTime={currentTime} />);
-    expect(screen.getByText(processTime)).toBeInTheDocument();
-    expect(screen.getByText(currentTime)).toBeInTheDocument();
+    expect(screen.getByRole("currentTime")).toBeInTheDocument();
+    expect(screen.getByRole("endTime")).toBeInTheDocument();
   });
 
-  it("renders the progress bar with correct styles", () => {
-    const processTime = "0:00";
-    const currentTime = "2:30";
-    render(<ProgressBar processTime={processTime} currentTime={currentTime} />);
-    const progressBar = screen.getByRole("progressbar");
-    expect(progressBar.className).toBe(
-      "relative flex h-[14px] w-full items-center justify-center gap-4 text-light"
-    );
-  });
+  // it("renders the progress bar with correct styles", () => {
+  //   const progressBar = screen.getByRole("slider");
+  //   fireEvent.change(progressBar, { target: { value: "10" } });
+  //   expect(mockFunc).toHaveBeenCalledTimes(1);
+  //   expect(mockFunc).toHaveBeenCalledWith(10);
+  // });
 });

@@ -1,15 +1,20 @@
-import React from "react";
 import { BiPlayCircle, BiPauseCircle, BiHeart } from "react-icons/bi";
 import { FiFastForward, FiSkipForward, FiSkipBack } from "react-icons/fi";
 import { IoPlayBackOutline } from "react-icons/io5";
 import { TbArrowsShuffle } from "react-icons/tb";
 import { BsRepeat } from "react-icons/bs";
+import { MusicContext } from "@/contexts/MusicContext";
+import shuffleSongs from "@/utils/shuffleSongs";
+import React, { useContext, useEffect, useState } from "react";
+import { PlayList } from "types";
 
 interface AudioControlsProps {
   isPlaying?: boolean;
   onPlayPauseClick?: () => void;
   onPrevClick?: () => void;
   onNextClick?: () => void;
+  loopMode?: string;
+  toggleLoopMode?: () => void;
 }
 
 const AudioControls = ({
@@ -17,7 +22,36 @@ const AudioControls = ({
   onPlayPauseClick,
   onPrevClick,
   onNextClick,
+  loopMode,
+  toggleLoopMode,
 }: AudioControlsProps) => {
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [originPlayList, setOriginPlayList] = useState<PlayList | null>(null);
+
+  const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex } = useContext(MusicContext);
+
+  //if there is a new queue playing, store the copy of it
+  useEffect(() => {
+    if (playingQueue) setOriginPlayList(playingQueue);
+  }, [playingQueue?.id, playingQueue?.type]);
+
+  //if there is a new copy or new shuffled mode, detect if it needs to be shuffled or reset
+  useEffect(() => {
+    if (!playingQueue || !originPlayList) return;
+
+    if (isShuffle) {
+      const shuffledPlayList = shuffleSongs(playingQueue, playingIndex);
+      setPlayingIndex(0);
+      setPlayingQueue(shuffledPlayList);
+    } else {
+      if (playingQueue === originPlayList) return;
+      const playingSong = playingQueue.songs[playingIndex];
+      const originIndex = originPlayList.songs.indexOf(playingSong);
+      setPlayingIndex(originIndex);
+      setPlayingQueue(originPlayList);
+    }
+  }, [isShuffle, originPlayList]);
+
   return (
     <div className="flex h-16 w-full items-center justify-between text-light">
       <button type="button" className="flex h-8 w-8 items-center justify-center">
@@ -63,10 +97,20 @@ const AudioControls = ({
       </div>
 
       <div className="flex items-center justify-center gap-6 py-[2px] text-light">
-        <button type="button" className="flex h-8 w-8 items-center justify-center">
+        <button
+          type="button"
+          className="flex h-8 w-8 items-center justify-center focus:text-red-500"
+          onClick={() => setIsShuffle((prev) => !prev)}
+          role="shuffle"
+        >
           <TbArrowsShuffle className="h-5 w-5" />
         </button>
-        <button type="button" className="flex h-8 w-8 items-center justify-center">
+        <button
+          type="button"
+          className="flex h-8 w-8 items-center justify-center"
+          onClick={toggleLoopMode}
+          role="loop"
+        >
           <BsRepeat className="h-5 w-5" />
         </button>
       </div>

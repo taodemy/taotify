@@ -1,20 +1,36 @@
 import React from "react";
-
+import formatTime from "../utils/formatTime";
 interface ProgressBarProps {
-  processTime: string;
-  currentTime: string;
+  currentTime: number;
+  endTime: number;
+  handleProgressChange: (time: number) => void;
 }
-const ProgressBar = ({ processTime, currentTime }: ProgressBarProps) => {
+const ProgressBar = ({ currentTime, endTime, handleProgressChange }: ProgressBarProps) => {
   return (
     <div
       className="relative flex h-[14px] w-full items-center justify-center gap-4 text-light"
       role="progressbar"
     >
-      <p className="text-xs md:text-sm">{processTime}</p>
-      <div className="relative h-0.5 flex-1 rounded-full bg-dark-100 md:h-1">
+      <p role="currentTime" className="text-xs md:text-sm">
+        {formatTime(Math.min(currentTime, endTime))}
+      </p>
+      <input
+        role="slider"
+        className="w-full"
+        type="range"
+        min={0}
+        max={endTime}
+        value={currentTime}
+        onChange={(e) => {
+          handleProgressChange(parseInt(e.target.value));
+        }}
+      />
+      {/* <div className="relative h-0.5 flex-1 rounded-full bg-dark-100 md:h-1">
         <div className="absolute h-0.5 w-1/2 flex-1 rounded-full bg-light md:h-1" />
-      </div>
-      <p className="text-xs md:text-sm">{currentTime}</p>
+      </div> */}
+      <p role="endTime" className="text-xs md:text-sm">
+        {formatTime(endTime)}
+      </p>
     </div>
   );
 };

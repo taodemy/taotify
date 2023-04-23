@@ -20,4 +20,65 @@ describe("Music Player Bar", () => {
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url2");
   });
+
+  it("should loop all when loop all mode", async () => {
+    renderMusicPlayer(2, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const loopButton = screen.getByRole("loop");
+    fireEvent.click(loopButton);
+    fireEvent.click(loopButton);
+    fireEvent.ended(audio);
+    expect(audio).toHaveAttribute("src", "url1");
+  });
+
+  it("should set new end time when duration changed", async () => {
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    fireEvent.durationChange(audio);
+    const endTime = screen.getByRole("endTime");
+    expect(endTime).toHaveTextContent("0:00");
+  });
+
+  it("should reset playing queue to origin order when shuffle mode turned off", async () => {
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const shuffleButton = screen.getByRole("shuffle");
+    fireEvent.click(shuffleButton);
+    fireEvent.click(shuffleButton);
+    expect(audio).toHaveAttribute("src", "url1");
+    fireEvent.ended(audio);
+    expect(audio).toHaveAttribute("src", "url2");
+  });
+
+  it("should loop single song when loop single mode", async () => {
+    const mockLoad = jest.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const loopButton = screen.getByRole("loop");
+    fireEvent.click(loopButton);
+    fireEvent.ended(audio);
+    expect(audio).toHaveAttribute("src", "url1");
+    mockLoad.mockRestore();
+  });
+
+  it("should start timer when audio on playing", async () => {
+    jest.useFakeTimers();
+    jest.spyOn(global, "setInterval");
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    fireEvent.playing(audio);
+    expect(setInterval).toHaveBeenCalledTimes(1);
+    jest.clearAllTimers();
+  });
+
+  it("should clear timer when audio on pause", async () => {
+    jest.useFakeTimers();
+    jest.spyOn(global, "clearInterval");
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    fireEvent.playing(audio);
+    fireEvent.pause(audio);
+    expect(clearInterval).toHaveBeenCalledTimes(1);
+    jest.clearAllTimers();
+  });
 });
