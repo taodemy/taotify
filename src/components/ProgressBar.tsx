@@ -15,7 +15,6 @@ const ProgressBar = ({ currentTime, endTime, handleProgressChange }: ProgressBar
         {formatTime(Math.min(currentTime, endTime))}
       </p>
       <input
-        role="slider"
         className="w-full"
         type="range"
         min={0}

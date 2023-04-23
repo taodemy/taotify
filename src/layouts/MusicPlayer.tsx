@@ -34,7 +34,6 @@ const MusicPlayer = () => {
 
   const handleProgressChange = (time: number) => {
     if (!audioRef.current) return;
-
     setCurrentTime(time);
     audioRef.current.currentTime = time;
   };
