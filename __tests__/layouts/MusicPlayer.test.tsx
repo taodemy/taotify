@@ -20,4 +20,8 @@ describe("Music Player", () => {
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url2");
   });
+
+  // it("should toggle the play and pause", () => {
+  //   renderMusicPlayer(0, mockPlayList);
+  // });
 });

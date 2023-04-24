@@ -13,7 +13,7 @@ describe("In ListItem test, ", () => {
     const { getByText, getByRole } = render(
       <table>
         <tbody>
-          <ListItem song={song} index={0} loadMusicList={fn} />
+          <ListItem song={song} index={0} loadMusicList={fn} setIsPlaying={fn} />
         </tbody>
       </table>
     );

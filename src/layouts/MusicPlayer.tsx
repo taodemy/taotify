@@ -19,7 +19,7 @@ export default function MusicPlayer() {
   return (
     <div className=" w-[100vw] h-[100px] bg-secondary-100 fixed bottom-0 left-0 border-2">
       <div>
-        <audio src={musicUrl} ref={audioRef} onEnded={handleEnd} autoPlay />
+        <audio src={musicUrl} ref={audioRef} onEnded={handleEnd} autoPlay role="audio" />
         <MusicControls
           audioRef={audioRef}
           musicData={musicData}

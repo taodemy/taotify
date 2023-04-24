@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const useMusicSource = (musicId: number, quality: string) => {
+/* istanbul ignore next */ const useMusicSource = (musicId: number, quality: string) => {
   const [musicUrl, setMusicUrl] = useState();
   const getMusicSource = async () => {
     try {

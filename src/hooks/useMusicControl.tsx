@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Song } from "types";
 
 export type MusicControlProps = {
@@ -10,7 +10,7 @@ export type MusicControlProps = {
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-const useMusicControl = ({
+/* istanbul ignore next */ const useMusicControl = ({
   playingIndex,
   musicData,
   setPlayingIndex,

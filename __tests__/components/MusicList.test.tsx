@@ -1,6 +1,6 @@
 import MusicList from "@/components/MusicList";
 import React from "react";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MusicContextProvider } from "@/contexts/MusicContext";
 import MusicPlayer from "@/layouts/MusicPlayer";
@@ -53,6 +53,6 @@ describe("Music List", () => {
     const clickableElement = screen.getAllByRole("button")[1];
     fireEvent.click(clickableElement);
     const audio = screen.getByRole("audio");
-    expect(audio).toHaveAttribute("src", "url2");
+    await waitFor(() => expect(audio).toHaveAttribute("src", "url2"));
   });
 });
