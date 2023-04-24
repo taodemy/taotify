@@ -30,10 +30,10 @@ export default function VolumeSlideController() {
     return newVolumeLevel;
   };
   return (
-    <div className={`w-52 absolute right-10 bottom-5 mx-auto`} data-testid="volumeSlideContainer">
+    <div className={`absolute right-10 bottom-5 mx-auto w-52`} data-testid="volumeSlideContainer">
       <div
         ref={volumeSlider}
-        className={`relative h-5 rounded cursor-pointer bg-primary-100`}
+        className={`relative h-5 cursor-pointer rounded bg-primary-100`}
         onMouseDown={handleDragSlideStart}
         data-testid="volumeSlideBar"
       >
@@ -43,7 +43,7 @@ export default function VolumeSlideController() {
           data-testid="volumeSlideProgress"
         ></div>
         <div
-          className={`absolute w-5 h-5 rounded-full bg-primary-200 top-1/2 transform -translate-y-1/2 cursor-pointer`}
+          className={`absolute top-1/2 h-5 w-5 -translate-y-1/2 transform cursor-pointer rounded-full bg-primary-200`}
           style={{ left: `calc(${volumeLevel}% - ${halfThumb}rem)` }}
           data-testid="volumeSlideThumb"
         ></div>

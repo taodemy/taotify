@@ -19,7 +19,6 @@ export default function MusicList({ musicList }: MusicListProps) {
       setPlayingIndex(currentIndex);
     }
   };
-
   return musicList.songs.length > 0 ? (
     <table className="w-full">
       <tbody>

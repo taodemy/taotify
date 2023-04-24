@@ -13,7 +13,18 @@ const renderMusicPlayer = (index: number, queue: PlayList) => {
   );
 };
 
-describe("Music Player", () => {
+describe("Music Player Bar", () => {
+  beforeEach(() => {
+    jest.spyOn(window, "clearInterval");
+    jest.useFakeTimers();
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
+    jest.clearAllTimers();
+    jest.useRealTimers();
+  });
+
   it("should handle playing end properly", async () => {
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
@@ -24,7 +35,7 @@ describe("Music Player", () => {
   it("should loop all when loop all mode", async () => {
     renderMusicPlayer(2, mockPlayList);
     const audio = screen.getByRole("audio");
-    const loopButton = screen.getByRole("button", { name: /loop/i });
+    const loopButton = screen.getByRole("loop");
     fireEvent.click(loopButton);
     fireEvent.click(loopButton);
     fireEvent.ended(audio);
@@ -42,7 +53,7 @@ describe("Music Player", () => {
   it("should reset playing queue to origin order when shuffle mode turned off", async () => {
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
-    const shuffleButton = screen.getByRole("button", { name: /shuffle/i });
+    const shuffleButton = screen.getByRole("shuffle");
     fireEvent.click(shuffleButton);
     fireEvent.click(shuffleButton);
     expect(audio).toHaveAttribute("src", "url1");
@@ -54,7 +65,7 @@ describe("Music Player", () => {
     const mockLoad = jest.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
-    const loopButton = screen.getByRole("button", { name: /loop/i });
+    const loopButton = screen.getByRole("loop");
     fireEvent.click(loopButton);
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url1");

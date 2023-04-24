@@ -16,7 +16,7 @@ export default function ListItem({ song, index, loadMusicList }: ListItemProps) 
         <img className="h-12 w-12" src={song.album.picUrl} alt={song.name} />
       </td>
       <td
-        className="flex justify-between border w-1/5"
+        className="flex w-1/5 justify-between border"
         onClick={() => loadMusicList(index, song)}
         role="button"
       >
