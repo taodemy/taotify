@@ -13,6 +13,7 @@ const MusicPlayer = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const musicData = playingQueue?.songs || "";
 
   const handlePlayEnd = () => {
     if (!playingQueue) return;
@@ -44,6 +45,25 @@ const MusicPlayer = () => {
     if (loopMode === "all") setLoopMode("none");
   };
 
+  const onPrevClick = () => {
+    if (playingIndex === 0) {
+      let lastTrackIndex = musicData.length - 1;
+      setPlayingIndex(lastTrackIndex);
+    } else {
+      setPlayingIndex((prev: number) => prev - 1);
+    }
+  };
+
+  const onNextClick = () => {
+    if (playingIndex >= musicData.length - 1) {
+      setPlayingIndex(0);
+      setIsPlaying(true);
+    } else {
+      setPlayingIndex((prev: number) => prev + 1);
+      setIsPlaying(true);
+    }
+  };
+
   useEffect(() => {
     const newAudioUrl = playingQueue?.songs[playingIndex].mp3Url || "";
     setAudioUrl(newAudioUrl);
@@ -58,6 +78,16 @@ const MusicPlayer = () => {
 
     return () => clearInterval(intervalId);
   }, [isPlaying, audioUrl]);
+
+  useEffect(() => {
+    {
+      isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
+    }
+  }, [isPlaying, audioRef]);
+
+  const onPlayPauseClick = () => {
+    setIsPlaying((prev) => !prev);
+  };
 
   return (
     <section className="fixed bottom-[72px] h-[78px] w-full transition-all duration-200 ease-in-out md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
@@ -95,7 +125,14 @@ const MusicPlayer = () => {
             <p className="text-sm"> - </p>
             <p className="text-xs">Jaxson Westervelt</p>
           </div>
-          <AudioControls loopMode={loopMode} toggleLoopMode={toggleLoopMode} />
+          <AudioControls
+            loopMode={loopMode}
+            toggleLoopMode={toggleLoopMode}
+            isPlaying={isPlaying}
+            onPrevClick={onPrevClick}
+            onNextClick={onNextClick}
+            onPlayPauseClick={onPlayPauseClick}
+          />
           <ProgressBar
             currentTime={currentTime}
             endTime={endTime}
