@@ -67,17 +67,28 @@ const AudioControls = ({
             type="button"
             className="hidden h-8 w-8 items-center justify-center md:flex"
             onClick={onPrevClick}
+            role="prevButton"
           >
             <IoPlayBackOutline className="h-4 w-4" />
           </button>
         </div>
 
-        {isPlaying ? (
-          <button type="button" className="items-center justify-center" onClick={onPlayPauseClick}>
+        {playingQueue && isPlaying ? (
+          <button
+            type="button"
+            className="items-center justify-center"
+            onClick={onPlayPauseClick}
+            role="playButton"
+          >
             <BiPauseCircle className="h-8 w-8" />
           </button>
         ) : (
-          <button type="button" className="items-center justify-center" onClick={onPlayPauseClick}>
+          <button
+            type="button"
+            className="items-center justify-center"
+            onClick={onPlayPauseClick}
+            role="pauseButton"
+          >
             <BiPlayCircle className="h-8 w-8" />
           </button>
         )}
@@ -87,6 +98,7 @@ const AudioControls = ({
             type="button"
             className="hidden h-8 w-8 items-center justify-center md:flex"
             onClick={onNextClick}
+            role="nextButton"
           >
             <FiFastForward className="h-4 w-4" />
           </button>
