@@ -17,4 +17,10 @@
   }
 }
 @tailwind components;
+
+.swiper-slide-active {
+  width: 806.03px !important;
+  height: 296px !important;
+}
+
 @tailwind utilities;

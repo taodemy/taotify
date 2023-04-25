@@ -6,6 +6,7 @@ import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
 import getPlayableSongs from "../utils/getPlayableSongs";
 import { PlayList } from "types";
+import Carousel from "@/components/Carousel";
 
 type HomeProps = {
   newSongsList: PlayList;
@@ -20,12 +21,17 @@ export default function Home({ newSongsList }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="mt-[100px] ml-[100px]">
-        <RecentlyPlayed />
-        <FriendsActivity />
-        <NewReleases />
-        {/* only for music list demo*/}
-        <MusicList musicList={newSongsList} />
+      <main>
+        <section className=" mx-[40px] mt-[102px]">
+          <Carousel />
+        </section>
+        <section className="mt-[100px] ml-[100px]">
+          <RecentlyPlayed />
+          <FriendsActivity />
+          <NewReleases />
+          {/* only for music list demo*/}
+          {/* <MusicList musicList={newSongsList} /> */}
+        </section>
       </main>
     </>
   );
