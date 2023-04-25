@@ -46,21 +46,18 @@ const MusicPlayer = () => {
   };
 
   const onPrevClick = () => {
-    if (playingIndex === 0) {
-      let lastTrackIndex = musicData.length - 1;
-      setPlayingIndex(lastTrackIndex);
-    } else {
-      setPlayingIndex((prev: number) => prev - 1);
+    {
+      playingIndex === 0
+        ? setPlayingIndex(musicData.length - 1)
+        : setPlayingIndex((prev: number) => prev - 1);
     }
   };
 
   const onNextClick = () => {
-    if (playingIndex >= musicData.length - 1) {
-      setPlayingIndex(0);
-      setIsPlaying(true);
-    } else {
-      setPlayingIndex((prev: number) => prev + 1);
-      setIsPlaying(true);
+    {
+      playingIndex >= musicData.length - 1
+        ? setPlayingIndex(0)
+        : setPlayingIndex((prev: number) => prev + 1);
     }
   };
 
