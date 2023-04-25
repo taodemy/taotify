@@ -6,12 +6,12 @@ import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
 
 const MusicPlayer = () => {
-  const { playingQueue, playingIndex, setPlayingIndex } = useContext(MusicContext);
+  const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
+    useContext(MusicContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
   const [audioUrl, setAudioUrl] = useState("");
-  const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const musicData = playingQueue?.songs || "";
 
