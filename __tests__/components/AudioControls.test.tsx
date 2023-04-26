@@ -34,23 +34,21 @@ describe("Audio controls panel", () => {
   it("should calls the onPlayPauseClick function when the play/pause button is clicked", () => {
     const mockOnPlayPauseClick = jest.fn();
     render(<AudioControls isPlaying={true} onPlayPauseClick={mockOnPlayPauseClick} />);
-    fireEvent.click(screen.getAllByRole("button")[3]);
+    fireEvent.click(screen.getByRole("pauseButton"));
     expect(mockOnPlayPauseClick).toHaveBeenCalled();
   });
 
   it("calls the onPrevClick function when the previous button is clicked", () => {
     const mockOnPrevClick = jest.fn();
     render(<AudioControls isPlaying={true} onPrevClick={mockOnPrevClick} />);
-
-    fireEvent.click(screen.getAllByRole("button")[2]);
+    fireEvent.click(screen.getByRole("prevButton"));
     expect(mockOnPrevClick).toHaveBeenCalled();
   });
 
   it("calls the onNextClick function when the next button is clicked", () => {
     const mockOnNextClick = jest.fn();
     render(<AudioControls isPlaying={true} onNextClick={mockOnNextClick} />);
-
-    fireEvent.click(screen.getAllByRole("button")[4]);
+    fireEvent.click(screen.getByRole("nextButton"));
     expect(mockOnNextClick).toHaveBeenCalled();
   });
 });

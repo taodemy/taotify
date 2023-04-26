@@ -14,17 +14,6 @@ const renderMusicPlayer = (index: number, queue: PlayList) => {
 };
 
 describe("Music Player Bar", () => {
-  beforeEach(() => {
-    jest.spyOn(window, "clearInterval");
-    jest.useFakeTimers();
-  });
-
-  afterEach(() => {
-    jest.clearAllMocks();
-    jest.clearAllTimers();
-    jest.useRealTimers();
-  });
-
   it("should handle playing end properly", async () => {
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
@@ -91,5 +80,44 @@ describe("Music Player Bar", () => {
     fireEvent.pause(audio);
     expect(clearInterval).toHaveBeenCalledTimes(1);
     jest.clearAllTimers();
+  });
+
+  it("should play the next song when click the next button", () => {
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const nextButton = screen.getByRole("nextButton");
+    fireEvent.click(nextButton);
+    expect(audio).toHaveAttribute("src", "url2");
+  });
+
+  it("should play the first song when click the next button and current song is last song", () => {
+    renderMusicPlayer(2, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const nextButton = screen.getByRole("nextButton");
+    fireEvent.click(nextButton);
+    expect(audio).toHaveAttribute("src", "url1");
+  });
+
+  it("should play the previous song when click the previous button ", () => {
+    renderMusicPlayer(2, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const prevButton = screen.getByRole("prevButton");
+    fireEvent.click(prevButton);
+    expect(audio).toHaveAttribute("src", "url2");
+  });
+
+  it("should play the last song when click the previous button and current song is first song ", () => {
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const prevButton = screen.getByRole("prevButton");
+    fireEvent.click(prevButton);
+    expect(audio).toHaveAttribute("src", "url3");
+  });
+
+  it("should toggle the isPlaying state when click the play/pause button", () => {
+    renderMusicPlayer(0, mockPlayList);
+    const pauseButton = screen.getByRole("pauseButton");
+    fireEvent.click(pauseButton);
+    expect(screen.getByRole("playButton")).toBeInTheDocument();
   });
 });
