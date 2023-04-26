@@ -18,7 +18,6 @@ interface AudioControlsProps {
 }
 
 const AudioControls = ({
-  isPlaying,
   onPlayPauseClick,
   onPrevClick,
   onNextClick,
@@ -28,7 +27,8 @@ const AudioControls = ({
   const [isShuffle, setIsShuffle] = useState(false);
   const [originPlayList, setOriginPlayList] = useState<PlayList | null>(null);
 
-  const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex } = useContext(MusicContext);
+  const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, isPlaying } =
+    useContext(MusicContext);
 
   //if there is a new queue playing, store the copy of it
   useEffect(() => {

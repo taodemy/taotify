@@ -46,7 +46,7 @@ const MusicPlayer = () => {
   };
 
   const onPrevClick = () => {
-    {
+    if (playingIndex !== -1) {
       playingIndex === 0
         ? setPlayingIndex(musicData.length - 1)
         : setPlayingIndex((prev: number) => prev - 1);
@@ -54,7 +54,7 @@ const MusicPlayer = () => {
   };
 
   const onNextClick = () => {
-    {
+    if (playingIndex !== -1) {
       playingIndex >= musicData.length - 1
         ? setPlayingIndex(0)
         : setPlayingIndex((prev: number) => prev + 1);
@@ -77,7 +77,7 @@ const MusicPlayer = () => {
   }, [isPlaying, audioUrl]);
 
   useEffect(() => {
-    {
+    if (playingIndex !== -1) {
       isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
     }
   }, [isPlaying, audioRef]);
@@ -125,7 +125,6 @@ const MusicPlayer = () => {
           <AudioControls
             loopMode={loopMode}
             toggleLoopMode={toggleLoopMode}
-            isPlaying={isPlaying}
             onPrevClick={onPrevClick}
             onNextClick={onNextClick}
             onPlayPauseClick={onPlayPauseClick}
