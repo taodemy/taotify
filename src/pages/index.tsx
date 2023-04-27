@@ -6,7 +6,7 @@ import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
 import getPlayableSongs from "../utils/getPlayableSongs";
 import { PlayList } from "types";
-import MusicListItem from "@/components/MusicListItem";
+import MusicListItem from "@/components/AlbumItem";
 
 type HomeProps = {
   newSongsList: PlayList;

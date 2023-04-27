@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import { BiPlayCircle, BiPauseCircle } from "react-icons/bi";
 import { MusicListProps } from "./MusicList";
 
-export default function MusicListItem({ musicList }: MusicListProps) {
+export default function AlbumItem({ musicList }: MusicListProps) {
   const { playingQueue, setPlayingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
     useContext(MusicContext);
 
@@ -12,10 +12,12 @@ export default function MusicListItem({ musicList }: MusicListProps) {
   };
 
   const handleMusicPlay = () => {
-    setPlayingQueue(musicList);
-    setPlayingIndex(0);
+    if (!playingQueue) {
+      setPlayingQueue(musicList);
+      setPlayingIndex(0);
+    }
   };
-
+  console.log(playingIndex);
   const iconClass =
     "absolute top-0 bottom-0 left-0 right-0 m-auto h-8 w-8 text-white group-hover:block";
 
@@ -35,7 +37,7 @@ export default function MusicListItem({ musicList }: MusicListProps) {
           alt={musicList.songs[0].name}
           role="img"
         />
-        {isPlaying && musicList.songs[playingIndex].id === playingQueue?.songs[playingIndex].id ? (
+        {isPlaying && musicList.songs[playingIndex]?.id === playingQueue?.songs[playingIndex].id ? (
           <BiPauseCircle
             className={`${iconClass} ${showIcon}`}
             onClick={togglePlayPause}

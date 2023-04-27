@@ -1,4 +1,4 @@
-import MusicListItem from "@/components/MusicListItem";
+import MusicListItem from "@/components/AlbumItem";
 import { mockPlayList } from "mockData/mockData";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { MusicContextProvider } from "@/contexts/MusicContext";

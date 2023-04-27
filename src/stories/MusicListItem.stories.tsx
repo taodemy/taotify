@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import MusicListItem from "../components/MusicListItem";
+import MusicListItem from "../components/AlbumItem";
 
 export default {
   title: "ui/ListItem",
