@@ -6,6 +6,7 @@ import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
 import getPlayableSongs from "../utils/getPlayableSongs";
 import { PlayList } from "types";
+import MusicListItem from "@/components/MusicListItem";
 
 type HomeProps = {
   newSongsList: PlayList;
@@ -25,6 +26,7 @@ export default function Home({ newSongsList }: HomeProps) {
         <FriendsActivity />
         <NewReleases />
         {/* only for music list demo*/}
+        <MusicListItem musicList={newSongsList} />
         <MusicList musicList={newSongsList} />
       </main>
     </>

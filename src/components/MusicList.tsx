@@ -3,7 +3,7 @@ import React, { useContext } from "react";
 import ListItem from "./ListItem";
 import { PlayList, Song } from "types";
 
-type MusicListProps = {
+export type MusicListProps = {
   musicList: PlayList;
 };
 
@@ -19,6 +19,7 @@ export default function MusicList({ musicList }: MusicListProps) {
       setPlayingIndex(currentIndex);
     }
   };
+
   return musicList.songs.length > 0 ? (
     <table className="w-full">
       <tbody>

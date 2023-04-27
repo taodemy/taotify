@@ -76,6 +76,7 @@ module.exports = {
       sans: ["Roboto", "sans-serif"],
     },
     extend: {
+      display: ["group-hover"],
       colors: {
         primary: {
           DEFAULT: "#8B3ECF",
