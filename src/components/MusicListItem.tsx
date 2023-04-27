@@ -16,8 +16,6 @@ export default function MusicListItem({ musicList }: MusicListProps) {
     setPlayingIndex(0);
   };
 
-  console.log(isPlaying);
-
   const iconClass =
     "absolute top-0 bottom-0 left-0 right-0 m-auto h-8 w-8 text-white group-hover:block";
 
@@ -37,7 +35,6 @@ export default function MusicListItem({ musicList }: MusicListProps) {
           alt={musicList.songs[0].name}
           role="img"
         />
-        {/* conditions should to be fixed */}
         {isPlaying && musicList.songs[playingIndex].id === playingQueue?.songs[playingIndex].id ? (
           <BiPauseCircle
             className={`${iconClass} ${showIcon}`}

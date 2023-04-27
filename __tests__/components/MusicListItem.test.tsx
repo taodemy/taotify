@@ -19,13 +19,8 @@ describe("MusicListItem test", () => {
     renderComponentsWithDefaultContext();
     const image = screen.getByAltText("song1");
     fireEvent.click(image);
-
     const audio = screen.getByRole("audio");
     expect(audio).toHaveAttribute("src", "url1");
     expect(screen.getByRole("pauseButton")).toBeInTheDocument();
-
-    // fireEvent.mouseEnter(screen.getByTestId("playlist-image"));
-    // await waitFor(() => screen.getByTestId("playlist-image"));
-    // expect(screen.getByRole("albumPauseIcon")).toBeInTheDocument();
   });
 });
