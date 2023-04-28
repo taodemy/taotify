@@ -1,13 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
+
 import { Swiper, SwiperSlide } from "swiper/react";
-import SwiperCore, { Mousewheel, EffectCoverflow } from "swiper";
-import "swiper/swiper-bundle.min.css";
-import 'swiper/css';
-import 'swiper/css/effect-coverflow';
-
-SwiperCore.use([Mousewheel, EffectCoverflow]);
-
+import SwiperCore, { EffectCoverflow } from "swiper";
+import "swiper/css";
 
 import slide1 from "@/assets/images/1.png";
 import slide2 from "@/assets/images/2.png";
@@ -15,43 +11,44 @@ import slide3 from "@/assets/images/3.png";
 import slide4 from "@/assets/images/4.png";
 import slide5 from "@/assets/images/5.png";
 
+SwiperCore.use([EffectCoverflow]);
+
 export default function Carousel() {
-  const [activeIndex, setActiveIndex] = useState(2);
   return (
-    <>
+    <div>
       <Swiper
         effect={"coverflow"}
-        grabCursor={true}
+        loop={true}
         centeredSlides={true}
-        slidesPerView={5}
+        spaceBetween={50}
+        slidesPerView={"auto"}
         coverflowEffect={{
           rotate: 0,
-          stretch: 0,
-          depth: 100,
-          modifier: 1,
+          stretch: 200,
+          depth: 80,
+          modifier: 5,
+          slideShadows: false,
         }}
-        // loop={true}
-        mousewheel={true}
-        initialSlide={activeIndex}
-        className="w-full"
+        className="w-full bg-slate-300"
       >
-        <SwiperSlide className="flex place-items-center">
-          <Image src={slide1} alt="slide_image"  className="object-cover rounded-lg"/>
-        </SwiperSlide>
-        <SwiperSlide className="flex place-items-center">
-          <Image src={slide2} alt="slide_image"  className="object-cover rounded-lg"/>
-        </SwiperSlide>
-        <SwiperSlide className="flex place-items-center">
-          <Image src={slide3} alt="slide_image"  className="object-cover rounded-lg"/>
-        </SwiperSlide>
-        <SwiperSlide className="flex place-items-center">
-          <Image src={slide4} alt="slide_image"  className="object-cover rounded-lg"/>
-        </SwiperSlide>
-        <SwiperSlide className="flex place-items-center">
-          <Image src={slide5} alt="slide_image"  className="object-cover rounded-lg"/>
-        </SwiperSlide>
+        <div className="swiper-wrapper">
+          <SwiperSlide className="h-[296px] w-[80%]">
+            <Image src={slide1} alt="slide" />
+          </SwiperSlide>
+          <SwiperSlide className=" h-[296px] w-[80%]">
+            <Image src={slide2} alt="slide" />
+          </SwiperSlide>
+          <SwiperSlide className="h-[296px] w-[80%]">
+            <Image src={slide3} alt="slide" />
+          </SwiperSlide>
+          <SwiperSlide className="h-[296px] w-[80%]">
+            <Image src={slide4} alt="slide" />
+          </SwiperSlide>
+          <SwiperSlide className=" h-[296px] w-[80%]">
+            <Image src={slide5} alt="slide" />
+          </SwiperSlide>
+        </div>
       </Swiper>
-    </>
+    </div>
   );
 }
-

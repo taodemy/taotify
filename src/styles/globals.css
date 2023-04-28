@@ -17,10 +17,17 @@
   }
 }
 @tailwind components;
-
-.swiper-slide-active {
+.swiper-slide img {
+  display: block;
   width: 806.03px !important;
   height: 296px !important;
+  margin:0 auto;
 }
 
 @tailwind utilities;
+@layer utilities {
+  .swiper-slide img {
+    width: 806.03px !important;
+    height: 296px !important;
+  }
+}
