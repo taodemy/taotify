@@ -13,7 +13,7 @@ const renderMusicPlayer = (index: number, queue: PlayList) => {
   );
 };
 
-describe("Music Player", () => {
+describe("Music Player Bar", () => {
   it("should handle playing end properly", async () => {
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
@@ -24,7 +24,7 @@ describe("Music Player", () => {
   it("should loop all when loop all mode", async () => {
     renderMusicPlayer(2, mockPlayList);
     const audio = screen.getByRole("audio");
-    const loopButton = screen.getByRole("button", { name: /loop/i });
+    const loopButton = screen.getByRole("loop");
     fireEvent.click(loopButton);
     fireEvent.click(loopButton);
     fireEvent.ended(audio);
@@ -42,7 +42,7 @@ describe("Music Player", () => {
   it("should reset playing queue to origin order when shuffle mode turned off", async () => {
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
-    const shuffleButton = screen.getByRole("button", { name: /shuffle/i });
+    const shuffleButton = screen.getByRole("shuffle");
     fireEvent.click(shuffleButton);
     fireEvent.click(shuffleButton);
     expect(audio).toHaveAttribute("src", "url1");
@@ -54,7 +54,7 @@ describe("Music Player", () => {
     const mockLoad = jest.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
     renderMusicPlayer(0, mockPlayList);
     const audio = screen.getByRole("audio");
-    const loopButton = screen.getByRole("button", { name: /loop/i });
+    const loopButton = screen.getByRole("loop");
     fireEvent.click(loopButton);
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url1");
@@ -80,5 +80,44 @@ describe("Music Player", () => {
     fireEvent.pause(audio);
     expect(clearInterval).toHaveBeenCalledTimes(1);
     jest.clearAllTimers();
+  });
+
+  it("should play the next song when click the next button", () => {
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const nextButton = screen.getByRole("nextButton");
+    fireEvent.click(nextButton);
+    expect(audio).toHaveAttribute("src", "url2");
+  });
+
+  it("should play the first song when click the next button and current song is last song", () => {
+    renderMusicPlayer(2, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const nextButton = screen.getByRole("nextButton");
+    fireEvent.click(nextButton);
+    expect(audio).toHaveAttribute("src", "url1");
+  });
+
+  it("should play the previous song when click the previous button ", () => {
+    renderMusicPlayer(2, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const prevButton = screen.getByRole("prevButton");
+    fireEvent.click(prevButton);
+    expect(audio).toHaveAttribute("src", "url2");
+  });
+
+  it("should play the last song when click the previous button and current song is first song ", () => {
+    renderMusicPlayer(0, mockPlayList);
+    const audio = screen.getByRole("audio");
+    const prevButton = screen.getByRole("prevButton");
+    fireEvent.click(prevButton);
+    expect(audio).toHaveAttribute("src", "url3");
+  });
+
+  it("should toggle the isPlaying state when click the play/pause button", () => {
+    renderMusicPlayer(0, mockPlayList);
+    const pauseButton = screen.getByRole("pauseButton");
+    fireEvent.click(pauseButton);
+    expect(screen.getByRole("playButton")).toBeInTheDocument();
   });
 });

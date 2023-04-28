@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function SideBar() {
+const SideBar = () => {
   return (
-    <aside className="flex h-[100vh] w-[320px] flex-col bg-black text-white">
+    <aside className="h-[100vh] w-0 flex-col bg-black text-white transition-all duration-200 ease-in-out md:flex md:w-[64px] lg:w-[320px]">
       This is the left SideBar
     </aside>
   );
-}
+};
+
+export default SideBar;
