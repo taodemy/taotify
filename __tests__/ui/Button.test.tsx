@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Button from "@ui/Button";
+import Button from "@/components/button/Button";
 import "@testing-library/jest-dom";
 
 /*=====================================================*/
