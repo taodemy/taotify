@@ -120,17 +120,46 @@ describe("Button", () => {
 // test icon variant
 /*=====================================================*/
 it("should render the icon when variant is set to icon", () => {
-  render(<Button variant="icon" size="large" />);
+  render(<Button variant="icon" />);
   const button = screen.getByRole("button");
   const icon = button.firstChild as SVGElement;
   expect(icon).toBeInTheDocument();
   expect(icon.outerHTML).toContain("svg");
 });
 
+it.each`
+  label
+  ${"close"}
+  ${"playback"}
+  ${"fastForward"}
+  ${"favorite"}
+  ${"pause"}
+  ${"play"}
+  ${"next"}
+  ${"previous"}
+  ${"shuffle"}
+  ${"repeat"}
+  ${"loop"}
+  ${"home"}
+  ${"discover"}
+  ${"albums"}
+  ${"artists"}
+  ${"videos"}
+  ${"recentPlay"}
+  ${"lists"}
+  ${"bin"}
+`(`should render the $label icon`, ({ label }) => {
+  render(<Button variant="icon" iconTypes={label} />);
+  const button = screen.getByLabelText(label);
+  const icon = button.firstChild as SVGElement;
+  expect(button).toBeInTheDocument();
+  expect(icon.outerHTML).toContain("svg");
+});
+
 it("calls onClick prop when button is clicked", () => {
   const clickHandler = jest.fn();
   render(<Button onClick={clickHandler} />);
-  const button = screen.getByRole("button");
+  const button = screen.getByRole(`${"aria-label"}`);
   fireEvent.click(button);
   expect(clickHandler).toBeCalled();
 });
