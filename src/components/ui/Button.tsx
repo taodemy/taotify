@@ -12,7 +12,7 @@ type ButtonColor = "primary" | "secondary" | "ternary" | "warning" | "info" | "l
 type IconTypes =
   | "close"
   | "playback"
-  | "fastforward"
+  | "fastForward"
   | "favorite"
   | "pause"
   | "play"
@@ -26,7 +26,7 @@ type IconTypes =
   | "albums"
   | "artists"
   | "videos"
-  | "recentplay"
+  | "recentPlay"
   | "lists"
   | "bin";
 type ButtonProps = {
@@ -111,7 +111,7 @@ const Button = ({
   const iconType = {
     playback: <IoPlayBackOutline className=" h-5 w-5" />,
     close: <AiOutlineCloseCircle className=" h-5 w-5" />,
-    fastforward: <FiFastForward className=" h-5 w-5" />,
+    fastForward: <FiFastForward className=" h-5 w-5" />,
     favorite: <BiHeart className=" h-5 w-5" />,
     pause: <BiPauseCircle className="h-8 w-8 sm:h-10 sm:w-10" />,
     play: <BiPlayCircle className="h-8 w-8 sm:h-10 sm:w-10" />,
@@ -125,7 +125,7 @@ const Button = ({
     albums: <RiAlbumFill className=" h-5 w-5" />,
     artists: <BsPersonLinesFill className=" h-5 w-5" />,
     videos: <MdMusicVideo className=" h-5 w-5" />,
-    recentplay: <GiBackwardTime className=" h-5 w-5" />,
+    recentPlay: <GiBackwardTime className=" h-5 w-5" />,
     lists: <MdQueueMusic className=" h-5 w-5" />,
     bin: <RiDeleteBin5Line className=" h-5 w-5" />,
   };
