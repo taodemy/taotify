@@ -1,5 +1,36 @@
+import { IoPlayBackOutline } from "react-icons/io5";
+import { AiOutlineCloseCircle, AiFillRocket } from "react-icons/ai";
+import { BiPlayCircle, BiPauseCircle, BiHeart } from "react-icons/bi";
+import { FiFastForward, FiSkipForward, FiSkipBack } from "react-icons/fi";
+import { TbArrowsShuffle } from "react-icons/tb";
+import { BsRepeat, BsRepeat1, BsPersonLinesFill } from "react-icons/bs";
+import { MdHomeFilled, MdMusicVideo, MdQueueMusic } from "react-icons/md";
+import { RiAlbumFill, RiDeleteBin5Line } from "react-icons/ri";
+import { GiBackwardTime } from "react-icons/gi";
+
 type ButtonColor = "primary" | "secondary" | "ternary" | "warning" | "info" | "light" | "dark";
+type IconTypes =
+  | "close"
+  | "playback"
+  | "fastforward"
+  | "favorite"
+  | "pause"
+  | "play"
+  | "next"
+  | "previous"
+  | "shuffle"
+  | "repeat"
+  | "loop"
+  | "home"
+  | "discover"
+  | "albums"
+  | "artists"
+  | "videos"
+  | "recentplay"
+  | "lists"
+  | "bin";
 type ButtonProps = {
+  iconTypes?: IconTypes;
   color?: ButtonColor;
   size?: "tiny" | "small" | "normal" | "large";
   outline?: boolean;
@@ -53,6 +84,7 @@ const Button = ({
   size = "normal",
   onClick,
   label = "button",
+  iconTypes = "close",
   ...otherProps
 }: ButtonProps) => {
   const buttonSize = {
@@ -76,6 +108,27 @@ const Button = ({
     normal: "40px",
     large: "48px",
   };
+  const iconType = {
+    playback: <IoPlayBackOutline className=" h-5 w-5" />,
+    close: <AiOutlineCloseCircle className=" h-5 w-5" />,
+    fastforward: <FiFastForward className=" h-5 w-5" />,
+    favorite: <BiHeart className=" h-5 w-5" />,
+    pause: <BiPauseCircle className="h-8 w-8 sm:h-10 sm:w-10" />,
+    play: <BiPlayCircle className="h-8 w-8 sm:h-10 sm:w-10" />,
+    next: <FiSkipForward className=" h-5 w-5" />,
+    previous: <FiSkipBack className=" h-5 w-5" />,
+    repeat: <BsRepeat1 className=" h-5 w-5" />,
+    loop: <BsRepeat className=" h-5 w-5" />,
+    shuffle: <TbArrowsShuffle className=" h-5 w-5" />,
+    home: <MdHomeFilled className=" h-5 w-5" />,
+    discover: <AiFillRocket className=" h-5 w-5" />,
+    albums: <RiAlbumFill className=" h-5 w-5" />,
+    artists: <BsPersonLinesFill className=" h-5 w-5" />,
+    videos: <MdMusicVideo className=" h-5 w-5" />,
+    recentplay: <GiBackwardTime className=" h-5 w-5" />,
+    lists: <MdQueueMusic className=" h-5 w-5" />,
+    bin: <RiDeleteBin5Line className=" h-5 w-5" />,
+  };
 
   return variant === "normal" ? (
     <button
@@ -86,17 +139,8 @@ const Button = ({
       {label}
     </button>
   ) : (
-    <button onClick={onClick} aria-label="close">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width={iconSize[size]}
-        height={iconSize[size]}
-        fill={iconColor[color]}
-      >
-        <title>close icon</title>
-        <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm3.707 12.293a1 1 0 11-1.414 1.414L12 13.414l-2.293 2.293a1 1 0 01-1.414-1.414L10.586 12 8.293 9.707a1 1 0 011.414-1.414L12 10.586l2.293-2.293a1 1 0 011.414 1.414L13.414 12z" />
-      </svg>
+    <button onClick={onClick} aria-label={iconTypes} className="text-light">
+      {iconType[iconTypes]}
     </button>
   );
 };
