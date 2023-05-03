@@ -30,17 +30,23 @@ export type IconTypes = keyof typeof iconList;
 type IconProps = {
   iconTypes?: IconTypes;
   onClick?: () => void;
+  size?: "tiny" | "small" | "normal" | "large";
 };
 
-const IconButton = ({ onClick, iconTypes = "close" }: IconProps) => {
+const IconButton = ({ onClick, size = "normal", iconTypes = "close" }: IconProps) => {
+  const iconSize = {
+    tiny: "w-6 h-6",
+    small: "w-8 h-8 p-1",
+    normal: "w-10 h-10 p-2",
+    large: "w-12 h-12 p-3",
+  };
   return (
     <button
       onClick={onClick}
       aria-label={iconTypes}
-      className="text-light-200 focus:text-light active:text-light"
+      className={`text-light-200 focus:text-light active:text-light  ${iconSize[size]}`}
     >
       {iconList[iconTypes]}
-      <span className="hidden sm:block"></span>
     </button>
   );
 };
