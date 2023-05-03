@@ -2,10 +2,10 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import MusicPlayer from "@/layouts/MusicPlayer";
 import { MusicContextProvider } from "@/contexts/MusicContext";
-import { mockPlayList } from "mockData/mockData";
-import { PlayList } from "types";
+import { mockMusicList } from "mockData/mockData";
+import { MusicList } from "types";
 
-const renderMusicPlayer = (index: number, queue: PlayList) => {
+const renderMusicPlayer = (index: number, queue: MusicList) => {
   return render(
     <MusicContextProvider index={index} queue={queue}>
       <MusicPlayer />
@@ -15,14 +15,14 @@ const renderMusicPlayer = (index: number, queue: PlayList) => {
 
 describe("Music Player Bar", () => {
   it("should handle playing end properly", async () => {
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url2");
   });
 
   it("should loop all when loop all mode", async () => {
-    renderMusicPlayer(2, mockPlayList);
+    renderMusicPlayer(2, mockMusicList);
     const audio = screen.getByRole("audio");
     const loopButton = screen.getByRole("loop");
     fireEvent.click(loopButton);
@@ -32,7 +32,7 @@ describe("Music Player Bar", () => {
   });
 
   it("should set new end time when duration changed", async () => {
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     fireEvent.durationChange(audio);
     const endTime = screen.getByRole("endTime");
@@ -40,7 +40,7 @@ describe("Music Player Bar", () => {
   });
 
   it("should reset playing queue to origin order when shuffle mode turned off", async () => {
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     const shuffleButton = screen.getByRole("shuffle");
     fireEvent.click(shuffleButton);
@@ -52,7 +52,7 @@ describe("Music Player Bar", () => {
 
   it("should loop single song when loop single mode", async () => {
     const mockLoad = jest.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     const loopButton = screen.getByRole("loop");
     fireEvent.click(loopButton);
@@ -64,7 +64,7 @@ describe("Music Player Bar", () => {
   it("should start timer when audio on playing", async () => {
     jest.useFakeTimers();
     jest.spyOn(global, "setInterval");
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     fireEvent.playing(audio);
     expect(setInterval).toHaveBeenCalledTimes(1);
@@ -74,7 +74,7 @@ describe("Music Player Bar", () => {
   it("should clear timer when audio on pause", async () => {
     jest.useFakeTimers();
     jest.spyOn(global, "clearInterval");
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     fireEvent.playing(audio);
     fireEvent.pause(audio);
@@ -83,7 +83,7 @@ describe("Music Player Bar", () => {
   });
 
   it("should play the next song when click the next button", () => {
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     const nextButton = screen.getByRole("nextButton");
     fireEvent.click(nextButton);
@@ -91,7 +91,7 @@ describe("Music Player Bar", () => {
   });
 
   it("should play the first song when click the next button and current song is last song", () => {
-    renderMusicPlayer(2, mockPlayList);
+    renderMusicPlayer(2, mockMusicList);
     const audio = screen.getByRole("audio");
     const nextButton = screen.getByRole("nextButton");
     fireEvent.click(nextButton);
@@ -99,7 +99,7 @@ describe("Music Player Bar", () => {
   });
 
   it("should play the previous song when click the previous button ", () => {
-    renderMusicPlayer(2, mockPlayList);
+    renderMusicPlayer(2, mockMusicList);
     const audio = screen.getByRole("audio");
     const prevButton = screen.getByRole("prevButton");
     fireEvent.click(prevButton);
@@ -107,7 +107,7 @@ describe("Music Player Bar", () => {
   });
 
   it("should play the last song when click the previous button and current song is first song ", () => {
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
     const prevButton = screen.getByRole("prevButton");
     fireEvent.click(prevButton);
@@ -115,7 +115,7 @@ describe("Music Player Bar", () => {
   });
 
   it("should toggle the isPlaying state when click the play/pause button", () => {
-    renderMusicPlayer(0, mockPlayList);
+    renderMusicPlayer(0, mockMusicList);
     const pauseButton = screen.getByRole("pauseButton");
     fireEvent.click(pauseButton);
     expect(screen.getByRole("playButton")).toBeInTheDocument();

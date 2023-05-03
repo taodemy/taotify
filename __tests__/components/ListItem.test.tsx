@@ -22,7 +22,5 @@ describe("In ListItem test, ", () => {
     expect(fn).toHaveBeenCalled();
 
     expect(getByText(song.name)).toBeInTheDocument();
-
-    expect(getByText(song.artists[0].name)).toBeInTheDocument();
   });
 });

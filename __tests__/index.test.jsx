@@ -1,16 +1,11 @@
 import { render, screen } from "@testing-library/react";
 import Home, { getStaticProps } from "../src/pages/index";
 import "@testing-library/jest-dom";
-import { mockPlayList } from "../mockData/mockData";
+import { mockMusicList, mockEmptyMusicList } from "../mockData/mockData";
 
 describe("Home", () => {
   beforeEach(() => {
-    render(<Home newSongsList={mockPlayList} />);
-  });
-
-  it("renders a heading", () => {
-    const main = screen.getByRole("main");
-    expect(main).toBeInTheDocument();
+    render(<Home newAlbums={[mockMusicList, mockEmptyMusicList]} />);
   });
 
   it("renders recently played txt", () => {
@@ -43,5 +38,5 @@ beforeEach(() => {
 
 it("fetches data from the API", async () => {
   const { props } = await getStaticProps();
-  expect(props).toEqual({ newSongsList: [] });
+  expect(props).toEqual({ newAlbums: [] });
 });

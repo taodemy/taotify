@@ -1,17 +1,19 @@
 import FriendsActivity from "../components/FriendsActivity";
 import NewReleases from "../components/NewReleases";
 import RecentlyPlayed from "../components/RecentlyPlayed";
-import MusicList from "../components/MusicList";
+import ListPage from "../components/ListPage";
 import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
-import getPlayableSongs from "../utils/getPlayableSongs";
-import { PlayList } from "types";
+import { MusicList } from "types";
+import getNewAlbums from "@/utils/getNewAlbums";
+import Albums from "@/components/Albums";
 
 type HomeProps = {
-  newSongsList: PlayList;
+  // newSongsList: MusicList;
+  newAlbums: MusicList[];
 };
 
-export default function Home({ newSongsList }: HomeProps) {
+export default function Home({ newAlbums }: HomeProps) {
   return (
     <>
       <Head>
@@ -20,25 +22,31 @@ export default function Home({ newSongsList }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="mt-[100px] ml-[100px]">
-        <RecentlyPlayed />
-        <FriendsActivity />
-        <NewReleases />
-        {/* only for music list demo*/}
-        <MusicList musicList={newSongsList} />
-      </main>
+      <RecentlyPlayed />
+      <FriendsActivity />
+      <NewReleases />
+      <Albums albums={newAlbums} />
+      {/* <ListPage musicList={newSongsList} /> */}
     </>
   );
 }
 
 export /* istanbul ignore next */ async function getStaticProps() {
-  const response = await getNewSongs();
-  if (!response.status) return { props: { newSongsList: [] }, revalidate: 600 };
+  // const newSongsRes = await getNewSongs();
+  // const newSongsList = {
+  //   id: 0,
+  //   type: "newSongs",
+  //   songs: newSongsRes.status ? newSongsRes.songs : [],
+  // };
 
-  const { newSongs } = response;
+  const newAlbumsEA = await getNewAlbums("EA", 2);
+  const newAlbumsJP = await getNewAlbums("JP", 2);
+  const newAlbumsKR = await getNewAlbums("KR", 1);
+  const newAlbumsZH = await getNewAlbums("ZH", 2);
+  const newAlbums = [...newAlbumsEA, ...newAlbumsJP, ...newAlbumsKR, ...newAlbumsZH];
 
-  const playableSongs = await getPlayableSongs(newSongs);
-
-  const newSongsList = { id: 0, type: "newSongs", songs: playableSongs };
-  return { props: { newSongsList }, revalidate: 600 };
+  return {
+    props: { newAlbums },
+    revalidate: 600,
+  };
 }

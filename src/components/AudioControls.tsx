@@ -6,7 +6,7 @@ import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { useContext, useEffect, useState } from "react";
-import { PlayList } from "types";
+import { MusicList } from "types";
 
 interface AudioControlsProps {
   isPlaying?: boolean;
@@ -25,32 +25,32 @@ const AudioControls = ({
   toggleLoopMode,
 }: AudioControlsProps) => {
   const [isShuffle, setIsShuffle] = useState(false);
-  const [originPlayList, setOriginPlayList] = useState<PlayList | null>(null);
+  const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
 
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, isPlaying } =
     useContext(MusicContext);
 
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
-    if (playingQueue) setOriginPlayList(playingQueue);
+    if (playingQueue) setOriginMusicList(playingQueue);
   }, [playingQueue?.id, playingQueue?.type]);
 
   //if there is a new copy or new shuffled mode, detect if it needs to be shuffled or reset
   useEffect(() => {
-    if (!playingQueue || !originPlayList) return;
+    if (!playingQueue || !originMusicList) return;
 
     if (isShuffle) {
-      const shuffledPlayList = shuffleSongs(playingQueue, playingIndex);
+      const shuffledMusicList = shuffleSongs(playingQueue, playingIndex);
       setPlayingIndex(0);
-      setPlayingQueue(shuffledPlayList);
+      setPlayingQueue(shuffledMusicList);
     } else {
-      if (playingQueue === originPlayList) return;
+      if (playingQueue === originMusicList) return;
       const playingSong = playingQueue.songs[playingIndex];
-      const originIndex = originPlayList.songs.indexOf(playingSong);
+      const originIndex = originMusicList.songs.indexOf(playingSong);
       setPlayingIndex(originIndex);
-      setPlayingQueue(originPlayList);
+      setPlayingQueue(originMusicList);
     }
-  }, [isShuffle, originPlayList]);
+  }, [isShuffle, originMusicList]);
 
   return (
     <div className="flex h-16 w-full items-center justify-between text-light">

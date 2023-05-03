@@ -1,7 +1,7 @@
-import { PlayList } from "types";
+import { MusicList } from "types";
 
-export default function shuffleSongs(playList: PlayList, index: number) {
-  const songs = [...playList.songs];
+export default function shuffleSongs(musicList: MusicList, index: number) {
+  const songs = [...musicList.songs];
   const playingSong = songs.splice(index, 1)[0];
 
   for (let i = songs.length - 1; i > 0; i--) {
@@ -9,11 +9,11 @@ export default function shuffleSongs(playList: PlayList, index: number) {
     [songs[i], songs[j]] = [songs[j], songs[i]];
   }
 
-  const shuffledPlayList = {
-    id: playList.id,
-    type: playList.type,
+  const shuffledMusicList = {
+    id: musicList.id,
+    type: musicList.type,
     songs: [playingSong, ...songs],
   };
 
-  return shuffledPlayList;
+  return shuffledMusicList;
 }
