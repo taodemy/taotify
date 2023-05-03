@@ -13,7 +13,7 @@ const CoverImage = ({ imgType = "playerCover", src, onClick }: CoverImageProps) 
     ),
     albumCover: (
       <button onClick={onClick} className="h-24 w-24 rounded-full border">
-        <img className="object-cover" src={src} alt="album cover"/>
+        <img className="object-cover" src={src} alt="album cover" />
       </button>
     ),
     playerCover: (
