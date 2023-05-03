@@ -13,7 +13,7 @@ const Layout = ({ children }: LayoutProps) => {
       <SideBar />
       <div className="flex h-full w-full flex-col md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
         <SearchBar />
-        <main className="mb-[150px] h-[calc(100vh-150px)] w-full md:mb-[120px] md:h-[calc(100vh-120px)]">
+        <main className="mb-[150px] h-[calc(100vh-150px)] w-full bg-dark px-2 md:mb-[120px] md:h-[calc(100vh-120px)] md:px-10">
           {children}
         </main>
         <MusicPlayer />
