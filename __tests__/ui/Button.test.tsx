@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import Button from "@/components/button/Button";
+import Button from "@/components/buttons";
 import "@testing-library/jest-dom";
 
 /*=====================================================*/
@@ -58,7 +58,7 @@ describe("Button", () => {
   /*=====================================================*/
   // test outline color
   /*=====================================================*/
-  it("should render outline when outline attribute is true", () => {
+  it("should render out-line when outline attribute is true", () => {
     render(<Button outline label="button" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
