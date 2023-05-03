@@ -7,6 +7,6 @@ export default {
   component: MusicPlayer,
 } as ComponentMeta<typeof MusicPlayer>;
 
-const Template: ComponentStory<typeof MusicPlayer> = () => <MusicPlayerBar />;
+const Template: ComponentStory<typeof MusicPlayer> = () => <MusicPlayer />;
 
 export const MusicPlayerBar = Template.bind({});
