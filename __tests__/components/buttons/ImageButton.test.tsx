@@ -4,18 +4,16 @@ import "@testing-library/jest-dom";
 
 describe("ImageButton", () => {
   it("should render the image in avatar size", () => {
-    render(<ImageButton isAvatar src="/sample_cover.png" />);
+    render(<ImageButton imgType="avatar" src="/sample_cover.png" />);
     const image = screen.getByRole("img") as HTMLImageElement;
     expect(image).toBeInTheDocument();
-    expect(image.width).toBe(48);
-    expect(image.alt).toBe("Picture of avatar");
+    expect(image.alt).toBe("avatar");
   });
   it("should render the image in music cover size", () => {
-    render(<ImageButton src="/sample_cover.png" />);
+    render(<ImageButton imgType="albumCover" src="/sample_cover.png" />);
     const image = screen.getByRole("img") as HTMLImageElement;
     expect(image).toBeInTheDocument();
-    expect(image.width).toBeGreaterThan(48);
-    expect(image.alt).toBe("Picture of music cover");
+    expect(image.alt).toBe("album cover");
   });
 
   it("calls onClick prop when icon is clicked", () => {

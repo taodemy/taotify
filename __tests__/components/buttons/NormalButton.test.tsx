@@ -123,7 +123,7 @@ describe("NormalButton", () => {
 it("calls onClick prop when button is clicked", () => {
   const clickHandler = jest.fn();
   render(<NormalButton onClick={clickHandler} />);
-  const button = screen.getByRole(`${"aria-label"}`);
+  const button = screen.getByRole("button");
   fireEvent.click(button);
   expect(clickHandler).toBeCalled();
 });
