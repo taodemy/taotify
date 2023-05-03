@@ -44,7 +44,7 @@ const IconButton = ({ onClick, size = "normal", iconTypes = "close" }: IconProps
     <button
       onClick={onClick}
       aria-label={iconTypes}
-      className={`text-light-200 focus:text-light active:text-light  ${iconSize[size]}`}
+      className={`text-light-200 focus:text-light active:text-light ${iconSize[size]}`}
     >
       {iconList[iconTypes]}
     </button>
