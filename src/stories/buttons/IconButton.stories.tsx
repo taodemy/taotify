@@ -11,8 +11,8 @@ const Template: ComponentStory<typeof IconButton> = (args) => (
   <IconButton {...args}>BUTTON</IconButton>
 );
 
-export const Home = Template.bind({});
-Home.args = {
+export const Playback = Template.bind({});
+Playback.args = {
   iconTypes: "playback",
 };
 
