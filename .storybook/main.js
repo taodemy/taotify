@@ -19,6 +19,7 @@ module.exports = {
   core: {
     builder: "@storybook/builder-webpack5",
   },
+  staticDirs: ["../public"], //👈 Configures the static asset folder in Storybook
   webpackFinal: async (config) => {
     config.resolve.alias = {
       ...config.resolve.alias,
