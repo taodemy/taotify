@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function SearchBar() {
+const SearchBar = () => {
   return (
-    <div className="fixed top-0 left-[320px] h-[64px] w-full border-2 border-dotted bg-light">
+    <div className="fixed top-0 h-[64px] w-full border-2 border-dotted bg-light transition-all duration-200 ease-in-out md:left-[64px] lg:left-[320px]">
       This is the top search bar
     </div>
   );
-}
+};
+
+export default SearchBar;

@@ -1,16 +1,16 @@
-import MusicList from "@/components/MusicList";
+import ListPage from "@/components/ListPage";
 import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MusicContextProvider } from "@/contexts/MusicContext";
 import MusicPlayer from "@/layouts/MusicPlayer";
-import { PlayList } from "types";
-import { mockEmptyPlayList, mockPlayList } from "mockData/mockData";
+import { MusicList } from "types";
+import { mockEmptyMusicList, mockMusicList } from "mockData/mockData";
 
-const renderComponentsWithCustomContex = (index: number, queue: PlayList | null) => {
+const renderComponentsWithCustomContex = (index: number, queue: MusicList | null) => {
   return render(
     <MusicContextProvider index={index} queue={queue}>
-      <MusicList musicList={mockPlayList} />
+      <ListPage musicList={mockMusicList} />
       <MusicPlayer />
     </MusicContextProvider>
   );
@@ -19,7 +19,7 @@ const renderComponentsWithCustomContex = (index: number, queue: PlayList | null)
 const renderComponentsWithDefaultContext = () => {
   return render(
     <MusicContextProvider>
-      <MusicList musicList={mockPlayList} />
+      <ListPage musicList={mockMusicList} />
       <MusicPlayer />
     </MusicContextProvider>
   );
@@ -27,31 +27,31 @@ const renderComponentsWithDefaultContext = () => {
 
 describe("Music List", () => {
   it("renders items correctly", async () => {
-    render(<MusicList musicList={mockPlayList} />);
-    mockPlayList.songs.forEach((song) => {
+    render(<ListPage musicList={mockMusicList} />);
+    mockMusicList.songs.forEach((song) => {
       const text = screen.getByText(song.name);
       expect(text).toBeInTheDocument();
     });
   });
 
   it("renders error message when music list is empty", async () => {
-    render(<MusicList musicList={mockEmptyPlayList} />);
+    render(<ListPage musicList={mockEmptyMusicList} />);
     const errorMsg = screen.getByText(/Ops, failed to load this music list/i);
     expect(errorMsg).toBeInTheDocument();
   });
 
   it("click list item to load music list", async () => {
     renderComponentsWithDefaultContext();
-    const clickableElement = screen.getAllByRole("button")[0];
-    fireEvent.click(clickableElement);
+    const songName = screen.getByText(/song1/i);
+    fireEvent.click(songName);
     const audio = screen.getByRole("audio");
     expect(audio).toHaveAttribute("src", "url1");
   });
 
   it("click list item to load new index when current list is playing", async () => {
-    renderComponentsWithCustomContex(0, mockPlayList);
-    const clickableElement = screen.getAllByRole("button")[1];
-    fireEvent.click(clickableElement);
+    renderComponentsWithCustomContex(0, mockMusicList);
+    const songName = screen.getByText(/song2/i);
+    fireEvent.click(songName);
     const audio = screen.getByRole("audio");
     expect(audio).toHaveAttribute("src", "url2");
   });

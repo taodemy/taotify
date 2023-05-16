@@ -1,4 +1,6 @@
-import { NewSong } from "../../types";
+import { NewSong, NewSongResult, Song } from "../../types";
+
+import getMp3Url from "./getMp3Url";
 
 export default async function getNewSongs() {
   try {
@@ -7,10 +9,25 @@ export default async function getNewSongs() {
       throw new Error("Failed to fetch new songs");
     }
     const data = await res.json();
-    const newSongs = data.result.map((item: NewSong) => item.song);
-
-    return { newSongs: newSongs, status: true };
+    const newSongs = data.result.map((newSongResult: NewSongResult) => newSongResult.song);
+    const urls = await Promise.all(
+      newSongs.map(async (newSong: NewSong) => getMp3Url(newSong.id, "standard"))
+    );
+    const songs: Song[] = [];
+    urls.forEach((url, index) => {
+      if (url.status) {
+        const newSong = newSongs[index];
+        songs.push({
+          id: newSong.id,
+          name: newSong.name,
+          album: newSong.album,
+          artists: newSong.artists,
+          mp3Url: url.mp3Url,
+        });
+      }
+    });
+    return { songs: songs, status: true };
   } catch (error) {
-    return { newSongs: [], status: false };
+    return { songs: [], status: false };
   }
 }
