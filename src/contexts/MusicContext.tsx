@@ -10,8 +10,6 @@ interface MusicContextProps {
   setNoResourceAlert: React.Dispatch<React.SetStateAction<boolean>>;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
-  audioContext: AudioContext | null;
-  setAudioContext: React.Dispatch<React.SetStateAction<AudioContext | null>>;
 }
 
 const defaultValues = {
@@ -23,8 +21,6 @@ const defaultValues = {
   setNoResourceAlert: () => {},
   isPlaying: false,
   setIsPlaying: () => {},
-  audioContext: null,
-  setAudioContext: () => {},
 };
 
 export const MusicContext = createContext<MusicContextProps>(defaultValues);
@@ -46,16 +42,6 @@ export const MusicContextProvider = ({
   const [playingQueue, setPlayingQueue] = useState<MusicList | null>(queue);
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(alert);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
-  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
-
-  useEffect(() => {
-    setAudioContext(new AudioContext());
-    return () => {
-      if (audioContext) {
-        audioContext.close();
-      }
-    };
-  }, []);
 
   return (
     <MusicContext.Provider
@@ -68,8 +54,6 @@ export const MusicContextProvider = ({
         setNoResourceAlert,
         isPlaying,
         setIsPlaying,
-        audioContext,
-        setAudioContext,
       }}
     >
       {children}

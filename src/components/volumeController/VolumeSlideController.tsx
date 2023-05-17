@@ -32,7 +32,7 @@ export default function VolumeSlideController() {
   const updateVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>): number => {
     let newVolumeLevel = 0;
     if (volumeSlider.current) {
-      const rect = volumeSlider.current!.getBoundingClientRect();
+      const rect = volumeSlider.current.getBoundingClientRect();
       const width = event.clientX - rect.left;
       newVolumeLevel = volumeUtils.calculateVolume(width, rect.width);
     }
