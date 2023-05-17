@@ -6,7 +6,7 @@ import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
 
 const MusicPlayer = () => {
-  const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
+  const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying, audioContext } =
     useContext(MusicContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
@@ -14,6 +14,8 @@ const MusicPlayer = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const musicData = playingQueue?.songs || "";
+  const [gainNode, setGainNode] = useState<GainNode | null>(null);
+  const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
 
   const handlePlayEnd = () => {
     if (!playingQueue) return;
@@ -83,8 +85,44 @@ const MusicPlayer = () => {
   }, [isPlaying, audioRef]);
 
   const onPlayPauseClick = () => {
-    setIsPlaying((prev) => !prev);
+    // setIsPlaying((prev) => !prev);
+    if (audioContext && audioSource && audioContext.state === "suspended") {
+      try {
+        audioSource.start();
+      } catch {
+        audioContext.resume();
+      }
+    }
+    if (audioContext && audioSource && audioContext.state === "running") {
+      audioContext.suspend();
+    }
   };
+
+  useEffect(() => {
+    const fetchAudio = async () => {
+      if (audioContext && playingQueue && playingQueue.songs[playingIndex]) {
+        const response = await fetch(playingQueue.songs[playingIndex].mp3Url);
+        const arrayBuffer = await response.arrayBuffer();
+        const newGainNode = audioContext.createGain();
+        const bufferSource = audioContext.createBufferSource();
+        audioContext.decodeAudioData(arrayBuffer, (buffer) => {
+          bufferSource.buffer = buffer;
+          bufferSource.connect(newGainNode);
+          newGainNode.connect(audioContext.destination);
+        });
+        setAudioSource(bufferSource);
+        setGainNode(newGainNode);
+      }
+    };
+    fetchAudio();
+  }, [playingIndex]);
+
+  useEffect(() => {
+    if (audioContext && gainNode && audioSource) {
+      audioSource.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+    }
+  }, [gainNode, audioSource]);
 
   return (
     <section className="fixed bottom-[72px] h-[78px] w-full transition-all duration-200 ease-in-out md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">

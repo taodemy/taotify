@@ -1,5 +1,6 @@
-import React, { createContext, useState } from "react";
-import { MusicList } from "types";
+import React, { createContext, useEffect, useState } from "react";
+import { MusicList, Song } from "types";
+import getNewSongs from "../utils/getNewSongs";
 
 interface MusicContextProps {
   playingIndex: number;
@@ -12,10 +13,6 @@ interface MusicContextProps {
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   audioContext: AudioContext | null;
   setAudioContext: React.Dispatch<React.SetStateAction<AudioContext | null>>;
-  gainNode: GainNode | null;
-  setGainNode: React.Dispatch<React.SetStateAction<GainNode | null>>;
-  audioSource: AudioBufferSourceNode | null;
-  setAudioSource: React.Dispatch<React.SetStateAction<AudioBufferSourceNode | null>>;
 }
 
 const defaultValues = {
@@ -29,10 +26,6 @@ const defaultValues = {
   setIsPlaying: () => {},
   audioContext: null,
   setAudioContext: () => {},
-  gainNode: null,
-  setGainNode: () => {},
-  audioSource: null,
-  setAudioSource: () => {},
 };
 
 export const MusicContext = createContext<MusicContextProps>(defaultValues);
@@ -55,8 +48,30 @@ export const MusicContextProvider = ({
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(alert);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
-  const [gainNode, setGainNode] = useState<GainNode | null>(null);
-  const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
+  useEffect(() => {
+    setAudioContext(new AudioContext());
+    return () => {
+      if (audioContext) {
+        audioContext.close();
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    const initalize = async () => {
+      console.log(123);
+      const newSongsRes = await getNewSongs();
+      console.log(newSongsRes);
+      const musicList: MusicList = {
+        id: 0,
+        type: "newSongs",
+        songs: newSongsRes.status ? newSongsRes.songs : [],
+      };
+      setPlayingQueue(musicList);
+      setPlayingIndex(0);
+    };
+    initalize();
+  }, []);
 
   return (
     <MusicContext.Provider
@@ -71,10 +86,6 @@ export const MusicContextProvider = ({
         setIsPlaying,
         audioContext,
         setAudioContext,
-        gainNode,
-        setGainNode,
-        audioSource,
-        setAudioSource,
       }}
     >
       {children}

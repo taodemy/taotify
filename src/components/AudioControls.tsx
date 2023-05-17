@@ -5,7 +5,7 @@ import { TbArrowsShuffle } from "react-icons/tb";
 import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { MusicList } from "types";
 
 interface AudioControlsProps {
@@ -29,7 +29,7 @@ const AudioControls = ({
 
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, isPlaying } =
     useContext(MusicContext);
-
+  const playButtonRef = useRef<HTMLButtonElement | null>(null);
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
     if (playingQueue) setOriginMusicList(playingQueue);
@@ -75,6 +75,7 @@ const AudioControls = ({
 
         {playingQueue && isPlaying ? (
           <button
+            ref={playButtonRef}
             type="button"
             className="items-center justify-center"
             onClick={onPlayPauseClick}
