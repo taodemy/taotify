@@ -1,13 +1,15 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
 
-import Button from "@/components/button";
+import NormalButton from "@/components/buttons/NormalButton";
 export default {
-  title: "ui/Button",
-  component: Button,
-} as ComponentMeta<typeof Button>;
+  title: "ui/buttons/NormalButton",
+  component: NormalButton,
+} as ComponentMeta<typeof NormalButton>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args}>BUTTON</Button>;
+const Template: ComponentStory<typeof NormalButton> = (args) => (
+  <NormalButton {...args}>BUTTON</NormalButton>
+);
 
 export const Primary = Template.bind({});
 Primary.args = {
@@ -74,9 +76,4 @@ Outline.args = {
   color: "primary",
   size: "normal",
   outline: true,
-};
-
-export const Icon = Template.bind({});
-Icon.args = {
-  variant: "icon",
 };
