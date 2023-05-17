@@ -3,6 +3,7 @@ import SearchBar from "@/layouts/SearchBar";
 import SideBar from "@/layouts/SideBar";
 import BottomNavBar from "./BottomNavBar";
 import { ReactNode } from "react";
+import { VolumeContextProvider } from "@/contexts/VolumeContext";
 interface LayoutProps {
   children: ReactNode;
 }
@@ -16,7 +17,9 @@ const Layout = ({ children }: LayoutProps) => {
         <main className="mb-[150px] h-[calc(100vh-150px)] w-full bg-dark px-2 md:mb-[120px] md:h-[calc(100vh-120px)] md:px-10">
           {children}
         </main>
-        <MusicPlayer />
+        <VolumeContextProvider>
+          <MusicPlayer />
+        </VolumeContextProvider>
         <BottomNavBar />
       </div>
     </div>

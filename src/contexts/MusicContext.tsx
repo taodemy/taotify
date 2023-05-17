@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { MusicList } from "types";
 
 interface MusicContextProps {
@@ -12,10 +12,6 @@ interface MusicContextProps {
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   audioContext: AudioContext | null;
   setAudioContext: React.Dispatch<React.SetStateAction<AudioContext | null>>;
-  gainNode: GainNode | null;
-  setGainNode: React.Dispatch<React.SetStateAction<GainNode | null>>;
-  audioSource: AudioBufferSourceNode | null;
-  setAudioSource: React.Dispatch<React.SetStateAction<AudioBufferSourceNode | null>>;
 }
 
 const defaultValues = {
@@ -29,10 +25,6 @@ const defaultValues = {
   setIsPlaying: () => {},
   audioContext: null,
   setAudioContext: () => {},
-  gainNode: null,
-  setGainNode: () => {},
-  audioSource: null,
-  setAudioSource: () => {},
 };
 
 export const MusicContext = createContext<MusicContextProps>(defaultValues);
@@ -55,8 +47,15 @@ export const MusicContextProvider = ({
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(alert);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
-  const [gainNode, setGainNode] = useState<GainNode | null>(null);
-  const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
+
+  useEffect(() => {
+    setAudioContext(new AudioContext());
+    return () => {
+      if (audioContext) {
+        audioContext.close();
+      }
+    };
+  }, []);
 
   return (
     <MusicContext.Provider
@@ -71,10 +70,6 @@ export const MusicContextProvider = ({
         setIsPlaying,
         audioContext,
         setAudioContext,
-        gainNode,
-        setGainNode,
-        audioSource,
-        setAudioSource,
       }}
     >
       {children}
