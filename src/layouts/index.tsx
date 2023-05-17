@@ -1,21 +1,22 @@
 import MusicPlayer from "@/layouts/MusicPlayer";
-import SearchBar from "@/layouts/SearchBar";
 import SideBar from "@/layouts/SideBar";
 import BottomNavBar from "./BottomNavBar";
 import { ReactNode } from "react";
+import SearchBar from "./SearchBar";
 interface LayoutProps {
   children: ReactNode;
 }
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div className="flex h-screen w-screen">
+    <div className="flex flex-row">
       <SideBar />
-      <div className="flex h-full w-full flex-col md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
-        <SearchBar />
-        <main className="mb-[150px] h-[calc(100vh-150px)] w-full bg-dark px-2 md:mb-[120px] md:h-[calc(100vh-120px)] md:px-10">
+      <div className="flex h-screen w-4/5 flex-col bg-dark">
+        <div className="grow overflow-y-scroll px-2 [-ms-overflow-style:'none'] [scrollbar-width:'none'] md:px-10 [&::-webkit-scrollbar]:hidden">
+          <SearchBar />
+          <div className="my-8 h-1/3">This is banner</div>
           {children}
-        </main>
+        </div>
         <MusicPlayer />
         <BottomNavBar />
       </div>

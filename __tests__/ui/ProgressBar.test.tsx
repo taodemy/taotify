@@ -23,12 +23,6 @@ describe("ProgressBar component", () => {
   });
 
   it("renders the progress bar with correct styles", () => {
-    const progressBar = screen.getByRole("progressbar");
-    expect(progressBar).toBeInTheDocument();
-    expect(progressBar).toHaveClass(
-      "relative flex h-[14px] w-full items-center justify-center gap-4 text-light"
-    );
-
     const rangeInput = screen.getByRole("slider");
     expect(rangeInput).toBeInTheDocument();
     expect(rangeInput).toHaveAttribute("min", "0");

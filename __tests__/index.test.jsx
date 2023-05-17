@@ -1,28 +1,7 @@
+import { getStaticProps } from "../src/pages/index";
 import { render, screen } from "@testing-library/react";
-import Home, { getStaticProps } from "../src/pages/index";
 import "@testing-library/jest-dom";
-import { mockMusicList, mockEmptyMusicList } from "../mockData/mockData";
-
-describe("Home", () => {
-  beforeEach(() => {
-    render(<Home newAlbums={[mockMusicList, mockEmptyMusicList]} />);
-  });
-
-  it("renders recently played txt", () => {
-    const RecentlyPlayedTitle = screen.getByText(/recently played/i);
-    expect(RecentlyPlayedTitle).toBeInTheDocument();
-  });
-
-  it("renders friends activity txt", () => {
-    const FriendsActivityTitle = screen.getByText(/friends activity/i);
-    expect(FriendsActivityTitle).toBeInTheDocument();
-  });
-
-  it("renders new releases for you txt", () => {
-    const NewReleasesTitle = screen.getByText(/new releases for you/i);
-    expect(NewReleasesTitle).toBeInTheDocument();
-  });
-});
+import Home from "../src/pages/index";
 
 describe("getStaticProps", () => {
   global.fetch = jest.fn(() =>
@@ -38,5 +17,38 @@ beforeEach(() => {
 
 it("fetches data from the API", async () => {
   const { props } = await getStaticProps();
-  expect(props).toEqual({ newAlbums: [] });
+  expect(props).toEqual({
+    newAlbums: [
+      { area: "EA", albums: [] },
+      { area: "JP", albums: [] },
+      { area: "KR", albums: [] },
+      { area: "ZH", albums: [] },
+    ],
+  });
+});
+
+describe("Home page", () => {
+  beforeEach(() => {
+    render(
+      <Home
+        newAlbums={[
+          { area: "EA", albums: [] },
+          { area: "JP", albums: [] },
+          { area: "KR", albums: [] },
+          { area: "ZH", albums: [] },
+        ]}
+      />
+    );
+  });
+
+  it("renders home page with new albums", () => {
+    const zh = screen.getByText(/china/i);
+    const ea = screen.getByText(/us & europe/i);
+    const jp = screen.getByText(/japan/i);
+    const kr = screen.getByText(/korea/i);
+    expect(zh).toBeInTheDocument();
+    expect(ea).toBeInTheDocument();
+    expect(jp).toBeInTheDocument();
+    expect(kr).toBeInTheDocument();
+  });
 });

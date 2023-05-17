@@ -21,16 +21,6 @@ describe("Music Player Bar", () => {
     expect(audio).toHaveAttribute("src", "url2");
   });
 
-  it("should loop all when loop all mode", async () => {
-    renderMusicPlayer(2, mockMusicList);
-    const audio = screen.getByRole("audio");
-    const loopButton = screen.getByRole("loop");
-    fireEvent.click(loopButton);
-    fireEvent.click(loopButton);
-    fireEvent.ended(audio);
-    expect(audio).toHaveAttribute("src", "url1");
-  });
-
   it("should set new end time when duration changed", async () => {
     renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
@@ -42,7 +32,7 @@ describe("Music Player Bar", () => {
   it("should reset playing queue to origin order when shuffle mode turned off", async () => {
     renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
-    const shuffleButton = screen.getByRole("shuffle");
+    const shuffleButton = screen.getByRole("shuffleButton");
     fireEvent.click(shuffleButton);
     fireEvent.click(shuffleButton);
     expect(audio).toHaveAttribute("src", "url1");
@@ -50,11 +40,22 @@ describe("Music Player Bar", () => {
     expect(audio).toHaveAttribute("src", "url2");
   });
 
+  it("should loop all when loop all mode", async () => {
+    renderMusicPlayer(2, mockMusicList);
+    const audio = screen.getByRole("audio");
+    const loopButton = screen.getByRole("loopButton");
+    fireEvent.click(loopButton);
+    const loopAllButton = screen.getByRole("loopButton");
+    fireEvent.click(loopAllButton);
+    fireEvent.ended(audio);
+    expect(audio).toHaveAttribute("src", "url1");
+  });
+
   it("should loop single song when loop single mode", async () => {
     const mockLoad = jest.spyOn(HTMLMediaElement.prototype, "load").mockImplementation(() => {});
     renderMusicPlayer(0, mockMusicList);
     const audio = screen.getByRole("audio");
-    const loopButton = screen.getByRole("loop");
+    const loopButton = screen.getByRole("loopButton");
     fireEvent.click(loopButton);
     fireEvent.ended(audio);
     expect(audio).toHaveAttribute("src", "url1");
@@ -114,10 +115,10 @@ describe("Music Player Bar", () => {
     expect(audio).toHaveAttribute("src", "url3");
   });
 
-  it("should toggle the isPlaying state when click the play/pause button", () => {
+  it("should toggle the isPlaying state when click the play button", () => {
     renderMusicPlayer(0, mockMusicList);
-    const pauseButton = screen.getByRole("pauseButton");
-    fireEvent.click(pauseButton);
-    expect(screen.getByRole("playButton")).toBeInTheDocument();
+    const playButton = screen.getByRole("playButton");
+    fireEvent.click(playButton);
+    expect(screen.getByRole("pauseButton")).toBeInTheDocument();
   });
 });

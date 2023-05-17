@@ -28,7 +28,7 @@ export const MusicContext = createContext<MusicContextProps>(defaultValues);
 interface Props {
   index?: number;
   queue?: MusicList | null;
-  alert?: false;
+  alert?: boolean;
   children: React.ReactNode;
 }
 

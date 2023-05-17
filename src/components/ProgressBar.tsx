@@ -7,15 +7,12 @@ interface ProgressBarProps {
 }
 const ProgressBar = ({ currentTime, endTime, handleProgressChange }: ProgressBarProps) => {
   return (
-    <div
-      className="relative flex h-[14px] w-full items-center justify-center gap-4 text-light"
-      role="progressbar"
-    >
+    <div className="flex flex-row items-center justify-center gap-4 text-light" role="progressbar">
       <p role="currentTime" className="text-xs md:text-sm">
         {formatTime(Math.min(currentTime, endTime))}
       </p>
       <input
-        className="w-full"
+        className="grow"
         type="range"
         min={0}
         max={endTime}

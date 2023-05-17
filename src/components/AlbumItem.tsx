@@ -22,7 +22,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
   };
 
   return musicList.songs.length > 0 ? (
-    <div className="text-center text-light">
+    <div className="mt-8 text-center text-light">
       <div className="relative">
         <img
           className="peer rounded-full"
@@ -43,12 +43,12 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
           />
         )}
       </div>
-      <p className="truncate text-base">{musicList.songs[0].album.name}</p>
+      <p className="mt-2 truncate text-base">{musicList.songs[0].album.name}</p>
       <p className="truncate text-sm text-light-200">
-        {musicList.songs[0].artists.map((artist) => artist.name)}
+        {musicList.songs[0].artists.map((artist) => artist.name).join(", ")}
       </p>
     </div>
   ) : (
-    <div></div>
+    <div role="emptyAlbum"></div>
   );
 }

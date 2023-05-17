@@ -12,9 +12,11 @@ const roboto = Roboto({
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <MusicContextProvider>
-      <GlobalLayout>
-        <Component {...pageProps} />
-      </GlobalLayout>
+      <div className={roboto.className}>
+        <GlobalLayout>
+          <Component {...pageProps} />
+        </GlobalLayout>
+      </div>
     </MusicContextProvider>
   );
 }

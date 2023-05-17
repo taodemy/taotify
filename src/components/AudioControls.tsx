@@ -9,7 +9,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { MusicList } from "types";
 
 interface AudioControlsProps {
-  isPlaying?: boolean;
   onPlayPauseClick?: () => void;
   onPrevClick?: () => void;
   onNextClick?: () => void;
@@ -53,88 +52,43 @@ const AudioControls = ({
   }, [isShuffle, originMusicList]);
 
   return (
-    <div className="flex h-16 w-full items-center justify-between text-light">
-      <button type="button" className="flex h-8 w-8 items-center justify-center">
-        <BiHeart className="h-6 w-6" />
-      </button>
+    <div className="mb-1 flex flex-row items-center justify-between text-light lg:mb-2">
+      <BiHeart className="h-6 w-6" />
 
-      <div className="flex items-center gap-6">
-        <div className="flex flex-1 justify-end gap-2">
-          <button type="button" className="flex h-8 w-8 items-center justify-center">
-            <FiSkipBack className="h-3 w-3" />
-          </button>
-          <button
-            type="button"
-            className="hidden h-8 w-8 items-center justify-center md:flex"
-            onClick={onPrevClick}
-            role="prevButton"
-          >
-            <IoPlayBackOutline className="h-4 w-4" />
-          </button>
-        </div>
-
+      <div className="flex flex-row items-center gap-6">
+        <FiSkipBack role="prevButton" className="h-3 w-3" onClick={onPrevClick} />
+        <IoPlayBackOutline className="hidden h-4 w-4 md:inline" />
         {playingQueue && isPlaying ? (
-          <button
-            type="button"
-            className="items-center justify-center"
-            onClick={onPlayPauseClick}
-            role="playButton"
-          >
-            <BiPauseCircle className="h-8 w-8" />
-          </button>
+          <BiPauseCircle role="pauseButton" className="h-8 w-8" onClick={onPlayPauseClick} />
         ) : (
-          <button
-            type="button"
-            className="items-center justify-center"
-            onClick={onPlayPauseClick}
-            role="pauseButton"
-          >
-            <BiPlayCircle className="h-8 w-8" />
-          </button>
+          <BiPlayCircle role="playButton" className="h-8 w-8" onClick={onPlayPauseClick} />
         )}
-
-        <div className="flex flex-1 justify-start gap-2">
-          <button
-            type="button"
-            className="hidden h-8 w-8 items-center justify-center md:flex"
-            onClick={onNextClick}
-            role="nextButton"
-          >
-            <FiFastForward className="h-4 w-4" />
-          </button>
-          <button type="button" className="flex h-8 w-8 items-center justify-center">
-            <FiSkipForward className="h-3 w-3" />
-          </button>
-        </div>
+        <FiFastForward className="hidden h-4 w-4 md:inline" />
+        <FiSkipForward role="nextButton" className="h-3 w-3" onClick={onNextClick} />
       </div>
 
-      <div className="flex items-center justify-center gap-6 py-[2px] text-light">
-        <button
-          type="button"
-          className="flex h-8 w-8 items-center justify-center"
-          onClick={() => setIsShuffle((prev) => !prev)}
-          role="shuffle"
-        >
-          {isShuffle === true ? (
-            <TbArrowsShuffle className="h-5 w-5 text-primary" />
-          ) : (
-            <TbArrowsShuffle className="h-5 w-5" />
-          )}
-        </button>
-        <button
-          type="button"
-          className="flex h-8 w-8 items-center justify-center"
-          onClick={toggleLoopMode}
-          role="loop"
-        >
-          {loopMode === "none" ? (
-            <BsRepeat className="h-5 w-5" />
-          ) : loopMode === "single" ? (
-            <BsRepeat1 className="h-5 w-5 text-primary" />
-          ) : (
-            <BsRepeat className="h-5 w-5 text-primary" />
-          )}
-        </button>
+      <div className="flex flex-row items-center gap-6">
+        {isShuffle === true ? (
+          <TbArrowsShuffle
+            role="shuffleButton"
+            className="h-5 w-5 text-primary"
+            onClick={() => setIsShuffle(false)}
+          />
+        ) : (
+          <TbArrowsShuffle
+            role="shuffleButton"
+            className="h-5 w-5"
+            onClick={() => setIsShuffle(true)}
+          />
+        )}
+
+        {loopMode === "none" ? (
+          <BsRepeat role="loopButton" className="h-5 w-5" onClick={toggleLoopMode} />
+        ) : loopMode === "single" ? (
+          <BsRepeat1 role="loopButton" className="h-5 w-5 text-primary" onClick={toggleLoopMode} />
+        ) : (
+          <BsRepeat role="loopButton" className="h-5 w-5 text-primary" onClick={toggleLoopMode} />
+        )}
       </div>
     </div>
   );
