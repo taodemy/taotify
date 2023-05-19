@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState } from "react";
 import { MusicList } from "types";
+import getNewSongs from "../utils/getNewSongs";
 
 interface MusicContextProps {
   playingIndex: number;
@@ -42,6 +43,21 @@ export const MusicContextProvider = ({
   const [playingQueue, setPlayingQueue] = useState<MusicList | null>(queue);
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(alert);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  useEffect(() => {
+    const initalize = async () => {
+      const newSongsRes = await getNewSongs();
+      console.log(newSongsRes);
+      const musicList: MusicList = {
+        id: 0,
+        type: "newSongs",
+        songs: newSongsRes.status ? newSongsRes.songs : [],
+      };
+      setPlayingQueue(musicList);
+      setPlayingIndex(0);
+    };
+    initalize();
+  }, []);
 
   return (
     <MusicContext.Provider

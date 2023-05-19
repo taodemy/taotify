@@ -4,10 +4,13 @@ import Image from "next/image";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
+import loadAudio from "@/utils/audioUtils/loadAudio";
+import { WebAudioContext } from "@/contexts/WebAudioContext";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
     useContext(MusicContext);
+  const { audioContext, audioSource, setAudioSource } = useContext(WebAudioContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
@@ -84,7 +87,34 @@ const MusicPlayer = () => {
 
   const onPlayPauseClick = () => {
     setIsPlaying((prev) => !prev);
+    console.log(audioContext);
+    if (audioContext && audioSource && audioContext.state === "suspended") {
+      try {
+        audioSource.start();
+      } catch {
+        audioContext.resume();
+      }
+    }
+    if (audioContext && audioSource && audioContext.state === "running") {
+      audioContext.suspend();
+    }
   };
+
+  useEffect(() => {
+    const loadSong = async () => {
+      if (playingQueue && playingQueue.songs[playingIndex]) {
+        const url = playingQueue.songs[playingIndex].mp3Url;
+        const res = await loadAudio({
+          mp3Url: url,
+          audioContext: audioContext,
+        });
+        if (res.status) {
+          setAudioSource(res.audioSource);
+        }
+      }
+      loadSong();
+    };
+  }, [playingIndex]);
 
   return (
     <section className="fixed bottom-[72px] h-[78px] w-full transition-all duration-200 ease-in-out md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
