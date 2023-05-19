@@ -1,9 +1,9 @@
-type ButtonColor = "primary" | "secondary" | "ternary" | "warning" | "info" | "light" | "dark";
-type ButtonProps = {
+import { ButtonColor } from "./index";
+
+export type NormalButtonProps = {
   color?: ButtonColor;
   size?: "tiny" | "small" | "normal" | "large";
   outline?: boolean;
-  variant?: "normal" | "icon";
   label?: string;
   onClick?: () => void;
 } & React.ComponentProps<"button">;
@@ -46,38 +46,22 @@ const getButtonClass = (color: ButtonColor, outline: boolean) => {
   }
 };
 
-const Button = ({
-  variant = "normal",
+const NormalButton = ({
   color = "primary",
   outline = false,
   size = "normal",
   onClick,
   label = "button",
   ...otherProps
-}: ButtonProps) => {
+}: NormalButtonProps) => {
   const buttonSize = {
     tiny: "py-[1px] px-[4px]",
     small: "py-[3px] px-[8px]",
     normal: "py-[6px] px-[12px]",
     large: "py-[12px] px-[24px]",
   };
-  const iconColor = {
-    primary: "#8B3ECF",
-    secondary: "#3972E6",
-    ternary: "#2DEBC9",
-    info: "#DB7737",
-    warning: "#E63965",
-    light: "#FEFEFE",
-    dark: "#282B2D",
-  };
-  const iconSize = {
-    tiny: "26px",
-    small: "32px",
-    normal: "40px",
-    large: "48px",
-  };
 
-  return variant === "normal" ? (
+  return (
     <button
       className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn} `}
       {...otherProps}
@@ -85,20 +69,7 @@ const Button = ({
     >
       {label}
     </button>
-  ) : (
-    <button onClick={onClick} aria-label="close">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 24 24"
-        width={iconSize[size]}
-        height={iconSize[size]}
-        fill={iconColor[color]}
-      >
-        <title>close icon</title>
-        <path d="M12 2a10 10 0 1010 10A10 10 0 0012 2zm3.707 12.293a1 1 0 11-1.414 1.414L12 13.414l-2.293 2.293a1 1 0 01-1.414-1.414L10.586 12 8.293 9.707a1 1 0 011.414-1.414L12 10.586l2.293-2.293a1 1 0 011.414 1.414L13.414 12z" />
-      </svg>
-    </button>
   );
 };
 
-export default Button;
+export default NormalButton;

@@ -2,10 +2,15 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
 import "@testing-library/jest-dom";
 import VolumeController from "@/components/volumeController/VolumeController";
+import { VolumeContextProvider } from "@/contexts/VolumeContext";
 
 describe("VolumeController", () => {
   beforeEach(() => {
-    render(<VolumeController />);
+    render(
+      <VolumeContextProvider>
+        <VolumeController />
+      </VolumeContextProvider>
+    );
   });
 
   it("should handle click successfully", () => {
@@ -15,6 +20,7 @@ describe("VolumeController", () => {
       .spyOn(volumeUtils, "calculateVolume")
       .mockImplementation(() => 100);
     fireEvent.mouseDown(volumeSlideBar);
+    fireEvent.mouseUp(volumeSlideBar);
     expect(volumeSlideProgress).toHaveStyle("width: 100%");
     mockCalculateVolume.mockRestore();
   });
