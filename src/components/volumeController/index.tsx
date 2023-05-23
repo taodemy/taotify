@@ -1,5 +1,4 @@
 import React from "react";
-import { VolumeContextProvider } from "@/contexts/VolumeContext";
 import VolumeMuteController from "./VolumeMuteController";
 import VolumeSlideController from "./VolumeSlideController";
 

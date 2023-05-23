@@ -1,4 +1,4 @@
-import VolumeController from "@/components/volumeController/VolumeController";
+import VolumeController from "@/components/volumeController";
 import { VolumeContextProvider } from "@/contexts/VolumeContext";
 const VolumeControllerDemo = () => {
   return (
