@@ -47,7 +47,7 @@ export const MusicContextProvider = ({
   useEffect(() => {
     const initalize = async () => {
       const newSongsRes = await getNewSongs();
-      console.log(newSongsRes);
+      //console.log(newSongsRes);
       const musicList: MusicList = {
         id: 0,
         type: "newSongs",

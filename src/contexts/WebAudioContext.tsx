@@ -22,21 +22,21 @@ interface Props {
 
 export const WebAudioContextProvider = ({ children }: Props) => {
   const audioContextRef = useRef<AudioContext | null>(null);
-  const audioContext = audioContextRef.current;
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
-  const gainNode = gainNodeRef.current;
   useEffect(() => {
     audioContextRef.current = new AudioContext();
-    console.log(audioContext);
+    console.log(audioContextRef.current);
     return () => {
-      if (audioContext) {
-        audioContext.close();
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
       }
     };
   }, []);
 
   useEffect(() => {
+    const audioContext = audioContextRef.current;
+    console.log(audioContext);
     if (audioContext && audioSource) {
       gainNodeRef.current = audioContext.createGain();
       audioSource.connect(gainNodeRef.current);
@@ -46,10 +46,10 @@ export const WebAudioContextProvider = ({ children }: Props) => {
   return (
     <WebAudioContext.Provider
       value={{
-        audioContext,
-        audioSource,
-        setAudioSource,
-        gainNode,
+        audioContext: audioContextRef.current,
+        audioSource: audioSource,
+        setAudioSource: setAudioSource,
+        gainNode: gainNodeRef.current,
       }}
     >
       {children}
