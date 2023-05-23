@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 
+const defaultVolume: number = 50;
 interface VolumeContextType {
   volumeLevel: number;
   setVolumeLevel: React.Dispatch<React.SetStateAction<number>>;
@@ -8,9 +9,9 @@ interface VolumeContextType {
 }
 
 export const VolumeContext = createContext<VolumeContextType>({
-  volumeLevel: 50,
+  volumeLevel: defaultVolume,
   setVolumeLevel: () => {},
-  preMuteVolumeLevel: 50,
+  preMuteVolumeLevel: defaultVolume,
   setPreMuteVolumeLevel: () => {},
 });
 
@@ -19,8 +20,8 @@ interface Props {
 }
 
 export const VolumeContextProvider = ({ children }: Props) => {
-  const [volumeLevel, setVolumeLevel] = useState<number>(50);
-  const [preMuteVolumeLevel, setPreMuteVolumeLevel] = useState<number>(50);
+  const [volumeLevel, setVolumeLevel] = useState<number>(defaultVolume);
+  const [preMuteVolumeLevel, setPreMuteVolumeLevel] = useState<number>(defaultVolume);
 
   return (
     <VolumeContext.Provider
