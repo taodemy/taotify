@@ -89,7 +89,12 @@ const MusicPlayer = () => {
     if (audioContext && audioSource && audioContext.state === "suspended") {
       try {
         audioSource.start();
-      } catch {
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "InvalidStateError") {
+          audioContext.resume();
+        } else {
+          throw err;
+        }
         audioContext.resume();
       }
       setIsPlaying(true);
