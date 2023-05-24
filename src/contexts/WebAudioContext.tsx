@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, useRef } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 interface WebAudioContextProps {
   audioContext: AudioContext | null;
@@ -21,14 +21,11 @@ interface Props {
 }
 
 export const WebAudioContextProvider = ({ children }: Props) => {
-  const audioContextRef = useRef<AudioContext | null>(null);
-  const audioContext = audioContextRef.current;
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
-  const gainNodeRef = useRef<GainNode | null>(null);
-  const gainNode = gainNodeRef.current;
+  const [gainNode, setGainNode] = useState<GainNode | null>(null);
   useEffect(() => {
-    audioContextRef.current = new AudioContext();
-    console.log(audioContext);
+    setAudioContext(new AudioContext());
     return () => {
       if (audioContext) {
         audioContext.close();
@@ -37,19 +34,27 @@ export const WebAudioContextProvider = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
+    console.log(audioContext);
     if (audioContext && audioSource) {
-      gainNodeRef.current = audioContext.createGain();
-      audioSource.connect(gainNodeRef.current);
-      gainNodeRef.current.connect(audioContext.destination);
+      const newGainNode = audioContext.createGain();
+      setGainNode(newGainNode);
     }
   }, [audioSource]);
+
+  useEffect(() => {
+    console.log(audioSource);
+    if (audioContext && audioSource && gainNode) {
+      audioSource.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+    }
+  }, [gainNode]);
   return (
     <WebAudioContext.Provider
       value={{
-        audioContext,
-        audioSource,
-        setAudioSource,
-        gainNode,
+        audioContext: audioContext,
+        audioSource: audioSource,
+        setAudioSource: setAudioSource,
+        gainNode: gainNode,
       }}
     >
       {children}
