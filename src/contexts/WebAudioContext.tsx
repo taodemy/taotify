@@ -1,10 +1,11 @@
-import React, { createContext, useEffect, useState, useRef } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 interface WebAudioContextProps {
   audioContext: AudioContext | null;
   audioSource: AudioBufferSourceNode | null;
   setAudioSource: React.Dispatch<React.SetStateAction<AudioBufferSourceNode | null>>;
   gainNode: GainNode | null;
+  setGainNode: React.Dispatch<React.SetStateAction<GainNode | null>>;
 }
 
 const defaultValues = {
@@ -12,6 +13,7 @@ const defaultValues = {
   audioSource: null,
   setAudioSource: () => {},
   gainNode: null,
+  setGainNode: () => {},
 };
 
 export const WebAudioContext = createContext<WebAudioContextProps>(defaultValues);
@@ -21,35 +23,41 @@ interface Props {
 }
 
 export const WebAudioContextProvider = ({ children }: Props) => {
-  const audioContextRef = useRef<AudioContext | null>(null);
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
-  const gainNodeRef = useRef<GainNode | null>(null);
+  const [gainNode, setGainNode] = useState<GainNode | null>(null);
   useEffect(() => {
-    audioContextRef.current = new AudioContext();
-    console.log(audioContextRef.current);
+    setAudioContext(new AudioContext());
     return () => {
-      if (audioContextRef.current) {
-        audioContextRef.current.close();
+      if (audioContext) {
+        audioContext.close();
       }
     };
   }, []);
 
   useEffect(() => {
-    const audioContext = audioContextRef.current;
     console.log(audioContext);
     if (audioContext && audioSource) {
-      gainNodeRef.current = audioContext.createGain();
-      audioSource.connect(gainNodeRef.current);
-      gainNodeRef.current.connect(audioContext.destination);
+      const newGainNode = audioContext.createGain();
+      setGainNode(newGainNode);
     }
   }, [audioSource]);
+
+  useEffect(() => {
+    console.log(audioSource);
+    if (audioContext && audioSource && gainNode) {
+      audioSource.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+    }
+  }, [gainNode]);
   return (
     <WebAudioContext.Provider
       value={{
-        audioContext: audioContextRef.current,
+        audioContext: audioContext,
         audioSource: audioSource,
         setAudioSource: setAudioSource,
-        gainNode: gainNodeRef.current,
+        gainNode: gainNode,
+        setGainNode: setGainNode,
       }}
     >
       {children}

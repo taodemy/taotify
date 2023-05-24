@@ -86,18 +86,20 @@ const MusicPlayer = () => {
   }, [isPlaying, audioRef]);
 
   const onPlayPauseClick = () => {
-    setIsPlaying((prev) => !prev);
-    console.log(audioContext);
-    // if (audioContext && audioSource && audioContext.state === "suspended") {
-    //   try {
-    //     audioSource.start();
-    //   } catch {
-    //     audioContext.resume();
-    //   }
-    // }
-    // if (audioContext && audioSource && audioContext.state === "running") {
-    //   audioContext.suspend();
-    // }
+    if (audioContext && audioSource && audioContext.state === "suspended") {
+      try {
+        audioSource.start();
+      } catch {
+        audioContext.resume();
+      }
+      setIsPlaying(true);
+      return;
+    }
+    if (audioContext && audioSource && audioContext.state === "running") {
+      audioContext.suspend();
+      setIsPlaying(false);
+      return;
+    }
   };
 
   useEffect(() => {
@@ -109,7 +111,6 @@ const MusicPlayer = () => {
           audioContext: audioContext,
         });
         if (res.status) {
-          console.log(res.audioSource);
           setAudioSource(res.audioSource);
         }
       }
