@@ -5,7 +5,7 @@ interface WebAudioContextProps {
   audioSource: AudioBufferSourceNode | null;
   setAudioSource: React.Dispatch<React.SetStateAction<AudioBufferSourceNode | null>>;
   gainNode: GainNode | null;
-  setGainNode: React.Dispatch<React.SetStateAction<GainNode | null>>;
+  analyserNode: AnalyserNode | null;
 }
 
 const defaultValues = {
@@ -13,7 +13,7 @@ const defaultValues = {
   audioSource: null,
   setAudioSource: () => {},
   gainNode: null,
-  setGainNode: () => {},
+  analyserNode: null,
 };
 
 export const WebAudioContext = createContext<WebAudioContextProps>(defaultValues);
@@ -25,6 +25,7 @@ interface Props {
 export const WebAudioContextProvider = ({ children }: Props) => {
   const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
+  const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
   const [gainNode, setGainNode] = useState<GainNode | null>(null);
   useEffect(() => {
     setAudioContext(new AudioContext());
@@ -36,20 +37,26 @@ export const WebAudioContextProvider = ({ children }: Props) => {
   }, []);
 
   useEffect(() => {
-    console.log(audioContext);
-    if (audioContext && audioSource) {
+    if (audioContext) {
       const newGainNode = audioContext.createGain();
+      newGainNode.connect(audioContext.destination);
       setGainNode(newGainNode);
     }
-  }, [audioSource]);
+  }, [audioContext]);
 
   useEffect(() => {
-    console.log(audioSource);
-    if (audioContext && audioSource && gainNode) {
-      audioSource.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+    if (audioContext && gainNode) {
+      const newAnalyserNode = audioContext.createAnalyser();
+      newAnalyserNode.connect(gainNode);
+      setAnalyserNode(newAnalyserNode);
     }
   }, [gainNode]);
+
+  useEffect(() => {
+    if (audioContext && audioSource && gainNode && analyserNode) {
+      audioSource.connect(gainNode);
+    }
+  }, [audioSource]);
   return (
     <WebAudioContext.Provider
       value={{
@@ -57,7 +64,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
         audioSource: audioSource,
         setAudioSource: setAudioSource,
         gainNode: gainNode,
-        setGainNode: setGainNode,
+        analyserNode: analyserNode,
       }}
     >
       {children}
