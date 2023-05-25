@@ -24,14 +24,14 @@ export default function VolumeSlideController() {
   };
   const handleDragSlideEnd = (event: MouseEvent) => {
     const newVolumeLevel = updateVolumeLevel(event);
-    if (newVolumeLevel > VolumeParam.minVolume && newVolumeLevel <= VolumeParam.maxVolume) {
+    if (newVolumeLevel > VolumeParam.MIN_VOLUME && newVolumeLevel <= VolumeParam.MAX_VOLUME) {
       setPreMuteVolumeLevel(newVolumeLevel);
     }
     document.removeEventListener("mousemove", handleDragSlideMove);
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
   const updateVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>): number => {
-    let newVolumeLevel = VolumeParam.minVolume;
+    let newVolumeLevel = VolumeParam.MIN_VOLUME;
     if (volumeSlider.current) {
       const rect = volumeSlider.current.getBoundingClientRect();
       const width = event.clientX - rect.left;

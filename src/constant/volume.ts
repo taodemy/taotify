@@ -1,11 +1,11 @@
 type VolumeParam = {
-  defaultVolume: number;
-  maxVolume: number;
-  minVolume: number;
+  DEFAULT_VALUE: number;
+  MAX_VOLUME: number;
+  MIN_VOLUME: number;
 };
 
 export const VolumeParam: VolumeParam = {
-  defaultVolume: 50,
-  maxVolume: 100,
-  minVolume: 0,
+  DEFAULT_VALUE: 50,
+  MAX_VOLUME: 100,
+  MIN_VOLUME: 0,
 };

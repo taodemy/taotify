@@ -9,9 +9,9 @@ interface VolumeContextType {
 }
 
 export const VolumeContext = createContext<VolumeContextType>({
-  volumeLevel: VolumeParam.defaultVolume,
+  volumeLevel: VolumeParam.DEFAULT_VALUE,
   setVolumeLevel: () => {},
-  preMuteVolumeLevel: VolumeParam.defaultVolume,
+  preMuteVolumeLevel: VolumeParam.DEFAULT_VALUE,
   setPreMuteVolumeLevel: () => {},
 });
 
@@ -20,24 +20,24 @@ interface Props {
 }
 
 export const VolumeContextProvider = ({ children }: Props) => {
-  const [volumeLevel, setVolumeLevel] = useState<number>(VolumeParam.defaultVolume);
-  const [preMuteVolumeLevel, setPreMuteVolumeLevel] = useState<number>(VolumeParam.defaultVolume);
+  const [volumeLevel, setVolumeLevel] = useState<number>(VolumeParam.DEFAULT_VALUE);
+  const [preMuteVolumeLevel, setPreMuteVolumeLevel] = useState<number>(VolumeParam.DEFAULT_VALUE);
 
   useEffect(() => {
-    if (volumeLevel > VolumeParam.maxVolume) {
-      setVolumeLevel(VolumeParam.maxVolume);
+    if (volumeLevel > VolumeParam.MAX_VOLUME) {
+      setVolumeLevel(VolumeParam.MAX_VOLUME);
     }
-    if (volumeLevel < VolumeParam.minVolume) {
-      setVolumeLevel(VolumeParam.minVolume);
+    if (volumeLevel < VolumeParam.MIN_VOLUME) {
+      setVolumeLevel(VolumeParam.MIN_VOLUME);
     }
   }, [volumeLevel]);
 
   useEffect(() => {
-    if (preMuteVolumeLevel > VolumeParam.maxVolume) {
-      setPreMuteVolumeLevel(VolumeParam.maxVolume);
+    if (preMuteVolumeLevel > VolumeParam.MAX_VOLUME) {
+      setPreMuteVolumeLevel(VolumeParam.MAX_VOLUME);
     }
-    if (preMuteVolumeLevel < VolumeParam.minVolume) {
-      setPreMuteVolumeLevel(VolumeParam.minVolume);
+    if (preMuteVolumeLevel < VolumeParam.MIN_VOLUME) {
+      setPreMuteVolumeLevel(VolumeParam.MIN_VOLUME);
     }
   }, [preMuteVolumeLevel]);
 

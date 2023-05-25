@@ -3,9 +3,9 @@ const volumeUtils = {
   calculateVolume: (progressWidth: number, slideWidth: number): number => {
     let newVolumeLevel = (progressWidth / slideWidth) * 100;
     newVolumeLevel =
-      newVolumeLevel < VolumeParam.minVolume ? VolumeParam.minVolume : newVolumeLevel;
+      newVolumeLevel < VolumeParam.MIN_VOLUME ? VolumeParam.MIN_VOLUME : newVolumeLevel;
     newVolumeLevel =
-      newVolumeLevel > VolumeParam.maxVolume ? VolumeParam.maxVolume : newVolumeLevel;
+      newVolumeLevel > VolumeParam.MAX_VOLUME ? VolumeParam.MAX_VOLUME : newVolumeLevel;
     return newVolumeLevel;
   },
 };
