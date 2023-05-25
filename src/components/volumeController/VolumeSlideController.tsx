@@ -1,9 +1,12 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef } from "react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
+import { VolumeContext } from "@/contexts/VolumeContext";
+import { VolumeParam } from "@/constant/volume";
 
 export default function VolumeSlideController() {
   const halfThumb = (5 * 0.25) / 2;
-  const [volumeLevel, setVolumeLevel] = useState<number>(50);
+  const { volumeLevel, setVolumeLevel, preMuteVolumeLevel, setPreMuteVolumeLevel } =
+    useContext(VolumeContext);
   const volumeSlider = useRef<HTMLDivElement>(null);
   const handleDragSlideStart = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -15,13 +18,20 @@ export default function VolumeSlideController() {
   const handleDragSlideMove = (event: MouseEvent) => {
     const newVolumeLevel = updateVolumeLevel(event);
     setVolumeLevel(newVolumeLevel);
+    if (newVolumeLevel > preMuteVolumeLevel) {
+      setPreMuteVolumeLevel(newVolumeLevel);
+    }
   };
-  const handleDragSlideEnd = () => {
+  const handleDragSlideEnd = (event: MouseEvent) => {
+    const newVolumeLevel = updateVolumeLevel(event);
+    if (newVolumeLevel > VolumeParam.MIN_VOLUME && newVolumeLevel <= VolumeParam.MAX_VOLUME) {
+      setPreMuteVolumeLevel(newVolumeLevel);
+    }
     document.removeEventListener("mousemove", handleDragSlideMove);
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
-  const updateVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>) => {
-    let newVolumeLevel = 0;
+  const updateVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>): number => {
+    let newVolumeLevel = VolumeParam.MIN_VOLUME;
     if (volumeSlider.current) {
       const rect = volumeSlider.current.getBoundingClientRect();
       const width = event.clientX - rect.left;
@@ -30,7 +40,7 @@ export default function VolumeSlideController() {
     return newVolumeLevel;
   };
   return (
-    <div className={`absolute right-10 bottom-5 mx-auto w-52`} data-testid="volumeSlideContainer">
+    <div className={`right-10 bottom-5 mx-auto w-52`} data-testid="volumeSlideContainer">
       <div
         ref={volumeSlider}
         className={`relative h-5 cursor-pointer rounded bg-primary-100`}
