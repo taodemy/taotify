@@ -1,7 +1,7 @@
 import React, { useContext, useRef } from "react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
 import { VolumeContext } from "@/contexts/VolumeContext";
-import { volumeParam } from "@/constant/volume";
+import { VolumeParam } from "@/constant/volume";
 
 export default function VolumeSlideController() {
   const halfThumb = (5 * 0.25) / 2;
@@ -24,14 +24,14 @@ export default function VolumeSlideController() {
   };
   const handleDragSlideEnd = (event: MouseEvent) => {
     const newVolumeLevel = updateVolumeLevel(event);
-    if (newVolumeLevel > volumeParam.minVolume && newVolumeLevel <= volumeParam.maxVolume) {
+    if (newVolumeLevel > VolumeParam.minVolume && newVolumeLevel <= VolumeParam.maxVolume) {
       setPreMuteVolumeLevel(newVolumeLevel);
     }
     document.removeEventListener("mousemove", handleDragSlideMove);
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
   const updateVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>): number => {
-    let newVolumeLevel = volumeParam.minVolume;
+    let newVolumeLevel = VolumeParam.minVolume;
     if (volumeSlider.current) {
       const rect = volumeSlider.current.getBoundingClientRect();
       const width = event.clientX - rect.left;

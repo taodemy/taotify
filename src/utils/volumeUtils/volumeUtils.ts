@@ -1,11 +1,11 @@
-import { volumeParam } from "@/constant/volume";
+import { VolumeParam } from "@/constant/volume";
 const volumeUtils = {
   calculateVolume: (progressWidth: number, slideWidth: number): number => {
     let newVolumeLevel = (progressWidth / slideWidth) * 100;
     newVolumeLevel =
-      newVolumeLevel < volumeParam.minVolume ? volumeParam.minVolume : newVolumeLevel;
+      newVolumeLevel < VolumeParam.minVolume ? VolumeParam.minVolume : newVolumeLevel;
     newVolumeLevel =
-      newVolumeLevel > volumeParam.maxVolume ? volumeParam.maxVolume : newVolumeLevel;
+      newVolumeLevel > VolumeParam.maxVolume ? VolumeParam.maxVolume : newVolumeLevel;
     return newVolumeLevel;
   },
 };
