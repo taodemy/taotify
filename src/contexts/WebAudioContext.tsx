@@ -1,10 +1,11 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 
 interface WebAudioContextProps {
   audioContext: AudioContext | null;
   audioSource: AudioBufferSourceNode | null;
   setAudioSource: React.Dispatch<React.SetStateAction<AudioBufferSourceNode | null>>;
   gainNode: GainNode | null;
+  analyserNode: AnalyserNode | null;
 }
 
 const defaultValues = {
@@ -12,6 +13,7 @@ const defaultValues = {
   audioSource: null,
   setAudioSource: () => {},
   gainNode: null,
+  analyserNode: null,
 };
 
 export const WebAudioContext = createContext<WebAudioContextProps>(defaultValues);
@@ -21,40 +23,52 @@ interface Props {
 }
 
 export const WebAudioContextProvider = ({ children }: Props) => {
-  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
+  // const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
-  const [gainNode, setGainNode] = useState<GainNode | null>(null);
+  // const [gainNode, setGainNode] = useState<GainNode | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
+  const analyserNodeRef = useRef<AnalyserNode | null>(null);
   useEffect(() => {
-    setAudioContext(new AudioContext());
+    if (typeof window !== "undefined") {
+      audioContextRef.current = new AudioContext();
+      gainNodeRef.current = audioContextRef.current.createGain();
+      analyserNodeRef.current = audioContextRef.current.createAnalyser();
+      analyserNodeRef.current.connect(gainNodeRef.current);
+      gainNodeRef.current.connect(audioContextRef.current.destination);
+      setIsInitialized(true);
+    }
     return () => {
-      if (audioContext) {
-        audioContext.close();
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
       }
     };
   }, []);
 
   useEffect(() => {
-    console.log(audioContext);
-    if (audioContext && audioSource) {
-      const newGainNode = audioContext.createGain();
-      setGainNode(newGainNode);
+    console.log(audioContextRef.current);
+    if (audioContextRef.current && analyserNodeRef.current && gainNodeRef.current && audioSource) {
+      try {
+        audioSource.connect(analyserNodeRef.current);
+      } catch (err) {
+        console.log(err);
+      }
     }
   }, [audioSource]);
 
-  useEffect(() => {
-    console.log(audioSource);
-    if (audioContext && audioSource && gainNode) {
-      audioSource.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-    }
-  }, [gainNode]);
+  if (!isInitialized) {
+    return null;
+  }
+
   return (
     <WebAudioContext.Provider
       value={{
-        audioContext: audioContext,
+        audioContext: audioContextRef.current,
         audioSource: audioSource,
         setAudioSource: setAudioSource,
-        gainNode: gainNode,
+        gainNode: gainNodeRef.current,
+        analyserNode: analyserNodeRef.current,
       }}
     >
       {children}
