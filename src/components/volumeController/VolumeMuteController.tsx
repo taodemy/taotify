@@ -1,17 +1,13 @@
 import React, { useContext } from "react";
 import { VolumeContext } from "@/contexts/VolumeContext";
+import { VolumeParam } from "@/constant/volume";
 
 export default function VolumeMuteController() {
-  const { volumeLevel, setVolumeLevel, backtrackVolumeLevel } = useContext(VolumeContext);
+  const { volumeLevel, setVolumeLevel, preMuteVolumeLevel } = useContext(VolumeContext);
   const handleClick = () => {
-    if (volumeLevel > 0 && volumeLevel <= 100) {
-      setVolumeLevel(0);
-      return;
-    }
-    if (volumeLevel === 0) {
-      setVolumeLevel(backtrackVolumeLevel);
-      return;
-    }
+    const newVolumeLevel =
+      volumeLevel === VolumeParam.MIN_VOLUME ? preMuteVolumeLevel : VolumeParam.MIN_VOLUME;
+    setVolumeLevel(newVolumeLevel);
   };
-  return <button className="w-5 h-5 bg-light-100" onClick={handleClick}></button>;
+  return <button className="h-5 w-5 bg-light-100" onClick={handleClick}></button>;
 }

@@ -1,10 +1,11 @@
 import React, { useContext, useRef } from "react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
 import { VolumeContext } from "@/contexts/VolumeContext";
+import { VolumeParam } from "@/constant/volume";
 
 export default function VolumeSlideController() {
   const halfThumb = (5 * 0.25) / 2;
-  const { volumeLevel, setVolumeLevel, backtrackVolumeLevel, setBacktrackVolumeLevel } =
+  const { volumeLevel, setVolumeLevel, preMuteVolumeLevel, setPreMuteVolumeLevel } =
     useContext(VolumeContext);
   const volumeSlider = useRef<HTMLDivElement>(null);
   const handleDragSlideStart = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -17,20 +18,20 @@ export default function VolumeSlideController() {
   const handleDragSlideMove = (event: MouseEvent) => {
     const newVolumeLevel = updateVolumeLevel(event);
     setVolumeLevel(newVolumeLevel);
-    if (newVolumeLevel > backtrackVolumeLevel) {
-      setBacktrackVolumeLevel(newVolumeLevel);
+    if (newVolumeLevel > preMuteVolumeLevel) {
+      setPreMuteVolumeLevel(newVolumeLevel);
     }
   };
   const handleDragSlideEnd = (event: MouseEvent) => {
     const newVolumeLevel = updateVolumeLevel(event);
-    if (newVolumeLevel > 0 && newVolumeLevel <= 100) {
-      setBacktrackVolumeLevel(newVolumeLevel);
+    if (newVolumeLevel > VolumeParam.MIN_VOLUME && newVolumeLevel <= VolumeParam.MAX_VOLUME) {
+      setPreMuteVolumeLevel(newVolumeLevel);
     }
     document.removeEventListener("mousemove", handleDragSlideMove);
     document.removeEventListener("mouseup", handleDragSlideEnd);
   };
   const updateVolumeLevel = (event: MouseEvent | React.MouseEvent<HTMLDivElement>): number => {
-    let newVolumeLevel = 0;
+    let newVolumeLevel = VolumeParam.MIN_VOLUME;
     if (volumeSlider.current) {
       const rect = volumeSlider.current.getBoundingClientRect();
       const width = event.clientX - rect.left;

@@ -10,7 +10,7 @@ describe("VolumeContext", () => {
       return (
         <div>
           <p>VolumeLevel: {context.volumeLevel}</p>
-          <p>BacktrackVolumeLevel: {context.backtrackVolumeLevel}</p>
+          <p>BacktrackVolumeLevel: {context.preMuteVolumeLevel}</p>
         </div>
       );
     };
