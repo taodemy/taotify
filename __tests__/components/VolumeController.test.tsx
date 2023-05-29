@@ -1,7 +1,7 @@
 import { render, fireEvent, screen } from "@testing-library/react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
 import "@testing-library/jest-dom";
-import VolumeController from "@/components/volumeController/VolumeController";
+import VolumeController from "@/components/volumeController";
 import { VolumeContextProvider } from "@/contexts/VolumeContext";
 
 describe("VolumeController", () => {

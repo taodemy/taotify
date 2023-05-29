@@ -1,17 +1,18 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { VolumeParam } from "@/constant/volume";
 
 interface VolumeContextType {
   volumeLevel: number;
   setVolumeLevel: React.Dispatch<React.SetStateAction<number>>;
-  backtrackVolumeLevel: number;
-  setBacktrackVolumeLevel: React.Dispatch<React.SetStateAction<number>>;
+  preMuteVolumeLevel: number;
+  setPreMuteVolumeLevel: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const VolumeContext = createContext<VolumeContextType>({
-  volumeLevel: 50,
+  volumeLevel: VolumeParam.DEFAULT_VALUE,
   setVolumeLevel: () => {},
-  backtrackVolumeLevel: 50,
-  setBacktrackVolumeLevel: () => {},
+  preMuteVolumeLevel: VolumeParam.DEFAULT_VALUE,
+  setPreMuteVolumeLevel: () => {},
 });
 
 interface Props {
@@ -19,12 +20,30 @@ interface Props {
 }
 
 export const VolumeContextProvider = ({ children }: Props) => {
-  const [volumeLevel, setVolumeLevel] = useState<number>(50);
-  const [backtrackVolumeLevel, setBacktrackVolumeLevel] = useState<number>(50);
+  const [volumeLevel, setVolumeLevel] = useState<number>(VolumeParam.DEFAULT_VALUE);
+  const [preMuteVolumeLevel, setPreMuteVolumeLevel] = useState<number>(VolumeParam.DEFAULT_VALUE);
+
+  useEffect(() => {
+    if (volumeLevel > VolumeParam.MAX_VOLUME) {
+      setVolumeLevel(VolumeParam.MAX_VOLUME);
+    }
+    if (volumeLevel < VolumeParam.MIN_VOLUME) {
+      setVolumeLevel(VolumeParam.MIN_VOLUME);
+    }
+  }, [volumeLevel]);
+
+  useEffect(() => {
+    if (preMuteVolumeLevel > VolumeParam.MAX_VOLUME) {
+      setPreMuteVolumeLevel(VolumeParam.MAX_VOLUME);
+    }
+    if (preMuteVolumeLevel < VolumeParam.MIN_VOLUME) {
+      setPreMuteVolumeLevel(VolumeParam.MIN_VOLUME);
+    }
+  }, [preMuteVolumeLevel]);
 
   return (
     <VolumeContext.Provider
-      value={{ volumeLevel, setVolumeLevel, backtrackVolumeLevel, setBacktrackVolumeLevel }}
+      value={{ volumeLevel, setVolumeLevel, preMuteVolumeLevel, setPreMuteVolumeLevel }}
     >
       {children}
     </VolumeContext.Provider>
