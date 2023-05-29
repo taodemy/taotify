@@ -25,9 +25,7 @@ interface Props {
 export const WebAudioContextProvider = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
-  // const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
-  // const [gainNode, setGainNode] = useState<GainNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const analyserNodeRef = useRef<AnalyserNode | null>(null);
   useEffect(() => {
@@ -52,7 +50,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
       try {
         audioSource.connect(analyserNodeRef.current);
       } catch (err) {
-        console.log(err);
+        return;
       }
     }
   }, [audioSource]);
