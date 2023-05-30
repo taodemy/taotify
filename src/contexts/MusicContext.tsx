@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 import { MusicList } from "types";
 import getNewSongs from "../utils/getNewSongs";
 
