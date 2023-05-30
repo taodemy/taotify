@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useRef, useState } from "react";
 
 interface WebAudioContextProps {
   audioContext: AudioContext | null;
@@ -23,48 +23,50 @@ interface Props {
 }
 
 export const WebAudioContextProvider = ({ children }: Props) => {
-  const [audioContext, setAudioContext] = useState<AudioContext | null>(null);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const audioContextRef = useRef<AudioContext | null>(null);
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
-  const [analyserNode, setAnalyserNode] = useState<AnalyserNode | null>(null);
-  const [gainNode, setGainNode] = useState<GainNode | null>(null);
+  const gainNodeRef = useRef<GainNode | null>(null);
+  const analyserNodeRef = useRef<AnalyserNode | null>(null);
   useEffect(() => {
-    setAudioContext(new AudioContext());
+    if (typeof window !== "undefined") {
+      audioContextRef.current = new AudioContext();
+      gainNodeRef.current = audioContextRef.current.createGain();
+      analyserNodeRef.current = audioContextRef.current.createAnalyser();
+      analyserNodeRef.current.connect(gainNodeRef.current);
+      gainNodeRef.current.connect(audioContextRef.current.destination);
+      setIsInitialized(true);
+    }
     return () => {
-      if (audioContext) {
-        audioContext.close();
+      if (audioContextRef.current) {
+        audioContextRef.current.close();
       }
     };
   }, []);
 
   useEffect(() => {
-    if (audioContext) {
-      const newGainNode = audioContext.createGain();
-      newGainNode.connect(audioContext.destination);
-      setGainNode(newGainNode);
-    }
-  }, [audioContext]);
-
-  useEffect(() => {
-    if (audioContext && gainNode) {
-      const newAnalyserNode = audioContext.createAnalyser();
-      newAnalyserNode.connect(gainNode);
-      setAnalyserNode(newAnalyserNode);
-    }
-  }, [gainNode]);
-
-  useEffect(() => {
-    if (audioContext && audioSource && gainNode && analyserNode) {
-      audioSource.connect(gainNode);
+    console.log(audioContextRef.current);
+    if (audioContextRef.current && analyserNodeRef.current && gainNodeRef.current && audioSource) {
+      try {
+        audioSource.connect(analyserNodeRef.current);
+      } catch (err) {
+        return;
+      }
     }
   }, [audioSource]);
+
+  if (!isInitialized) {
+    return null;
+  }
+
   return (
     <WebAudioContext.Provider
       value={{
-        audioContext: audioContext,
+        audioContext: audioContextRef.current,
         audioSource: audioSource,
         setAudioSource: setAudioSource,
-        gainNode: gainNode,
-        analyserNode: analyserNode,
+        gainNode: gainNodeRef.current,
+        analyserNode: analyserNodeRef.current,
       }}
     >
       {children}
