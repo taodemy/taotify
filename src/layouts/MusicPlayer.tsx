@@ -10,13 +10,16 @@ import { WebAudioContext } from "@/contexts/WebAudioContext";
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
     useContext(MusicContext);
-  const { audioContext, audioSource, setAudioSource } = useContext(WebAudioContext);
+  const { audioContext, audioSource, setAudioSource, analyserNode, visualArr, setAudioData } =
+    useContext(WebAudioContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
   const [audioUrl, setAudioUrl] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const musicData = playingQueue?.songs || "";
+  const rafRef = useRef<number>();
+  let lastTime: number;
 
   const handlePlayEnd = () => {
     if (!playingQueue) return;
@@ -98,11 +101,13 @@ const MusicPlayer = () => {
         audioContext.resume();
       }
       setIsPlaying(true);
+      rafRef.current = requestAnimationFrame(step);
       return;
     }
     if (audioContext && audioSource && audioContext.state === "running") {
       audioContext.suspend();
       setIsPlaying(false);
+      rafRef.current && cancelAnimationFrame(rafRef.current);
       return;
     }
   };
@@ -122,6 +127,21 @@ const MusicPlayer = () => {
     };
     loadSong();
   }, [playingIndex]);
+
+  const step = (timestamp: number) => {
+    if (!lastTime) lastTime = timestamp;
+    const progress = timestamp - lastTime;
+    if (progress === 0 || progress > 0) {
+      try {
+        analyserNode?.getByteFrequencyData(visualArr!);
+        setAudioData(Array.from(visualArr!));
+        lastTime = timestamp;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    rafRef.current = requestAnimationFrame(step);
+  };
 
   return (
     <section className="fixed bottom-[72px] h-[78px] w-full transition-all duration-200 ease-in-out md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:w-[calc(100vw-320px)]">
