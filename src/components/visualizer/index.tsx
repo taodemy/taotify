@@ -1,15 +1,9 @@
 import { WebAudioContext } from "@/contexts/WebAudioContext";
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Circle, Canvas, Rect, DisplayObject, CanvasEvent } from "@antv/g";
 import { Renderer as CanvasRenderer } from "@antv/g-canvas";
 
-interface SComponentProps {
-  isPlaying: boolean;
-  data: number[] | null;
-  audioImg?: string;
-}
-
-export default function AudioVisualizer(Props: SComponentProps) {
+export default function AudioVisualizer() {
   const { audioData } = useContext(WebAudioContext);
   const POINT_NUM = (64 * 3) / 4;
   const OFFSET = 10;
