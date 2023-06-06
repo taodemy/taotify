@@ -44,7 +44,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
       gainNodeRef.current = audioContextRef.current.createGain();
       analyserNodeRef.current = audioContextRef.current.createAnalyser();
       analyserNodeRef.current.connect(gainNodeRef.current);
-      analyserNodeRef.current.fftSize = 128;
+      analyserNodeRef.current.fftSize = 128 * 2;
       gainNodeRef.current.connect(audioContextRef.current.destination);
       setIsInitialized(true);
     }
