@@ -37,21 +37,24 @@ export const WebAudioContextProvider = ({ children }: Props) => {
   const analyserNodeRef = useRef<AnalyserNode | null>(null);
   const [visualArr, setVisualArr] = useState<Uint8Array | null>(null);
   const [audioData, setAudioData] = useState<number[] | null>(null);
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      audioContextRef.current = new AudioContext();
-      gainNodeRef.current = audioContextRef.current.createGain();
-      analyserNodeRef.current = audioContextRef.current.createAnalyser();
-      analyserNodeRef.current.connect(gainNodeRef.current);
-      analyserNodeRef.current.fftSize = FFT_SIZE;
-      gainNodeRef.current.connect(audioContextRef.current.destination);
-      setIsInitialized(true);
-    }
+
+  const initWebAuidoContext = () => {
+    audioContextRef.current = new AudioContext();
+    gainNodeRef.current = audioContextRef.current.createGain();
+    analyserNodeRef.current = audioContextRef.current.createAnalyser();
+    analyserNodeRef.current.connect(gainNodeRef.current);
+    analyserNodeRef.current.fftSize = FFT_SIZE;
+    gainNodeRef.current.connect(audioContextRef.current.destination);
+    setIsInitialized(true);
     return () => {
       if (audioContextRef.current) {
         audioContextRef.current.close();
       }
     };
+  };
+
+  useEffect(() => {
+    initWebAuidoContext();
   }, []);
 
   useEffect(() => {
