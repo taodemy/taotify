@@ -5,7 +5,7 @@ import { Renderer as CanvasRenderer } from "@antv/g-canvas";
 
 export default function AudioVisualizer() {
   const { audioData } = useContext(WebAudioContext);
-  const POINT_NUM = (64 * 9) / 16;
+  const POINT_NUM = 64;
   const OFFSET = 10;
   const RECT_WIDTH = 4;
   const RECT_COLOR = "#e9dcf7";
@@ -18,7 +18,7 @@ export default function AudioVisualizer() {
   const imgRef = useRef<GImage>();
   const getArray = (arr: number[]) => {
     const filterArr = arr.reduce((prev: number[], curr: number, index: number) => {
-      if (index % 2) {
+      if (index > 10 && index < 75) {
         prev.push(curr);
       }
       return prev;
@@ -26,7 +26,7 @@ export default function AudioVisualizer() {
     return filterArr;
   };
 
-  useEffect(() => {
+  const initCanvas = () => {
     const renderer = new CanvasRenderer();
     const newCanvas = new Canvas({
       container: "SLine",
@@ -60,20 +60,26 @@ export default function AudioVisualizer() {
         }),
       },
     });
-    const matrix = imgRef.current.getLocalTransform;
-    const radian = 2 * Math.PI;
-    // imgRef.current.animate((ratio: number) => {
-    //   return {
-    //     matrix: transform(matrix, [
-    //       ["t", -X, -Y],
-    //       ["r", radian * ratio],
-    //       ["t", X, Y],
-    //     ]),
-    //   };
-    // });
     newCanvas.addEventListener(CanvasEvent.READY, () => {
       newCanvas.appendChild(circle);
       newCanvas.appendChild(imgRef.current!);
+      imgRef.current!.animate(
+        [
+          {
+            transform: "rotate(-360deg)",
+            transformOrigin: "center",
+          },
+          {
+            transform: "rotate(0)",
+            transformOrigin: "center",
+          },
+        ],
+        {
+          duration: 10000,
+          fill: "both",
+          iterations: Infinity,
+        }
+      );
       sArr.current = Array.from({ length: POINT_NUM }, (item, index: number) => {
         const deg = index * (360 / POINT_NUM) - 150;
         const l = Math.cos((deg * Math.PI) / 180);
@@ -94,6 +100,10 @@ export default function AudioVisualizer() {
       });
     });
     canvasRef.current = newCanvas;
+  };
+
+  useEffect(() => {
+    initCanvas();
   }, []);
 
   useEffect(() => {
@@ -101,7 +111,6 @@ export default function AudioVisualizer() {
       // console.log(audioData);
       const arr = getArray(audioData);
       arr.map((item, index) => {
-        if (index >= POINT_NUM) return;
         sArr.current[index]?.setAttribute("height", `${((item * item) / 65025) * 50 + RECT_WIDTH}`);
       });
     }
