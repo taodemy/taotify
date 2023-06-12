@@ -111,7 +111,7 @@ export default function AudioVisualizer() {
       // console.log(audioData);
       const arr = getArray(audioData);
       arr.map((item, index) => {
-        sArr.current[index]?.setAttribute("height", `${((item * item) / 65025) * 50 + RECT_WIDTH}`);
+        sArr.current[index]?.setAttribute("height", `${((item * item) / 65025) * 60 + RECT_WIDTH}`);
       });
     }
   }, [audioData]);
