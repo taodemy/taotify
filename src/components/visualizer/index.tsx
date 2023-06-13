@@ -2,9 +2,13 @@ import { WebAudioContext } from "@/contexts/WebAudioContext";
 import React, { useContext, useEffect, useRef } from "react";
 import { Circle, Canvas, Rect, Image as GImage, DisplayObject, CanvasEvent } from "@antv/g";
 import { Renderer as CanvasRenderer } from "@antv/g-canvas";
+import { MusicContext } from "@/contexts/MusicContext";
 
 export default function AudioVisualizer() {
-  const { audioData } = useContext(WebAudioContext);
+  const { audioData, analyserNode, visualArr, setAudioData } = useContext(WebAudioContext);
+  const { isPlaying } = useContext(MusicContext);
+  const rafRef = useRef<number>();
+  let lastTime: number;
   const POINT_NUM = 64;
   const OFFSET = 10;
   const RECT_WIDTH = 4;
@@ -24,6 +28,21 @@ export default function AudioVisualizer() {
       return prev;
     }, []);
     return filterArr;
+  };
+
+  const step = (timestamp: number) => {
+    if (!lastTime) lastTime = timestamp;
+    const progress = timestamp - lastTime;
+    if (progress === 0 || progress > 0) {
+      try {
+        analyserNode?.getByteFrequencyData(visualArr!);
+        setAudioData(Array.from(visualArr!));
+        lastTime = timestamp;
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    rafRef.current = requestAnimationFrame(step);
   };
 
   const initCanvas = () => {
@@ -63,7 +82,7 @@ export default function AudioVisualizer() {
     newCanvas.addEventListener(CanvasEvent.READY, () => {
       newCanvas.appendChild(circle);
       newCanvas.appendChild(imgRef.current!);
-      imgRef.current!.animate(
+      const animation = imgRef.current!.animate(
         [
           {
             transform: "rotate(-360deg)",
@@ -76,10 +95,12 @@ export default function AudioVisualizer() {
         ],
         {
           duration: 10000,
-          fill: "both",
           iterations: Infinity,
         }
       );
+      setTimeout(() => {
+        animation?.pause();
+      });
       sArr.current = Array.from({ length: POINT_NUM }, (item, index: number) => {
         const deg = index * (360 / POINT_NUM) - 150;
         const l = Math.cos((deg * Math.PI) / 180);
@@ -107,8 +128,21 @@ export default function AudioVisualizer() {
   }, []);
 
   useEffect(() => {
+    if (isPlaying) {
+      imgRef.current?.getAnimations().map((animation) => {
+        animation.play();
+      });
+      rafRef.current = requestAnimationFrame(step);
+    } else {
+      imgRef.current?.getAnimations().map((animation) => {
+        animation.pause();
+      });
+      rafRef.current && cancelAnimationFrame(rafRef.current);
+    }
+  }, [isPlaying]);
+
+  useEffect(() => {
     if (audioData?.length) {
-      // console.log(audioData);
       const arr = getArray(audioData);
       arr.map((item, index) => {
         sArr.current[index]?.setAttribute("height", `${((item * item) / 65025) * 60 + RECT_WIDTH}`);
