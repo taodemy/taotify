@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import { Roboto } from "next/font/google";
 import { MusicContextProvider } from "@/contexts/MusicContext";
 import GlobalLayout from "@/layouts";
+import { WebAudioContextProvider } from "@/contexts/WebAudioContext";
 
 const roboto = Roboto({
   weight: ["300", "400", "500"],
@@ -11,10 +12,12 @@ const roboto = Roboto({
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <MusicContextProvider>
-      <GlobalLayout>
-        <Component {...pageProps} />
-      </GlobalLayout>
-    </MusicContextProvider>
+    <WebAudioContextProvider>
+      <MusicContextProvider>
+        <GlobalLayout>
+          <Component {...pageProps} />
+        </GlobalLayout>
+      </MusicContextProvider>
+    </WebAudioContextProvider>
   );
 }
