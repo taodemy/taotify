@@ -1,16 +1,13 @@
 import Button from "@/components/buttons";
 import tokenHandler from "@/utils/tokenHandler";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
 
 const SearchBar = () => {
-  const router = useRouter();
   const [bearerToken, setBearerToken] = useState<string>("");
   useEffect(() => {
     const { token } = tokenHandler.getToken();
     token && setBearerToken(token);
-    token && router.push("/member/prices");
   }, []);
 
   return (
