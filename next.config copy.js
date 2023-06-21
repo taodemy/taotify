@@ -6,7 +6,14 @@ const nextConfig = {
   },
   env: {
     TAOTIFY_BACKEND_URL: process.env.TAOTIFY_BACKEND_URL,
-    STRIPE_PUBLISHABLE_KEY: process.env.STRIPE_PUBLISHABLE_KEY,
+  },
+  async rewrites() {
+    return [
+      {
+        source: "/v1/:path*",
+        destination: "http://localhost:3001/v1/:path*", // Proxy to Backend
+      },
+    ];
   },
 };
 
