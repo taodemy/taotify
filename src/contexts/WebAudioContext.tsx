@@ -67,10 +67,6 @@ export const WebAudioContextProvider = ({ children }: Props) => {
     }
   }, [audioSource]);
 
-  // useEffect(() => {
-  //   console.log(audioData);
-  // }, [audioData]);
-
   if (!isInitialized) {
     return null;
   }

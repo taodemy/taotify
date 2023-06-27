@@ -10,8 +10,7 @@ import { WebAudioContext } from "@/contexts/WebAudioContext";
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
     useContext(MusicContext);
-  const { audioContext, audioSource, setAudioSource, analyserNode, visualArr, setAudioData } =
-    useContext(WebAudioContext);
+  const { audioContext, audioSource, setAudioSource } = useContext(WebAudioContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
