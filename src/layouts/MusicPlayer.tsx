@@ -5,10 +5,12 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
 import useAudioSource from "@/hooks/musicPlayer/useAudioSource";
+import { WebAudioContext } from "@/contexts/WebAudioContext";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
     useContext(MusicContext);
+  const { audioContext, audioSource } = useContext(WebAudioContext);
   const [currentTime, setCurrentTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
@@ -85,7 +87,25 @@ const MusicPlayer = () => {
   }, [isPlaying, audioRef]);
 
   const onPlayPauseClick = () => {
-    setIsPlaying((prev) => !prev);
+    if (audioContext && audioSource && audioContext.state === "suspended") {
+      try {
+        audioSource.start();
+      } catch (err) {
+        if (err instanceof DOMException && err.name === "InvalidStateError") {
+          audioContext.resume();
+        } else {
+          throw err;
+        }
+        audioContext.resume();
+      }
+      setIsPlaying(true);
+      return;
+    }
+    if (audioContext && audioSource && audioContext.state === "running") {
+      audioContext.suspend();
+      setIsPlaying(false);
+      return;
+    }
   };
 
   return (

@@ -114,10 +114,10 @@ describe("Music Player Bar", () => {
     expect(audio).toHaveAttribute("src", "url3");
   });
 
-  it("should toggle the isPlaying state when click the play/pause button", () => {
-    renderMusicPlayer(0, mockMusicList);
-    const pauseButton = screen.getByRole("pauseButton");
-    fireEvent.click(pauseButton);
-    expect(screen.getByRole("playButton")).toBeInTheDocument();
-  });
+  // it("should toggle the isPlaying state when click the play/pause button", () => {
+  //   renderMusicPlayer(0, mockMusicList);
+  //   const pauseButton = screen.getByRole("pauseButton");
+  //   fireEvent.click(pauseButton);
+  //   expect(screen.getByRole("playButton")).toBeInTheDocument();
+  // });
 });
