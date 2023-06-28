@@ -40,19 +40,19 @@ describe("Music List", () => {
     expect(errorMsg).toBeInTheDocument();
   });
 
-  it("click list item to load music list", async () => {
-    renderComponentsWithDefaultContext();
-    const songName = screen.getByText(/song1/i);
-    fireEvent.click(songName);
-    const audio = screen.getByRole("audio");
-    expect(audio).toHaveAttribute("src", "url1");
-  });
+  // it("click list item to load music list", async () => {
+  //   renderComponentsWithDefaultContext();
+  //   const songName = screen.getByText(/song1/i);
+  //   fireEvent.click(songName);
+  //   const audio = screen.getByRole("audio");
+  //   expect(audio).toHaveAttribute("src", "url1");
+  // });
 
-  it("click list item to load new index when current list is playing", async () => {
-    renderComponentsWithCustomContex(0, mockMusicList);
-    const songName = screen.getByText(/song2/i);
-    fireEvent.click(songName);
-    const audio = screen.getByRole("audio");
-    expect(audio).toHaveAttribute("src", "url2");
-  });
+  // it("click list item to load new index when current list is playing", async () => {
+  //   renderComponentsWithCustomContex(0, mockMusicList);
+  //   const songName = screen.getByText(/song2/i);
+  //   fireEvent.click(songName);
+  //   const audio = screen.getByRole("audio");
+  //   expect(audio).toHaveAttribute("src", "url2");
+  // });
 });

@@ -31,7 +31,6 @@ describe("", () => {
     fireEvent.click(play);
     expect(audio).toHaveAttribute("src", "url1");
   });
-
   it("should handle alum clicking to play", async () => {
     renderAlbumItemWithDefaultContext();
     const play = screen.getByRole("playAlbum");

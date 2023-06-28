@@ -5,8 +5,13 @@ import { getAudioSource } from "@/utils/getAudioSource";
 
 const useAudioSource = () => {
   const { playingIndex, playingQueue } = useContext(MusicContext);
-  const { setAudioSource, audioContext } = useContext(WebAudioContext);
+  const { audioSource, analyserNode, setAudioSource, audioContext } = useContext(WebAudioContext);
   const loadSong = async () => {
+    try {
+      if (analyserNode && audioSource) audioSource.disconnect(analyserNode);
+    } catch (err) {
+      return;
+    }
     if (playingQueue && playingQueue.songs[playingIndex]) {
       const url = playingQueue.songs[playingIndex].mp3Url;
       const res = await getAudioSource({
@@ -19,6 +24,8 @@ const useAudioSource = () => {
     }
   };
   useEffect(() => {
+    console.log(audioContext?.state);
+    console.log(audioSource);
     loadSong();
   }, [playingIndex]);
 };
