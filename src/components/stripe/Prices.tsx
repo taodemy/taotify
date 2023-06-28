@@ -65,6 +65,7 @@ const Price = () => {
     const { token } = tokenHandler.getToken() || "no token";
     // create customer + get subscription price
     console.log(`${process.env.TAOTIFY_BACKEND_URL}/stripe/price`);
+    console.log(`token is ${token}`);
     const fetchPrices = async () => {
       // const { prices } = await fetch(`${process.env.TAOTIFY_BACKEND_URL}/stripe/price`, {
       const { prices } = await fetch(`${process.env.TAOTIFY_BACKEND_URL}/stripe/price`, {

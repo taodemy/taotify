@@ -15,6 +15,5 @@ export const appFetch = async ({ path, method, payload }: FetchProps) => {
     },
     body: JSON.stringify(payload),
   }).then((r) => r.json());
-  console.log(response, "看一下response 是什么");
   return response;
 };

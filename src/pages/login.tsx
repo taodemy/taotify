@@ -2,12 +2,20 @@
 // 登陆后：1. set bear token，2.router.push
 
 import Button from "@/components/buttons";
+import { appFetch } from "@/utils/fetchHelper";
 import tokenHandler from "@/utils/tokenHandler";
-import { FormEvent, useState, ChangeEvent } from "react";
+import { FormEvent, useState, useEffect, ChangeEvent } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("liuchuan_an@hotmail.com");
   const [password, setPassword] = useState("abcd1234");
+  useEffect(() => {
+    const isLogin = appFetch({
+      method: "GET",
+      path: "",
+    });
+  });
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {

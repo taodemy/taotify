@@ -11,10 +11,13 @@ const SearchBar = () => {
   }, []);
 
   return (
-    <div className="fixed top-0 h-[64px] w-full border-2 border-dotted bg-light transition-all duration-200 ease-in-out md:left-[64px] lg:left-[320px]">
+    <div className="fixed top-0 flex h-[64px] w-full border-2 border-dotted bg-light transition-all duration-200 ease-in-out md:left-[64px] lg:left-[320px]">
       This is the top search bar
       <Link href="/login">
         <Button label="login" />
+      </Link>
+      <Link href="/member/prices">
+        <Button label="member" />
       </Link>
     </div>
   );
