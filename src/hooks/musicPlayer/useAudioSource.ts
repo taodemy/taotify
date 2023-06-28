@@ -20,7 +20,7 @@ const useAudioSource = () => {
   };
   useEffect(() => {
     loadSong();
-  });
+  }, [playingIndex]);
 };
 
 export default useAudioSource;
