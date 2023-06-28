@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { getAudioBuffer, loadAudio } from "@/utils/loadSong";
+import { getAudioBuffer } from "@/utils/getAudioSource";
 
 describe("loadSong utils", () => {
   describe("getAudioBuffer", () => {

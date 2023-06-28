@@ -16,7 +16,8 @@ async function getAudioBuffer(mp3Url: string) {
   }
 }
 
-/* istanbul ignore next */ async function loadAudio({ mp3Url, audioContext }: Props) {
+/* istanbul ignore next */ async function getAudioSource({ mp3Url, audioContext }: Props) {
+  if (!mp3Url) return;
   const res = await getAudioBuffer(mp3Url);
   if (res.status && res.audioBuffer && audioContext) {
     const audioSource = audioContext.createBufferSource();
@@ -29,4 +30,4 @@ async function getAudioBuffer(mp3Url: string) {
   }
 }
 
-export { loadAudio, getAudioBuffer };
+export { getAudioSource, getAudioBuffer };
