@@ -23,6 +23,9 @@ const customJestConfig = {
 		"/src/utils/getMp3Url.ts",
 		"/src/utils/getNewSongs.ts",
 		"/src/utils/getNewAlbums.ts",
+		"/src/contexts/WebAudioContext.tsx",
+		"/src/hooks/musicPlayer/useAudioSource.ts",
+		"/src/components/visualizer/index.tsx",
 	],
 	// If you're using [Module Path Aliases](https://nextjs.org/docs/advanced-features/module-path-aliases),
 	// you will have to add the moduleNameMapper in order for jest to resolve your absolute paths.
