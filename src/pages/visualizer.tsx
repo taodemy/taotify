@@ -8,11 +8,6 @@ const VolumeControllerDemo = () => {
     if (typeof window !== "undefined") setIsClientSide(true);
   }, []);
 
-  return (
-    <VolumeContextProvider>
-      {isClientSide ? <AudioVisualizer /> : null}
-      <VolumeController></VolumeController>
-    </VolumeContextProvider>
-  );
+  return <>{isClientSide ? <AudioVisualizer /> : null}</>;
 };
 export default VolumeControllerDemo;
