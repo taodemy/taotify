@@ -62,7 +62,9 @@ export const WebAudioContextProvider = ({ children }: Props) => {
       try {
         audioSource.connect(analyserNodeRef.current);
         audioSource.start();
-        setVisualArr(new Uint8Array(analyserNodeRef.current.frequencyBinCount));
+        const newVisualArr = new Uint8Array(analyserNodeRef.current.frequencyBinCount);
+        setVisualArr(newVisualArr);
+        setAudioData(Array.from(newVisualArr));
       } catch (err) {
         return;
       }
