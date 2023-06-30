@@ -1,6 +1,5 @@
 import { appFetch } from "@/utils/fetchHelper";
 import { useRouter } from "next/router";
-import { stringify } from "querystring";
 import { useEffect, useState } from "react";
 import Button from "../buttons";
 
@@ -22,10 +21,8 @@ interface Order {
 
 const Cart = () => {
   const [orders, setOrders] = useState<Order[]>([]);
-  // const [order, setOrder] = useState<Order>({} as Order);
   const router = useRouter();
   useEffect(() => {
-    // create customer + get subscription price
     const fetchOrders = async () => {
       const orders = (await appFetch({
         method: "GET",
@@ -40,29 +37,6 @@ const Cart = () => {
     }
   }, []);
 
-  // const handleDeletion = async (order: Order) => {
-  //   try {
-  //     // find order and call delete api
-  //     if (order.payment_status === "success") {
-  //       throw new Error(
-  //         "The selected order has a payment associated with it. Deleting paid orders is not allowed."
-  //       );
-  //     }
-  //     await appFetch({
-  //       method: "DELETE",
-  //       path: "/orders/delete",
-  //       payload: { order_id: order._id },
-  //     });
-  //     // 使用filter去掉order._id 的那个部分
-  //   } catch (error: any) {
-  //     console.log("error: ");
-  //     console.log(error);
-  //   } finally {
-  //     const newOrders = orders.filter((item) => item._id !== order._id);
-  //     console.log(newOrders);
-  //     // setOrders((states) => states.filter((item) => item._id !== order._id));
-  //   }
-  // };
   const handleDeletion = async (order: Order) => {
     try {
       // find order and call delete api
@@ -76,15 +50,12 @@ const Cart = () => {
         path: "/orders/delete",
         payload: { order_id: order._id },
       });
-      // 使用filter去掉order._id 的那个部分
       setOrders((states) => states.filter((item) => item._id !== order._id));
     } catch (error: any) {
-      console.log("error: ");
       console.log(error);
     }
   };
   const handleCheckout = async (order: Order) => {
-    //  调用checkout api
     try {
       const response = await appFetch({
         method: "POST",

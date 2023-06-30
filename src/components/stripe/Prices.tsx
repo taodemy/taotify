@@ -1,7 +1,7 @@
 import Button from "@/components/buttons";
+import { appFetch } from "@/utils/fetchHelper";
 import tokenHandler from "@/utils/tokenHandler";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 interface Price {
@@ -62,18 +62,12 @@ const Price = () => {
   const [prices, setPrices] = useState<Price[]>([]);
 
   useEffect(() => {
-    const { token } = tokenHandler.getToken() || "no token";
     // create customer + get subscription price
-    console.log(`${process.env.TAOTIFY_BACKEND_URL}/stripe/price`);
-    console.log(`token is ${token}`);
     const fetchPrices = async () => {
-      // const { prices } = await fetch(`${process.env.TAOTIFY_BACKEND_URL}/stripe/price`, {
-      const { prices } = await fetch(`${process.env.TAOTIFY_BACKEND_URL}/stripe/price`, {
+      const { prices } = await appFetch({
         method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }).then((r) => r.json());
+        path: "/stripe/price",
+      });
       prices && setPrices(prices);
     };
     try {
@@ -85,18 +79,15 @@ const Price = () => {
 
   const handleClick = async (price: Price) => {
     // create order
-    const { id: price_id, product, unit_amount, currency } = price;
-    const { token } = tokenHandler.getToken() || "no token";
-    console.log(token, "@token");
-
-    await fetch(`${process.env.TAOTIFY_BACKEND_URL}/orders/add`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({ price }),
-    }).then((r) => r.json());
+    try {
+      await appFetch({
+        path: "/orders/add",
+        method: "POST",
+        payload: { price },
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <>

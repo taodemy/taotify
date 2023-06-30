@@ -15,5 +15,6 @@ export const appFetch = async ({ path, method, payload }: FetchProps) => {
     },
     body: JSON.stringify(payload),
   }).then((r) => r.json());
+  console.log(response, "@@@ appFetch");
   return response;
 };
