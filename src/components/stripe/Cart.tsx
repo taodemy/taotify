@@ -91,59 +91,66 @@ const Cart = () => {
         path: "/stripe/create-subscription",
         payload: { order },
       });
-      // 付款成功后，通过webhook更新我的数据库，因为success url会返回这个页面，页面加载时候，state会根据后端数据rerender。
-      // 刚刚webhook没有开启，数据库没有更新
+      // 页面跳转到stripe的付款页面
+      router.push(response.url);
     } catch (error) {
       console.log(error);
     }
   };
   return (
-    <table className="bg-light">
-      <tbody>
+    <table className="min-w-full bg-light text-left">
+      <thead>
         <tr>
           <th>order number</th>
-          <th>order type</th>
+          <th>order date</th>
           <th>price</th>
           <th>subscription length</th>
           <th>payment status</th>
           <th>pay</th>
           <th>delete</th>
         </tr>
+      </thead>
+      <tbody>
         {orders.length > 1 &&
-          orders.map((order) => (
-            <tr key={order._id}>
-              <td>{order.order_number}</td>
-              <td>{order.product}</td>
-              <td className="mx-4 border">
-                {order.unit_amount / 100}/{order.currency}
-              </td>
-              <td className="mx-4 border">
-                {order.interval_count}
-                {order.interval}
-              </td>
-              <td className="mx-4 border">{order.payment_status}</td>
-              <td className="mx-4 cursor-pointer border">
-                <Button
-                  disabled={order.payment_status === "success"}
-                  size="small"
-                  label="checkout"
-                  onClick={() => {
-                    handleCheckout(order);
-                  }}
-                />
-              </td>
-              <td className="mx-4 cursor-pointer border">
-                <Button
-                  disabled={order.payment_status === "success"}
-                  size="small"
-                  label="delete"
-                  onClick={() => {
-                    handleDeletion(order);
-                  }}
-                />
-              </td>
-            </tr>
-          ))}
+          orders.map((order) => {
+            const formattedDate = new Date(order.createdAt).toLocaleDateString("en-GB");
+            const currency = { aud: "AU$" }[order.currency];
+            return (
+              <tr key={order._id} className="border">
+                <td className="border">{order.order_number}</td>
+                <td className="border">{formattedDate}</td>
+                <td className="border">
+                  {currency}
+                  {order.unit_amount / 100}
+                </td>
+                <td className="border">
+                  {order.interval_count}
+                  {order.interval}
+                </td>
+                <td className="border">{order.payment_status}</td>
+                <td className="cursor-pointer border">
+                  <Button
+                    disabled={order.payment_status === "success"}
+                    size="small"
+                    label="checkout"
+                    onClick={() => {
+                      handleCheckout(order);
+                    }}
+                  />
+                </td>
+                <td className="mx-4 cursor-pointer border">
+                  <Button
+                    disabled={order.payment_status === "success"}
+                    size="small"
+                    label="delete"
+                    onClick={() => {
+                      handleDeletion(order);
+                    }}
+                  />
+                </td>
+              </tr>
+            );
+          })}
       </tbody>
     </table>
   );
