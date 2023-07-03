@@ -4,6 +4,7 @@ import Image from "next/image";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
+import useAudioSource from "@/hooks/musicPlayer/useAudioSource";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -14,6 +15,7 @@ const MusicPlayer = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const musicData = playingQueue?.songs || "";
+  useAudioSource();
 
   const handlePlayEnd = () => {
     if (!playingQueue) return;
