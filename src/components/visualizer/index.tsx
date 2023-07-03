@@ -131,7 +131,7 @@ export default function AudioVisualizer() {
     }
   };
 
-  const cleanAudioData = () => {
+  const cleanVisualArr = () => {
     setVisualArr(new Uint8Array());
   };
 
@@ -139,7 +139,7 @@ export default function AudioVisualizer() {
     initCanvas();
     initVisualArr();
     return () => {
-      cleanAudioData();
+      cleanVisualArr();
     };
   }, []);
 
