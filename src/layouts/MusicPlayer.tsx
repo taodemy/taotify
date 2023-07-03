@@ -6,7 +6,7 @@ import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/AudioControls";
 import useAudioSource from "@/hooks/musicPlayer/useAudioSource";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
-import usePlayingQueue from "@/hooks/usePlayingQueue";
+import usePlayingQueueAndPlayingIndex from "@/hooks/usePlayingQueueAndPlayingIndex";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -19,7 +19,7 @@ const MusicPlayer = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const musicData = playingQueue?.songs || "";
   useAudioSource();
-  usePlayingQueue();
+  usePlayingQueueAndPlayingIndex();
 
   const handlePlayEnd = () => {
     if (!playingQueue) return;

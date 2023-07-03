@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import getNewSongs from "@/utils/getNewSongs";
 import { MusicList } from "types";
 
-const usePlayingQueue = () => {
+const usePlayingQueueAndPlayingIndex = () => {
   const { setPlayingQueue, setPlayingIndex } = useContext(MusicContext);
   const initalize = async () => {
     const newSongsRes = await getNewSongs();
@@ -19,4 +19,4 @@ const usePlayingQueue = () => {
     initalize();
   }, []);
 };
-export default usePlayingQueue;
+export default usePlayingQueueAndPlayingIndex;
