@@ -1,11 +1,12 @@
 import { WebAudioContext } from "@/contexts/WebAudioContext";
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Circle, Canvas, Rect, Image as GImage, DisplayObject, CanvasEvent } from "@antv/g";
 import { Renderer as CanvasRenderer } from "@antv/g-canvas";
 import { MusicContext } from "@/contexts/MusicContext";
 
 export default function AudioVisualizer() {
-  const { audioData, analyserNode, visualArr, setAudioData } = useContext(WebAudioContext);
+  const { audioData, analyserNode, visualArr, setAudioData, setVisualArr } =
+    useContext(WebAudioContext);
   const { isPlaying } = useContext(MusicContext);
   const rafRef = useRef<number>();
   let lastTime: number;
@@ -123,8 +124,23 @@ export default function AudioVisualizer() {
     canvasRef.current = newCanvas;
   };
 
+  const initVisualArr = () => {
+    if (analyserNode) {
+      const newVisualArr = new Uint8Array(analyserNode.frequencyBinCount);
+      setVisualArr(newVisualArr);
+    }
+  };
+
+  const cleanAudioData = () => {
+    setVisualArr(new Uint8Array());
+  };
+
   useEffect(() => {
     initCanvas();
+    initVisualArr();
+    return () => {
+      cleanAudioData();
+    };
   }, []);
 
   useEffect(() => {
