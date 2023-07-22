@@ -14,9 +14,9 @@
     "check-lint": "eslint . --ext ts --ext tsx --ext js",
     "test": "jest --coverage --colors --config jest.config.js",
     "pre-commit": "npm run check-prettier && npm run check-lint && npm run check-types && npm run test && npx --no-install && npm run build",
-    "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook",
-    "coverage": "npx jest --coverage"
+    "coverage": "npx jest --coverage",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "engineStrict": true,
   "engines": {
@@ -39,22 +39,21 @@
   },
   "devDependencies": {
     "@babel/core": "^7.21.0",
-    "@storybook/addon-actions": "^6.5.16",
-    "@storybook/addon-essentials": "^6.5.16",
-    "@storybook/addon-interactions": "^6.5.16",
-    "@storybook/addon-links": "^6.5.16",
-    "@storybook/addon-styling": "^0.3.2",
-    "@storybook/builder-webpack5": "^6.5.16",
-    "@storybook/manager-webpack5": "^6.5.16",
-    "@storybook/react": "^6.5.16",
-    "@storybook/testing-library": "^0.0.13",
+    "@storybook/addon-essentials": "^7.1.0",
+    "@storybook/addon-interactions": "^7.1.0",
+    "@storybook/addon-links": "^7.1.0",
+    "@storybook/addon-onboarding": "^1.0.8",
+    "@storybook/blocks": "^7.1.0",
+    "@storybook/nextjs": "^7.1.0",
+    "@storybook/react": "^7.1.0",
+    "@storybook/testing-library": "^0.2.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/react-hooks": "^8.0.1",
     "autoprefixer": "^10.4.14",
     "babel-loader": "^8.3.0",
     "eslint-config-prettier": "^8.6.0",
-    "eslint-plugin-storybook": "^0.6.11",
+    "eslint-plugin-storybook": "^0.6.13",
     "husky": "^8.0.3",
     "isomorphic-fetch": "^3.0.0",
     "jest": "^29.4.3",
@@ -63,6 +62,7 @@
     "postcss-loader": "^7.2.4",
     "prettier": "^2.8.4",
     "prettier-plugin-tailwindcss": "^0.2.7",
+    "storybook": "^7.1.0",
     "tailwindcss": "^3.2.7"
   }
 }

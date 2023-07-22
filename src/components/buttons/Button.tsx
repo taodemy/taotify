@@ -63,7 +63,7 @@ const NormalButton = ({
 
   return (
     <button
-      className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn} `}
+      className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn} font-allura`}
       {...otherProps}
       onClick={onClick}
     >

@@ -8,6 +8,7 @@ import { WebAudioContextProvider } from "@/contexts/WebAudioContext";
 const roboto = Roboto({
   weight: ["300", "400", "500"],
   subsets: ["latin"],
+  variable: "--font-roboto",
 });
 
 export default function App({ Component, pageProps }: AppProps) {
