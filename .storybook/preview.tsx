@@ -14,14 +14,14 @@ const preview: Preview = {
       },
     },
   },
-  // decorators: [
-  //   (Story) => (
-  //     // <div className={`${roboto.variable}`}>
-  //     <div>
-  //       <Story />
-  //     </div>
-  //   ),
-  // ],
+  decorators: [
+    (Story) => (
+      <div className={`${allura.variable}`}>
+        {/* <div> */}
+        <Story />
+      </div>
+    ),
+  ],
 };
 
 export default preview;
