@@ -8,7 +8,7 @@ export type NormalButtonProps = {
   onClick?: () => void;
 } & React.ComponentProps<"button">;
 
-const btn = " text-light text-base rounded-full font-[Roboto] flex justify-center items-center";
+const btn = " text-light text-base rounded-full flex justify-center items-center";
 const getButtonClass = (color: ButtonColor, outline: boolean) => {
   switch (color) {
     case "primary":
@@ -63,7 +63,7 @@ const NormalButton = ({
 
   return (
     <button
-      className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn} font-allura`}
+      className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn}`}
       {...otherProps}
       onClick={onClick}
     >
