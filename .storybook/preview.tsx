@@ -1,10 +1,8 @@
 import "../src/styles/globals.css";
-import { allura, sora } from "../src/lib/font";
-// import { Story } from "@storybook/react";
+import { allura, roboto } from "../src/lib/font";
+import { Story } from "@storybook/react";
 
-import type { Preview } from "@storybook/react";
-
-const preview: Preview = {
+const preview = {
   parameters: {
     actions: { argTypesRegex: "^on[A-Z].*" },
     controls: {
@@ -15,9 +13,8 @@ const preview: Preview = {
     },
   },
   decorators: [
-    (Story) => (
-      <div className={`${allura.variable}`}>
-        {/* <div> */}
+    (Story: Story) => (
+      <div className={`${allura.variable} ${roboto.variable}`}>
         <Story />
       </div>
     ),
