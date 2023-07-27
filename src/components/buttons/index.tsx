@@ -1,7 +1,7 @@
 import ImageButton from "./ImageButton";
 import IconButton, { IconTypes } from "./IconButton";
 import LinkButton, { LinkTypes } from "./LinkButton";
-import NormalButton, { NormalButtonProps } from "./NormalButton";
+import NormalButton, { NormalButtonProps } from "./Button";
 
 export type ButtonColor =
   | "primary"
@@ -46,8 +46,14 @@ const Button = ({
       />
     ),
     icon: <IconButton size={size} onClick={onClick} {...otherProps} />,
-    image: src ? <ImageButton src={src} onClick={onClick} /> : <span>invalid img url</span>,
-    link: <LinkButton linkTypes={linkTypes} onClick={onClick} isActive={isActive} />,
+    image: src ? (
+      <ImageButton src={src} onClick={onClick} {...otherProps} />
+    ) : (
+      <span>invalid img url</span>
+    ),
+    link: (
+      <LinkButton linkTypes={linkTypes} onClick={onClick} isActive={isActive} {...otherProps} />
+    ),
   }[variant];
 };
 
