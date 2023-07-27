@@ -25,6 +25,7 @@ const useAudioSource = () => {
   };
   useEffect(() => {
     loadSong();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playingIndex]);
 };
 

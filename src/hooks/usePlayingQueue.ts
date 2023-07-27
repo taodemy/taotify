@@ -17,6 +17,7 @@ const usePlayingQueue = () => {
   };
   useEffect(() => {
     initalize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
 export default usePlayingQueue;

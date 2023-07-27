@@ -33,6 +33,7 @@ const AudioControls = ({
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
     if (playingQueue) setOriginMusicList(playingQueue);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playingQueue?.id, playingQueue?.type]);
 
   //if there is a new copy or new shuffled mode, detect if it needs to be shuffled or reset
@@ -50,6 +51,7 @@ const AudioControls = ({
       setPlayingIndex(originIndex);
       setPlayingQueue(originMusicList);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isShuffle, originMusicList]);
 
   return (
