@@ -130,7 +130,6 @@ module.exports = {
       fontFamily: {
         sans: ["sans-serif"],
         roboto: ["var(--font-roboto)"],
-        allura: ["var(--font-allura)"],
       },
     },
   },

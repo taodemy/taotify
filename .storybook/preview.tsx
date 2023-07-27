@@ -1,6 +1,5 @@
 import "../src/styles/globals.css";
-import { allura, roboto } from "../src/lib/font";
-import { Story } from "@storybook/react";
+import { roboto } from "../src/lib/font";
 
 const preview = {
   parameters: {
@@ -13,8 +12,8 @@ const preview = {
     },
   },
   decorators: [
-    (Story: Story) => (
-      <div className={`${allura.variable} ${roboto.variable}`}>
+    (Story) => (
+      <div className={`${roboto.variable}`}>
         <Story />
       </div>
     ),
