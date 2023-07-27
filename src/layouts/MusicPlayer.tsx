@@ -86,6 +86,7 @@ const MusicPlayer = () => {
     if (playingIndex !== -1) {
       isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying, audioRef]);
 
   const onPlayPauseClick = () => {

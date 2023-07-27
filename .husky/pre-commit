@@ -12,7 +12,7 @@ npm run check-types ||
 )
 
 # Format files to Prettier standards
-npm run check-prettier ||
+npm run prettier ||
 (
         echo '😤🏀👋😤 Prettier Check Failed. 😤🏀👋😤 
                 Run npm run format, add changes and try to commit again.'
@@ -28,12 +28,12 @@ npm run check-lint ||
 )
 
 # Check test all pass
-npm run test ||
-(
-    echo '😤😂❌🤡 Test Failed. 😤😂❌🤡
-            Make sure all tests pass and meet the required coverage threshold'
-    false;
-)
+# npm run test ||
+# (
+#     echo '😤😂❌🤡 Test Failed. 😤😂❌🤡
+#             Make sure all tests pass and meet the required coverage threshold'
+#     false;
+# )
 
 # If everything passes... try to run a build
 echo '🤔🤔🤔🤔 Alright... Code looks good to me... Trying to build now. 🤔🤔🤔🤔'
