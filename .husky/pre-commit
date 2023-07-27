@@ -12,7 +12,7 @@ npm run check-types ||
 )
 
 # Format files to Prettier standards
-npm run prettier ||
+npm run check-prettier ||
 (
         echo '😤🏀👋😤 Prettier Check Failed. 😤🏀👋😤 
                 Run npm run format, add changes and try to commit again.'
