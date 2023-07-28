@@ -13,7 +13,7 @@ describe("Layout", () => {
   });
 
   it("renders search bar txt", () => {
-    const SearchBarTitle = screen.getByText(/This is the top search bar/i);
+    const SearchBarTitle = screen.getByPlaceholderText(/search for music/i);
     expect(SearchBarTitle).toBeInTheDocument();
   });
 });
