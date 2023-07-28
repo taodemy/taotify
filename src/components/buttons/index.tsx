@@ -1,7 +1,7 @@
 import ImageButton from "./ImageButton";
 import IconButton, { IconTypes } from "./IconButton";
 import LinkButton, { LinkTypes } from "./LinkButton";
-import NormalButton, { NormalButtonProps } from "./Button";
+import NormalButton, { NormalButtonProps } from "./NormalButton";
 
 export type ButtonColor =
   | "primary"
