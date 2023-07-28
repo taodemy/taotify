@@ -1,13 +1,19 @@
-interface CoverImageProps {
+type CoverImageProps<T> = {
   imgType?: "avatar" | "albumCover" | "playerCover";
   src: string;
   onClick?: () => void;
-}
-const CoverImage = ({ imgType = "playerCover", src, onClick }: CoverImageProps) => {
+} & T;
+
+const CoverImage = <T,>({
+  imgType = "playerCover",
+  src,
+  onClick,
+  ...otherProps
+}: CoverImageProps<T>) => {
   // console.log("@@@img src is", src);
   const imageButton = {
     avatar: (
-      <button className="h-12 w-12 rounded-full border">
+      <button className="h-12 w-12 rounded-full border" {...otherProps}>
         <img className="object-cover" src={src} alt="avatar" onClick={onClick} />
       </button>
     ),
