@@ -15,9 +15,9 @@ const SearchBar = () => {
       <Link className="mr-2 text-light" href={"/"}>
         Home
       </Link>
-      <Search onClick={handleSearch} />
-      <IconButton onClick={handleSetting} iconTypes="setting"></IconButton>
-      <IconButton onClick={handleNotification} iconTypes="notification"></IconButton>
+      <Search />
+      <IconButton iconTypes="setting"></IconButton>
+      <IconButton iconTypes="notification"></IconButton>
     </div>
   );
 };

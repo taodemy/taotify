@@ -12,7 +12,7 @@ describe("Layout", () => {
     expect(SideBarTitle).toBeInTheDocument();
   });
 
-  it("renders search bar txt", () => {
+  it("renders search bar", () => {
     const SearchBarTitle = screen.getByPlaceholderText(/search for music/i);
     expect(SearchBarTitle).toBeInTheDocument();
   });
