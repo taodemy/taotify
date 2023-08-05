@@ -1,9 +1,17 @@
+import IconButton from "@/components/buttons/IconButton";
+import Search from "@/components/Input/Search";
+import Link from "next/link";
 import React from "react";
 
 const SearchBar = () => {
   return (
-    <div className="fixed top-0 h-[64px] w-full border-2 border-dotted bg-light transition-all duration-200 ease-in-out md:left-[64px] lg:left-[320px]">
-      This is the top search bar
+    <div className="flex w-full items-center bg-dark p-2 pb-8 md:px-6 md:pt-6 lg:px-10 lg:pt-8">
+      <Link className="mr-2 text-light" href={"/"}>
+        Home
+      </Link>
+      <Search />
+      <IconButton iconTypes="setting"></IconButton>
+      <IconButton iconTypes="notification"></IconButton>
     </div>
   );
 };

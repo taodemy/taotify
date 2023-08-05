@@ -68,3 +68,8 @@ export const Play = Template.bind({});
 Play.args = {
   iconTypes: "play",
 };
+
+export const Setting = Template.bind({});
+Setting.args = {
+  iconTypes: "setting",
+};
