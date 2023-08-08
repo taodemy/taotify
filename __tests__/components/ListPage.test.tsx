@@ -3,7 +3,7 @@ import React from "react";
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import { MusicContextProvider } from "@/contexts/MusicContext";
-import MusicPlayer from "@/layouts/MusicPlayer";
+import MusicPlayer from "@/components/player";
 import { MusicList } from "types";
 import { mockEmptyMusicList, mockMusicList } from "mockData/mockData";
 

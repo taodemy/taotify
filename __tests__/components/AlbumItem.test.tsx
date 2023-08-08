@@ -3,7 +3,7 @@ import "@testing-library/jest-dom";
 import { MusicContextProvider } from "@/contexts/MusicContext";
 import AlbumItem from "@/components/AlbumItem";
 import { mockMusicList } from "mockData/mockData";
-import MusicPlayer from "@/layouts/MusicPlayer";
+import MusicPlayer from "@/components/player/MusicPlayer";
 
 const renderAlbumItem = () => {
   return render(
