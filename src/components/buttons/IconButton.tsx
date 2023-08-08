@@ -28,13 +28,18 @@ const iconList = {
 
 export type IconTypes = keyof typeof iconList;
 
-type IconProps = {
+type IconProps<T> = {
   iconTypes?: IconTypes;
   onClick?: () => void;
   size?: "tiny" | "small" | "normal" | "large";
-};
+} & T;
 
-const IconButton = ({ onClick, size = "normal", iconTypes = "close" }: IconProps) => {
+const IconButton = <T,>({
+  onClick,
+  size = "normal",
+  iconTypes = "close",
+  ...otherProps
+}: IconProps<T>) => {
   const iconSize = {
     tiny: "w-6 h-6",
     small: "w-8 h-8 p-1",
@@ -46,6 +51,7 @@ const IconButton = ({ onClick, size = "normal", iconTypes = "close" }: IconProps
       onClick={onClick}
       aria-label={iconTypes}
       className={`text-light-200 focus:text-light active:text-light ${iconSize[size]}`}
+      {...otherProps}
     >
       {iconList[iconTypes]}
     </button>

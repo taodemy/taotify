@@ -45,9 +45,21 @@ const Button = ({
         {...otherProps}
       />
     ),
-    icon: <IconButton size={size} onClick={onClick} {...otherProps} />,
-    image: src ? <ImageButton src={src} onClick={onClick} /> : <span>invalid img url</span>,
-    link: <LinkButton linkTypes={linkTypes} onClick={onClick} isActive={isActive} />,
+    icon: (
+      <IconButton<React.ComponentProps<"button">> size={size} onClick={onClick} {...otherProps} />
+    ),
+    image: src ? (
+      <ImageButton<React.ComponentProps<"button">> src={src} onClick={onClick} />
+    ) : (
+      <span>invalid img url</span>
+    ),
+    link: (
+      <LinkButton<React.ComponentProps<"button">>
+        linkTypes={linkTypes}
+        onClick={onClick}
+        isActive={isActive}
+      />
+    ),
   }[variant];
 };
 
