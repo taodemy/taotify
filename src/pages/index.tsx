@@ -6,9 +6,9 @@ import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
 import { MusicList } from "types";
 import getNewAlbums from "@/utils/getNewAlbums";
-import Carousel from "@/components/carousel/Carousel";
-import FeaturedAlbums from "@/components/featuredAlbums/FeaturedAlbums";
-import TopMusicAlbums from "@/components/topMusicAlbums/TopMusicAlbums";
+import Carousel from "@/components/carousel";
+import FeaturedAlbums from "@/components/featuredAlbums";
+import TopMusicAlbums from "@/components/topMusicAlbums";
 
 type HomeProps = {
   // newSongsList: MusicList;
