@@ -1,6 +1,6 @@
 import React from "react";
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import MusicPlayer from "@/layouts/MusicPlayer";
+import MusicPlayer from "@/components/player";
 
 export default {
   title: "ui/MusicPlayerBar",

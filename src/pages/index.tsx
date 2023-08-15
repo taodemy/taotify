@@ -6,7 +6,9 @@ import Head from "next/head";
 import getNewSongs from "../utils/getNewSongs";
 import { MusicList } from "types";
 import getNewAlbums from "@/utils/getNewAlbums";
-import Albums from "@/components/Albums";
+import Carousel from "@/components/carousel";
+import FeaturedAlbums from "@/components/featuredAlbums";
+import TopMusicAlbums from "@/components/topMusicAlbums";
 
 type HomeProps = {
   // newSongsList: MusicList;
@@ -22,11 +24,9 @@ export default function Home({ newAlbums }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <RecentlyPlayed />
-      <FriendsActivity />
-      <NewReleases />
-      <Albums albums={newAlbums} />
-      {/* <ListPage musicList={newSongsList} /> */}
+      <Carousel />
+      <FeaturedAlbums albums={newAlbums} />
+      <TopMusicAlbums />
     </>
   );
 }
@@ -39,11 +39,7 @@ export /* istanbul ignore next */ async function getStaticProps() {
   //   songs: newSongsRes.status ? newSongsRes.songs : [],
   // };
 
-  const newAlbumsEA = await getNewAlbums("EA", 2);
-  const newAlbumsJP = await getNewAlbums("JP", 2);
-  const newAlbumsKR = await getNewAlbums("KR", 1);
-  const newAlbumsZH = await getNewAlbums("ZH", 2);
-  const newAlbums = [...newAlbumsEA, ...newAlbumsJP, ...newAlbumsKR, ...newAlbumsZH];
+  const newAlbums = await getNewAlbums("EA", 7);
 
   return {
     props: { newAlbums },
