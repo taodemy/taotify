@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }: AppProps) {
       <MusicContextProvider>
         <GlobalLayout>
           {isLoading ? (
-            <ImSpinner8 className="m-auto h-1/3 w-1/3 animate-spin text-primary" />
+            <ImSpinner8 className="m-auto h-2/5 w-2/5 animate-spin text-primary" />
           ) : (
             <Component {...pageProps} />
           )}
