@@ -10,7 +10,7 @@ const getSongsById = async (id: number | number[], level = STANDARD) => {
       const data = await res.json();
       return data;
     } catch (error) {
-      console.log(error);
+      console.log(JSON.stringify(error));
     }
     return { error: "no valid id" };
   }

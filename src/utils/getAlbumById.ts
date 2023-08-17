@@ -5,7 +5,7 @@ const getAlbumById = async (id: number) => {
     const detail = await res.json();
     return detail;
   } catch (error) {
-    console.log(error);
+    console.log(JSON.stringify(error));
   }
 };
 

@@ -29,6 +29,7 @@ export default async function getNewSongs() {
     });
     return { songs: songs, status: true };
   } catch (error) {
+    console.log(JSON.stringify(error));
     return { songs: [], status: false };
   }
 }

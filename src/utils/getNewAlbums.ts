@@ -46,6 +46,7 @@ export default async function getNewAlbums(area: string, limit: number) {
 
     return albums;
   } catch (error) {
+    console.log(JSON.stringify(error));
     return [];
   }
 }

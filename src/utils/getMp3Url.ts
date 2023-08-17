@@ -14,6 +14,7 @@ export default async function getMp3Url(id: number, level = STANDARD) {
     const time = data.data[0].time;
     return { mp3Url, time, status: true };
   } catch (error) {
+    console.log(JSON.stringify(error));
     return { mp3Url: "", status: false };
   }
 }
