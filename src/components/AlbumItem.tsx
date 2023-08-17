@@ -22,7 +22,6 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
     }
   };
   const handleClick = (id: number) => {
-    console.log(id, "click");
     router.push(`/album/${id}`);
   };
 
@@ -46,7 +45,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
       </div>
       <div className="group absolute top-1/4 left-1/3 flex h-1/3 w-1/3 items-center justify-center">
         {isPlaying && playingQueue?.type === musicList.type && playingQueue.id === musicList.id ? (
-          <ImPause className="h-full w-1/3" role="pauseAlbum" onClick={handleAlbumPlay} />
+          <ImPause className="h-full w-full" role="pauseAlbum" onClick={handleAlbumPlay} />
         ) : (
           <ImPlay2
             className="invisible h-full w-full group-hover:visible"

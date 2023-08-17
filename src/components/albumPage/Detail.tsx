@@ -73,7 +73,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                   </td>
                   <td className="px-4">
                     <div>{music.name}</div>
-                    <div className="sm:hidden">{music.album?.artist?.name}</div>
+                    <div className="lg:hidden">{music.album?.artist?.name}</div>
                   </td>
                   <td className="hidden lg:table-cell">{music.album?.artist?.name}</td>
                   <td>
