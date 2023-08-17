@@ -47,24 +47,20 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                           alt="singer avatar"
                           src={music.album?.blurPicUrl}
                         />
-                        <div className="group absolute top-1/3 flex h-1/3 w-full items-center justify-center">
+                        <div
+                          className="group absolute top-0 flex h-full w-full items-center justify-center"
+                          onClick={() => {
+                            handleSongPlay(index);
+                          }}
+                        >
                           {isPlaying &&
                           playingIndex === index &&
                           musicList.id === playingQueue?.id ? (
-                            <ImPause
-                              className="absolute h-full w-6"
-                              role="pauseAlbum"
-                              onClick={() => {
-                                handleSongPlay(index);
-                              }}
-                            />
+                            <ImPause className="h-full w-6" role="pauseAlbum" />
                           ) : (
                             <ImPlay2
-                              className="invisible absolute h-full w-6 group-hover:visible"
+                              className="invisible h-full w-6 group-hover:visible"
                               role="playAlbum"
-                              onClick={() => {
-                                handleSongPlay(index);
-                              }}
                             />
                           )}
                         </div>
