@@ -2,7 +2,7 @@ import { MusicContext } from "@/contexts/MusicContext";
 import React, { useContext } from "react";
 import { MusicList } from "types";
 import { ImPause, ImPlay2 } from "react-icons/im";
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 type AlbumItemProps = {
   musicList: MusicList;
@@ -11,7 +11,6 @@ type AlbumItemProps = {
 export default function AlbumItem({ musicList }: AlbumItemProps) {
   const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, setIsPlaying } =
     useContext(MusicContext);
-  const router = useRouter();
   const handleAlbumPlay = () => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setPlayingQueue(musicList);
@@ -21,41 +20,45 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
       setIsPlaying((prev) => !prev);
     }
   };
-  const handleClick = (id: number) => {
-    router.push(`/album/${id}`);
-  };
 
-  return musicList.songs.length > 0 ? (
+  return (
     <div className="relative cursor-pointer text-center text-light">
-      <div
-        onClick={() => {
-          handleClick(musicList?.id);
-        }}
-        className="relative"
-      >
-        <img
-          className="rounded-full"
-          src={musicList.songs[0]?.album?.picUrl}
-          alt={musicList.songs[0]?.album?.name}
-        />
-        <p className="truncate text-base">{musicList.songs[0]?.album?.name}</p>
-        <p className="truncate text-sm text-light-200">
-          {musicList.songs[0]?.artists?.map((artist) => artist.name)}
-        </p>
-      </div>
-      <div className="group absolute top-1/4 left-1/3 flex h-1/3 w-1/3 items-center justify-center">
-        {isPlaying && playingQueue?.type === musicList.type && playingQueue.id === musicList.id ? (
-          <ImPause className="h-full w-full" role="pauseAlbum" onClick={handleAlbumPlay} />
-        ) : (
-          <ImPlay2
-            className="invisible h-full w-full group-hover:visible"
-            onClick={handleAlbumPlay}
-            role="playAlbum"
-          />
-        )}
-      </div>
+      {musicList.songs.length > 0 && (
+        <>
+          <Link href={`/album/${musicList?.id}`} className="relative">
+            <figure>
+              <img
+                className="rounded-full"
+                src={musicList.songs[0]?.album?.picUrl}
+                alt={musicList.songs[0]?.album?.name}
+              />
+              <figcaption className="truncate text-base">
+                {musicList.songs[0]?.album?.name}
+              </figcaption>
+              <p className="truncate text-sm text-light-200">
+                {musicList.songs[0]?.artists?.map((artist) => artist.name)}
+              </p>
+            </figure>
+          </Link>
+          <div className="group absolute top-1/4 left-1/3 flex h-1/3 w-1/3 items-center justify-center">
+            {isPlaying &&
+            playingQueue?.type === musicList.type &&
+            playingQueue.id === musicList.id ? (
+              <button className="h-full w-full" role="pauseAlbum" onClick={handleAlbumPlay}>
+                <ImPause className="h-full w-full" />
+              </button>
+            ) : (
+              <button
+                className="invisible h-full w-full group-hover:visible"
+                onClick={handleAlbumPlay}
+                role="playAlbum"
+              >
+                <ImPlay2 className="h-full w-full" />
+              </button>
+            )}
+          </div>
+        </>
+      )}
     </div>
-  ) : (
-    <div></div>
   );
 }

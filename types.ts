@@ -288,7 +288,7 @@ type AlbumDetailAr = {
   alia: string[];
 };
 
-export interface SongFetchById {
+export type SongFetchById = {
   id: number;
   url: string;
   br: number;
@@ -314,11 +314,11 @@ export interface SongFetchById {
   podcastCtrp?: any;
   effectTypes?: any;
   time: number;
-}
+};
 
-interface FreeTimeTrialPrivilege {
+type FreeTimeTrialPrivilege = {
   resConsumable: boolean;
   userConsumable: boolean;
   type: number;
   remainTime: number;
-}
+};

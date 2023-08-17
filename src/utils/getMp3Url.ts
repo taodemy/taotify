@@ -1,4 +1,7 @@
-export default async function getMp3Url(id: number, level = "standard") {
+import { musicQuality } from "@/constant/song";
+const { STANDARD } = musicQuality;
+
+export default async function getMp3Url(id: number, level = STANDARD) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_MUSIC_API}/song/url/v1?id=${id}&level=${level}`

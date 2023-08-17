@@ -1,3 +1,4 @@
+import { musicQuality } from "@/constant/song";
 import { NewSong, NewSongResult, Song } from "../../types";
 
 import getMp3Url from "./getMp3Url";
@@ -11,7 +12,7 @@ export default async function getNewSongs() {
     const data = await res.json();
     const newSongs = data.result.map((newSongResult: NewSongResult) => newSongResult.song);
     const urls = await Promise.all(
-      newSongs.map(async (newSong: NewSong) => getMp3Url(newSong.id, "standard"))
+      newSongs.map(async (newSong: NewSong) => getMp3Url(newSong.id, musicQuality.STANDARD))
     );
     const songs: Song[] = [];
     urls.forEach((url, index) => {
