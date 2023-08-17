@@ -22,6 +22,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
     }
   };
   const handleClick = (id: number) => {
+    console.log(id, "click");
     router.push(`/album/${id}`);
   };
 
@@ -33,31 +34,26 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
         }}
         className="relative"
       >
-        <div className="relative">
-          <img
-            className="rounded-full"
-            src={musicList.songs[0]?.album?.picUrl}
-            alt={musicList.songs[0]?.album?.name}
-          />
-          <div className="group absolute top-1/3 flex h-1/3 w-full items-center justify-center">
-            {isPlaying &&
-            playingQueue?.type === musicList.type &&
-            playingQueue.id === musicList.id ? (
-              <ImPause className="h-full w-1/3" role="pauseAlbum" onClick={handleAlbumPlay} />
-            ) : (
-              <ImPlay2
-                className="invisible h-full w-1/3 group-hover:visible"
-                onClick={handleAlbumPlay}
-                role="playAlbum"
-              />
-            )}
-          </div>
-        </div>
-
+        <img
+          className="rounded-full"
+          src={musicList.songs[0]?.album?.picUrl}
+          alt={musicList.songs[0]?.album?.name}
+        />
         <p className="truncate text-base">{musicList.songs[0]?.album?.name}</p>
         <p className="truncate text-sm text-light-200">
           {musicList.songs[0]?.artists?.map((artist) => artist.name)}
         </p>
+      </div>
+      <div className="group absolute top-1/4 left-1/3 flex h-1/3 w-1/3 items-center justify-center">
+        {isPlaying && playingQueue?.type === musicList.type && playingQueue.id === musicList.id ? (
+          <ImPause className="h-full w-1/3" role="pauseAlbum" onClick={handleAlbumPlay} />
+        ) : (
+          <ImPlay2
+            className="invisible h-full w-full group-hover:visible"
+            onClick={handleAlbumPlay}
+            role="playAlbum"
+          />
+        )}
       </div>
     </div>
   ) : (

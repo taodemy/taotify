@@ -35,7 +35,7 @@ export async function getServerSideProps(context: SsrProps) {
     songsDetail = [
       ...songsDetail,
       {
-        id: songs[index].id, //这里要吧songId放进来
+        id: songs[index].id,
         name: songs[index].name,
         album,
         artists: album.artists,

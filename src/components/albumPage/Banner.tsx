@@ -11,26 +11,10 @@ type BannerType = {
 };
 
 function Banner({ musicList, id }: BannerType) {
-  const [playCount, setPlayCount] = useState<number>(0);
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
-
   const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, playingIndex, setIsPlaying } =
     useContext(MusicContext);
 
-  const getAlbumPlayCount = async (id: number) => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_MUSIC_API}/album/detail/dynamic?id=${id}`);
-    const count = await res.json();
-    return count;
-  };
-
-  useEffect(() => {
-    const fetchMusicList = async () => {
-      const count = await getAlbumPlayCount(id);
-      count && setPlayCount(count.subCount);
-    };
-    fetchMusicList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
   const handleAlbumPlay = () => {
     if ((musicList && playingQueue?.type !== musicList.type) || playingQueue?.id !== musicList.id) {
       setPlayingQueue(musicList);
@@ -67,7 +51,7 @@ function Banner({ musicList, id }: BannerType) {
         <div className="flex justify-between">
           <div className="flex items-center">
             <FiMusic className="h-5 w-5" />
-            <span className="ml-4 text-sm">{playCount}</span>
+            <span className="ml-4 text-sm">{musicList.songs[0].album.mark}</span>
             <p className="ml-4 text-sm">Total Subscriptions</p>
           </div>
           <div className="flex justify-end gap-6">

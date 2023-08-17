@@ -40,8 +40,8 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                 <tr className="border-t border-dark-100" key={music.id}>
                   <td>
                     <div className="m-2 ml-0 flex items-center">
-                      <div>{index + 1}</div>
-                      <div className="relative ml-8 h-14 w-14 cursor-pointer">
+                      <div className="mr-8 hidden sm:inline-block">{index + 1}</div>
+                      <div className="relative h-14 w-14 cursor-pointer">
                         <img
                           className="rounded-full object-cover"
                           alt="singer avatar"
@@ -71,12 +71,15 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                       </div>
                     </div>
                   </td>
-                  <td className="px-4">{music.name}</td>
-                  <td>{music.album?.artist?.name}</td>
+                  <td className="px-4">
+                    <div>{music.name}</div>
+                    <div className="sm:hidden">{music.album?.artist?.name}</div>
+                  </td>
+                  <td className="hidden lg:table-cell">{music.album?.artist?.name}</td>
                   <td>
-                    <div className="flex items-center">
-                      <FiHeadphones className="inline-block h-5 w-5" />
-                      <span className="ml-2">{music.id}</span>
+                    <div className="hidden items-center sm:flex">
+                      <FiHeadphones className=" inline-block h-5 w-5" />
+                      <span className="ml-2">{music.time}</span>
                     </div>
                   </td>
                   <td>
@@ -85,7 +88,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                       <span className="ml-2">{duration}</span>
                     </div>
                   </td>
-                  <td>
+                  <td className="hidden sm:table-cell">
                     <IconButton iconTypes="like" />
                   </td>
                   <td>
