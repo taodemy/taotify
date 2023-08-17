@@ -1,4 +1,6 @@
-const getSongsById = async (id: number | number[], level = "standard") => {
+import { musicQuality } from "@/constant/song";
+const { STANDARD } = musicQuality;
+const getSongsById = async (id: number | number[], level = STANDARD) => {
   if (id) {
     try {
       const url = Array.isArray(id)
