@@ -1,6 +1,6 @@
 import { IoPlayBackOutline } from "react-icons/io5";
 import { AiOutlineCloseCircle, AiOutlineSetting } from "react-icons/ai";
-import { BiPlayCircle, BiPauseCircle, BiHeart } from "react-icons/bi";
+import { BiPlayCircle, BiPauseCircle, BiHeart, BiDotsHorizontalRounded } from "react-icons/bi";
 import { FiFastForward, FiSkipForward, FiSkipBack } from "react-icons/fi";
 import { TbArrowsShuffle } from "react-icons/tb";
 import { BsRepeat, BsRepeat1 } from "react-icons/bs";
@@ -24,6 +24,7 @@ const iconList = {
   bin: <RiDeleteBin5Line className="h-5 w-5" />,
   notification: <IoMdNotificationsOutline className="h-5 w-5" />,
   setting: <AiOutlineSetting className="h-5 w-5" />,
+  dot: <BiDotsHorizontalRounded className="h-5 w-5" />,
 };
 
 export type IconTypes = keyof typeof iconList;

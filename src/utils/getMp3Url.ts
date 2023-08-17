@@ -1,4 +1,7 @@
-export default async function getMp3Url(id: number, level: string) {
+import { musicQuality } from "@/constant/song";
+const { STANDARD } = musicQuality;
+
+export default async function getMp3Url(id: number, level = STANDARD) {
   try {
     const res = await fetch(
       `${process.env.NEXT_PUBLIC_MUSIC_API}/song/url/v1?id=${id}&level=${level}`
@@ -8,8 +11,10 @@ export default async function getMp3Url(id: number, level: string) {
     }
     const data = await res.json();
     const mp3Url = data.data[0].url;
-    return { mp3Url, status: true };
+    const time = data.data[0].time;
+    return { mp3Url, time, status: true };
   } catch (error) {
+    console.log(JSON.stringify(error));
     return { mp3Url: "", status: false };
   }
 }

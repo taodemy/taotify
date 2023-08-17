@@ -24,7 +24,7 @@ export default async function getNewAlbums(area: string, limit: number) {
       albumsDetails.map(async (detail: AlbumDetail) => {
         const albumSongs = detail.songs;
         const urls = await Promise.all(
-          albumSongs.map(async (song: AlbumDetailSong) => getMp3Url(song.id, "standard"))
+          albumSongs.map(async (song: AlbumDetailSong) => getMp3Url(song.id))
         );
 
         const songs: Song[] = [];
@@ -46,6 +46,7 @@ export default async function getNewAlbums(area: string, limit: number) {
 
     return albums;
   } catch (error) {
+    console.log(JSON.stringify(error));
     return [];
   }
 }

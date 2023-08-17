@@ -1,9 +1,4 @@
-import FriendsActivity from "../components/FriendsActivity";
-import NewReleases from "../components/NewReleases";
-import RecentlyPlayed from "../components/RecentlyPlayed";
-import ListPage from "../components/ListPage";
 import Head from "next/head";
-import getNewSongs from "../utils/getNewSongs";
 import { MusicList } from "types";
 import getNewAlbums from "@/utils/getNewAlbums";
 import Carousel from "@/components/carousel";
@@ -11,7 +6,6 @@ import FeaturedAlbums from "@/components/featuredAlbums";
 import TopMusicAlbums from "@/components/topMusicAlbums";
 
 type HomeProps = {
-  // newSongsList: MusicList;
   newAlbums: MusicList[];
 };
 
@@ -25,21 +19,14 @@ export default function Home({ newAlbums }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Carousel />
-      <FeaturedAlbums albums={newAlbums} />
-      <TopMusicAlbums />
+      <FeaturedAlbums albums={newAlbums.slice(0, 7)} />
+      <TopMusicAlbums albums={newAlbums.slice(7)} />
     </>
   );
 }
 
 export /* istanbul ignore next */ async function getStaticProps() {
-  // const newSongsRes = await getNewSongs();
-  // const newSongsList = {
-  //   id: 0,
-  //   type: "newSongs",
-  //   songs: newSongsRes.status ? newSongsRes.songs : [],
-  // };
-
-  const newAlbums = await getNewAlbums("EA", 7);
+  const newAlbums = await getNewAlbums("EA", 14);
 
   return {
     props: { newAlbums },
