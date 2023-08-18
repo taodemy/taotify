@@ -77,12 +77,14 @@ const MusicPlayer = () => {
   }, [isPlaying, audioUrl]);
 
   useEffect(() => {
-    if (playingIndex !== -1) {
-      isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
+    if (playingIndex !== -1 && audioRef.current) {
+      isPlaying
+        ? audioRef.current.addEventListener("canplaythrough", () => {
+            audioRef.current!.play();
+          })
+        : audioRef.current.pause();
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying, audioRef]);
-
   const onPlayPauseClick = () => {
     setIsPlaying((prev) => !prev);
   };

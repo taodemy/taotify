@@ -56,14 +56,14 @@ function Banner({ musicList, id }: BannerType) {
           </div>
           <div className="flex justify-end gap-6">
             {isPlaying && musicList.id === playingQueue?.id ? (
-              <Button onClick={handleAlbumPlay} label="Stop" />
+              <Button onClick={handleAlbumPlay}>Stop</Button>
             ) : (
-              <Button onClick={handleAlbumPlay} label="Paly" />
+              <Button onClick={handleAlbumPlay}>Paly</Button>
             )}
             {isSubscribed ? (
-              <Button onClick={handleSubscription} label="Following" />
+              <Button onClick={handleSubscription}>Following</Button>
             ) : (
-              <Button onClick={handleSubscription} label="Follow" />
+              <Button onClick={handleSubscription}>Follow</Button>
             )}
           </div>
         </div>

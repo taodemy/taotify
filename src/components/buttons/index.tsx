@@ -27,7 +27,7 @@ const Button = ({
   outline = false,
   size = "normal",
   onClick,
-  label = "button",
+  children = "button",
   iconTypes = "close",
   linkTypes = "home",
   isActive,
@@ -36,14 +36,9 @@ const Button = ({
 }: ButtonProps) => {
   return {
     normal: (
-      <NormalButton
-        color={color}
-        outline={outline}
-        size={size}
-        onClick={onClick}
-        label={label}
-        {...otherProps}
-      />
+      <NormalButton color={color} outline={outline} size={size} onClick={onClick} {...otherProps}>
+        {children}
+      </NormalButton>
     ),
     icon: (
       <IconButton<React.ComponentProps<"button">> size={size} onClick={onClick} {...otherProps} />
