@@ -79,13 +79,15 @@ const MusicPlayer = () => {
 
   return (
     <section
-      className={`fixed -bottom-6 h-[78px] w-full transition-all duration-1000 md:left-[64px] md:-bottom-20 md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
-        playingQueue && "-translate-y-20"
+      className={`fixed -bottom-10 h-[78px] w-full transition-all duration-1000 md:left-[64px] md:-bottom-24 md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
+        playingQueue && "-translate-y-24"
       }`}
     >
-      <div className="relative h-full drop-shadow-bgImgShadow">
-        <img src={playingQueue?.songs[0].album.picUrl} alt="Player background image" />
-      </div>
+      {playingQueue && (
+        <div className="relative h-full drop-shadow-bgImgShadow">
+          <img src={playingQueue?.songs[0].album.picUrl} alt="Player background image" />
+        </div>
+      )}
 
       <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2">
         <audio
