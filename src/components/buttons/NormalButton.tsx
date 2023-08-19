@@ -4,7 +4,7 @@ export type NormalButtonProps = {
   color?: ButtonColor;
   size?: "tiny" | "small" | "normal" | "large";
   outline?: boolean;
-  label?: string;
+  children?: React.ReactNode;
   onClick?: () => void;
 } & React.ComponentProps<"button">;
 
@@ -51,7 +51,7 @@ const NormalButton = ({
   outline = false,
   size = "normal",
   onClick,
-  label = "button",
+  children = "button",
   ...otherProps
 }: NormalButtonProps) => {
   const buttonSize = {
@@ -67,7 +67,7 @@ const NormalButton = ({
       {...otherProps}
       onClick={onClick}
     >
-      {label}
+      {children}
     </button>
   );
 };

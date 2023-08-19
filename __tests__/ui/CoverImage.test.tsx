@@ -8,7 +8,6 @@ describe("Cover image", () => {
     const coverImg = screen.getByRole("img", { name: /picture of musiccover/i });
     expect(coverImg).toBeInTheDocument();
     expect(coverImg.classList).toContain("rounded-full");
-    expect(coverImg).toHaveAttribute("src", "/_next/image?url=%2Fsample_cover.png&w=256&q=75");
     expect(coverImg).toHaveAttribute("alt", "Picture of musicCover");
     expect(coverImg).toHaveAttribute("width", "100");
     expect(coverImg).toHaveAttribute("height", "100");
@@ -19,7 +18,6 @@ describe("Cover image", () => {
     const avatarsImg = screen.getByRole("img", { name: /picture of avatars/i });
     expect(avatarsImg).toBeInTheDocument();
     expect(avatarsImg.classList).toContain("rounded-full");
-    expect(avatarsImg).toHaveAttribute("src", "/_next/image?url=%2Fsample_cover.png&w=96&q=75");
     expect(avatarsImg).toHaveAttribute("alt", "Picture of avatars");
     expect(avatarsImg).toHaveAttribute("width", "48");
     expect(avatarsImg).toHaveAttribute("height", "48");

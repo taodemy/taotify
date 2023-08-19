@@ -7,49 +7,49 @@ import "@testing-library/jest-dom";
 /*=====================================================*/
 describe("NormalButton", () => {
   it("should render button with primary color", () => {
-    render(<NormalButton color="primary" label="button" />);
+    render(<NormalButton color="primary" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("bg-primary");
   });
 
   it("should render button with secondary color", () => {
-    render(<NormalButton color="secondary" label="button"></NormalButton>);
+    render(<NormalButton color="secondary" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("bg-secondary");
   });
 
   it("should render button with ternary color", () => {
-    render(<NormalButton color="ternary" label="button"></NormalButton>);
+    render(<NormalButton color="ternary" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("bg-ternary");
   });
 
   it("should render button with warning color", () => {
-    render(<NormalButton color="warning" label="button"></NormalButton>);
+    render(<NormalButton color="warning" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("bg-warning");
   });
 
   it("should render button with info color", () => {
-    render(<NormalButton color="info" label="button"></NormalButton>);
+    render(<NormalButton color="info" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("bg-info");
   });
 
   it("should render button with light color", () => {
-    render(<NormalButton color="light" label="button"></NormalButton>);
+    render(<NormalButton color="light" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("bg-light-400");
   });
 
   it("should render button with dark color", () => {
-    render(<NormalButton color="dark" label="button"></NormalButton>);
+    render(<NormalButton color="dark" />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("bg-dark-400");
@@ -59,7 +59,7 @@ describe("NormalButton", () => {
   // test outline color
   /*=====================================================*/
   it("should render out line", () => {
-    render(<NormalButton outline label="button" />);
+    render(<NormalButton outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button).toHaveStyle(`background: "transparent"`);
@@ -67,49 +67,49 @@ describe("NormalButton", () => {
   });
 
   it("should render button with primary border", () => {
-    render(<NormalButton color="primary" outline label="button" />);
+    render(<NormalButton color="primary" outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-primary");
   });
 
   it("should render button with secondary border", () => {
-    render(<NormalButton color="secondary" outline label="button"></NormalButton>);
+    render(<NormalButton color="secondary" outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-secondary");
   });
 
   it("should render button with ternary border", () => {
-    render(<NormalButton color="ternary" outline label="button"></NormalButton>);
+    render(<NormalButton color="ternary" outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-ternary");
   });
 
   it("should render button with warning border", () => {
-    render(<NormalButton color="warning" outline label="button"></NormalButton>);
+    render(<NormalButton color="warning" outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-warning");
   });
 
   it("should render button with info border", () => {
-    render(<NormalButton color="info" outline label="button"></NormalButton>);
+    render(<NormalButton color="info" outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-info");
   });
 
   it("should render button with light border", () => {
-    render(<NormalButton color="light" outline label="button"></NormalButton>);
+    render(<NormalButton color="light" outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-light-100");
   });
 
   it("should render button with dark border", () => {
-    render(<NormalButton color="dark" outline label="button"></NormalButton>);
+    render(<NormalButton color="dark" outline />);
     const button = screen.getByRole("button", { name: /button/i });
     expect(button).toBeInTheDocument();
     expect(button.classList).toContain("border-dark-100");
