@@ -7,16 +7,10 @@ interface CoverImageProps {
 }
 const CoverImage = ({ variant = "musicCover", src }: CoverImageProps) => {
   return variant === "avatars" ? (
-    <Image
-      className="rounded-full"
-      src={src}
-      alt={`Picture of ${variant}`}
-      width={48}
-      height={48}
-    />
+    <img className="rounded-full" src={src} alt={`Picture of ${variant}`} width={48} height={48} />
   ) : (
-    <div className="h-16 w-16 md:h-[60px] md:w-[60px] lg:h-[100px] lg:w-[100px]">
-      <Image
+    <div className="h-[64px] w-[64px] overflow-hidden md:h-[60px] md:w-[60px] lg:h-[100px] lg:w-[100px]">
+      <img
         className="rounded-full"
         src={src}
         alt={`Picture of ${variant}`}

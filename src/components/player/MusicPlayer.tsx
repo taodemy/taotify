@@ -1,9 +1,8 @@
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/player/ProgressBar";
 import { MusicContext } from "@/contexts/MusicContext";
-import Image from "next/image";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
-import AudioControls from "@/components/AudioControls";
+import AudioControls from "@/components/player/AudioControls";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -13,7 +12,6 @@ const MusicPlayer = () => {
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
   const [audioUrl, setAudioUrl] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const musicData = playingQueue?.songs || "";
 
   const handlePlayEnd = () => {
     if (!playingQueue) return;
@@ -39,28 +37,6 @@ const MusicPlayer = () => {
     audioRef.current.currentTime = time;
   };
 
-  const toggleLoopMode = () => {
-    if (loopMode === "none") setLoopMode("single");
-    if (loopMode === "single") setLoopMode("all");
-    if (loopMode === "all") setLoopMode("none");
-  };
-
-  const onPrevClick = () => {
-    if (playingIndex !== -1) {
-      playingIndex === 0
-        ? setPlayingIndex(musicData.length - 1)
-        : setPlayingIndex((prev: number) => prev - 1);
-    }
-  };
-
-  const onNextClick = () => {
-    if (playingIndex !== -1) {
-      playingIndex >= musicData.length - 1
-        ? setPlayingIndex(0)
-        : setPlayingIndex((prev: number) => prev + 1);
-    }
-  };
-
   useEffect(() => {
     const newAudioUrl = playingQueue?.songs[playingIndex].mp3Url || "";
     setAudioUrl(newAudioUrl);
@@ -76,23 +52,37 @@ const MusicPlayer = () => {
     return () => clearInterval(intervalId);
   }, [isPlaying, audioUrl]);
 
+  const playAudio = () => {
+    const audio = audioRef.current;
+    if (audio) {
+      try {
+        if (audio.readyState === 4) {
+          audio.play();
+          return;
+        }
+        //if readyState is not 4(ready), we will add an event listener to check music's status, when the status is "can play", we will play it.
+        audio.addEventListener("canplay", () => {
+          audio.play();
+        });
+      } catch (error) {
+        console.log(error || JSON.stringify(error));
+      }
+    }
+  };
   useEffect(() => {
-    if (playingIndex !== -1 && audioRef.current) {
-      isPlaying
-        ? audioRef.current.addEventListener("canplaythrough", () => {
-            audioRef.current!.play();
-          })
-        : audioRef.current.pause();
+    if (playingIndex !== -1) {
+      isPlaying ? playAudio() : audioRef.current?.pause();
     }
   }, [isPlaying, audioRef]);
-  const onPlayPauseClick = () => {
-    setIsPlaying((prev) => !prev);
-  };
 
   return (
-    <section className="fixed bottom-[72px] h-[78px] w-full md:left-[64px] md:bottom-0 md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)]">
+    <section
+      className={`fixed -bottom-6 h-[78px] w-full transition-all duration-1000 md:left-[64px] md:-bottom-20 md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
+        playingQueue && "-translate-y-20"
+      }`}
+    >
       <div className="relative h-full drop-shadow-bgImgShadow">
-        <Image src="/bg_player.png" alt="Player background image" fill />
+        <img src={playingQueue?.songs[0].album.picUrl} alt="Player background image" />
       </div>
 
       <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2">
@@ -107,31 +97,25 @@ const MusicPlayer = () => {
           onEnded={handlePlayEnd}
         />
         <div className="flex flex-col items-center justify-center gap-1 lg:justify-start">
-          <CoverImage src="/sample_cover.png" />
+          {playingQueue && <CoverImage src={playingQueue?.songs[0].album.picUrl} />}
           <div className="hidden items-center justify-center gap-1 px-2 text-light md:flex md:flex-col lg:hidden">
-            <p className="text-base">This is love</p>
-            <p className="text-sm">Jaxson Westervelt</p>
+            <p className="text-base">{playingQueue?.songs[playingIndex].name}</p>
+            <p className="text-sm">{playingQueue?.songs[playingIndex].artists[0].name}</p>
           </div>
         </div>
 
         <div className="hidden items-start justify-center gap-[10px] px-2 text-light lg:flex lg:flex-col ">
-          <p className="text-base">This is love</p>
-          <p className="text-sm">By Jaxson Westervelt</p>
+          <p className="text-base">{playingQueue?.songs[playingIndex].name}</p>
+          <p className="text-sm">By {playingQueue?.songs[playingIndex].artists[0].name}</p>
         </div>
 
-        <div className="flex flex-grow flex-col items-center gap-1 py-1 md:justify-center md:gap-2 md:p-[10px]">
-          <div className="flex items-center justify-center gap-1 px-2 text-light md:hidden">
-            <p className="text-sm">This is love</p>
+        <div className="flex flex-grow flex-col items-center md:justify-center md:gap-2 md:p-[10px]">
+          <div className="flex items-center justify-center gap-1 px-2 pt-1 text-light md:hidden">
+            <p className="text-sm">{playingQueue?.songs[playingIndex].name}</p>
             <p className="text-sm"> - </p>
-            <p className="text-xs">Jaxson Westervelt</p>
+            <p className="text-xs">{playingQueue?.songs[playingIndex].artists[0].name}</p>
           </div>
-          <AudioControls
-            loopMode={loopMode}
-            toggleLoopMode={toggleLoopMode}
-            onPrevClick={onPrevClick}
-            onNextClick={onNextClick}
-            onPlayPauseClick={onPlayPauseClick}
-          />
+          <AudioControls audioRef={audioRef} loopMode={loopMode} setLoopMode={setLoopMode} />
           <ProgressBar
             currentTime={currentTime}
             endTime={endTime}

@@ -14,7 +14,7 @@ const Layout = ({ children }: LayoutProps) => {
       <SideBar />
       <main className="fixed top-0 bottom-0 flex w-full flex-col overflow-y-auto bg-dark px-4 md:left-[64px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)]">
         <SearchBar />
-        <div className="mb-28 flex w-full flex-col lg:mb-20">{children}</div>
+        <div className="mb-32 flex w-full flex-col">{children}</div>
       </main>
       <VolumeContextProvider>
         <MusicPlayer />

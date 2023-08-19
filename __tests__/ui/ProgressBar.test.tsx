@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/player/ProgressBar";
 import "@testing-library/jest-dom";
 
 describe("ProgressBar component", () => {

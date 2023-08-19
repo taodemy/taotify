@@ -5,31 +5,22 @@ import { TbArrowsShuffle } from "react-icons/tb";
 import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
-import React, { useContext, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { MusicList } from "types";
 
 interface AudioControlsProps {
-  isPlaying?: boolean;
-  onPlayPauseClick?: () => void;
-  onPrevClick?: () => void;
-  onNextClick?: () => void;
   loopMode?: string;
-  toggleLoopMode?: () => void;
+  setLoopMode: Dispatch<SetStateAction<"none" | "single" | "all">>;
+  audioRef: React.MutableRefObject<HTMLAudioElement | null>;
 }
 
-const AudioControls = ({
-  onPlayPauseClick,
-  onPrevClick,
-  onNextClick,
-  loopMode,
-  toggleLoopMode,
-}: AudioControlsProps) => {
+const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
-
-  const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, isPlaying } =
+  const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
 
+  const audio = audioRef.current;
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
     if (playingQueue) setOriginMusicList(playingQueue);
@@ -43,6 +34,7 @@ const AudioControls = ({
       const shuffledMusicList = shuffleSongs(playingQueue, playingIndex);
       setPlayingIndex(0);
       setPlayingQueue(shuffledMusicList);
+      setLoopMode("none");
     } else {
       if (playingQueue === originMusicList) return;
       const playingSong = playingQueue.songs[playingIndex];
@@ -52,22 +44,58 @@ const AudioControls = ({
     }
   }, [isShuffle, originMusicList]);
 
+  const toggleLoopMode = () => {
+    setIsShuffle(false);
+    if (loopMode === "none") setLoopMode("single");
+    if (loopMode === "single") setLoopMode("all");
+    if (loopMode === "all") setLoopMode("none");
+  };
+
+  const onNextClick = () => {
+    if (playingIndex !== -1 && playingQueue) {
+      playingIndex >= playingQueue?.songs.length - 1
+        ? setPlayingIndex(0)
+        : setPlayingIndex((prev: number) => prev + 1);
+    }
+  };
+  const onPrevClick = () => {
+    if (playingIndex !== -1 && playingQueue) {
+      playingIndex === 0
+        ? setPlayingIndex(playingQueue?.songs.length - 1)
+        : setPlayingIndex(playingIndex - 1);
+    }
+  };
+  const onPlayPauseClick = () => {
+    setIsPlaying((prev) => !prev);
+  };
+
+  const handleFastForward = () => {
+    audio && (audio.currentTime += 10);
+  };
+  const handleRewind = () => {
+    audio && (audio.currentTime -= 10);
+  };
   return (
-    <div className="flex h-16 w-full items-center justify-between text-light">
+    <div className="flex h-8 w-full items-center justify-between text-light md:h-16">
       <button type="button" className="flex h-8 w-8 items-center justify-center">
         <BiHeart className="h-6 w-6" />
       </button>
 
       <div className="flex items-center gap-6">
         <div className="flex flex-1 justify-end gap-2">
-          <button type="button" className="flex h-8 w-8 items-center justify-center">
+          <button
+            className="flex h-8 w-8 items-center justify-center"
+            type="button"
+            role="prevButton"
+            onClick={onPrevClick}
+          >
             <FiSkipBack className="h-3 w-3" />
           </button>
           <button
             type="button"
             className="hidden h-8 w-8 items-center justify-center md:flex"
-            onClick={onPrevClick}
-            role="prevButton"
+            role="rewindButton"
+            onClick={handleRewind}
           >
             <IoPlayBackOutline className="h-4 w-4" />
           </button>
@@ -97,12 +125,17 @@ const AudioControls = ({
           <button
             type="button"
             className="hidden h-8 w-8 items-center justify-center md:flex"
-            onClick={onNextClick}
-            role="nextButton"
+            role="fastForwardButton"
+            onClick={handleFastForward}
           >
             <FiFastForward className="h-4 w-4" />
           </button>
-          <button type="button" className="flex h-8 w-8 items-center justify-center">
+          <button
+            type="button"
+            className="flex h-8 w-8 items-center justify-center"
+            role="nextButton"
+            onClick={onNextClick}
+          >
             <FiSkipForward className="h-3 w-3" />
           </button>
         </div>
