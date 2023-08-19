@@ -12,12 +12,13 @@ const MusicPlayer = () => {
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
   const [audioUrl, setAudioUrl] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const audio = audioRef.current;
 
   const handlePlayEnd = () => {
     if (!playingQueue) return;
 
     if (loopMode === "single") {
-      audioRef.current?.load();
+      audio?.load();
       return;
     }
 
@@ -28,13 +29,13 @@ const MusicPlayer = () => {
 
   const handleDurationChange = () => {
     setCurrentTime(0);
-    setEndTime(Math.floor(audioRef.current?.duration || 0));
+    setEndTime(Math.floor(audio?.duration || 0));
   };
 
   const handleProgressChange = (time: number) => {
-    if (!audioRef.current) return;
+    if (!audio) return;
     setCurrentTime(time);
-    audioRef.current.currentTime = time;
+    audio.currentTime = time;
   };
 
   useEffect(() => {
@@ -46,14 +47,13 @@ const MusicPlayer = () => {
     if (!isPlaying) return;
 
     const intervalId = setInterval(() => {
-      setCurrentTime(Math.ceil(audioRef.current?.currentTime || 0));
+      setCurrentTime(Math.ceil(audio?.currentTime || 0));
     }, 1000);
 
     return () => clearInterval(intervalId);
   }, [isPlaying, audioUrl]);
 
   const playAudio = () => {
-    const audio = audioRef.current;
     if (audio) {
       try {
         if (audio.readyState === 4) {
@@ -71,9 +71,11 @@ const MusicPlayer = () => {
   };
   useEffect(() => {
     if (playingIndex !== -1) {
-      isPlaying ? playAudio() : audioRef.current?.pause();
+      isPlaying ? playAudio() : audio?.pause();
     }
-  }, [isPlaying, audioRef]);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPlaying, audio]);
 
   return (
     <section
