@@ -3,7 +3,7 @@ import Button from "@/components/buttons";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import { MusicContext } from "@/contexts/MusicContext";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 
 type BannerType = {
   musicList: MusicList;
@@ -27,12 +27,13 @@ function Banner({ musicList, id }: BannerType) {
   const handleSubscription = () => {
     setIsSubscribed(!isSubscribed);
   };
+  const { musicContext } = musicList;
   return (
     <div className="relative mb-9 flex h-48 w-full flex-col justify-end text-light">
       <div className="absolute -top-28 -z-10 h-72 w-full">
         <img
           className="h-full w-full scale-105 object-cover"
-          src={musicList?.songs[0]?.album?.artist?.img1v1Url}
+          src={musicContext[0]?.artist?.image}
           alt="album"
         />
         <div className="absolute top-0 h-full w-full scale-105 bg-gradient-to-b from-dark via-transparent to-dark"></div>
@@ -40,9 +41,7 @@ function Banner({ musicList, id }: BannerType) {
       <div className="mb-4 flex flex-col gap-2">
         <p className="text-lg uppercase">artists</p>
         <div className="flex items-center text-primary">
-          <span className="mr-3 text-4xl text-light">
-            {musicList?.songs[0]?.album?.artist?.name}
-          </span>
+          <span className="mr-3 text-4xl text-light">{musicContext[0]?.artist?.name}</span>
           <div className={`relative ${isSubscribed ? "visible" : "hidden"}`}>
             <span className="absolute left-1/3 top-1/3 -z-10 h-1/3 w-1/3 bg-light"></span>
             <AiFillCheckCircle className="inline-block" />
@@ -51,7 +50,7 @@ function Banner({ musicList, id }: BannerType) {
         <div className="flex justify-between">
           <div className="flex items-center">
             <FiMusic className="h-5 w-5" />
-            <span className="ml-4 text-sm">{musicList.songs[0].album.mark}</span>
+            <span className="ml-4 text-sm">{musicContext[0]?.album.mark}</span>
             <p className="ml-4 text-sm">Total Subscriptions</p>
           </div>
           <div className="flex justify-end gap-6">

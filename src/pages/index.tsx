@@ -1,5 +1,5 @@
 import Head from "next/head";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 import getNewAlbums from "@/utils/getNewAlbums";
 import Carousel from "@/components/carousel";
 import FeaturedAlbums from "@/components/featuredAlbums";
@@ -27,7 +27,6 @@ export default function Home({ newAlbums }: HomeProps) {
 
 export /* istanbul ignore next */ async function getStaticProps() {
   const newAlbums = await getNewAlbums("EA", 14);
-
   return {
     props: { newAlbums },
     revalidate: 600,

@@ -1,6 +1,6 @@
 import Albums from "@/components/Albums";
 import { IoIosArrowForward } from "react-icons/io";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 type FeaturedAlbumsProps = {
   albums: MusicList[];
 };

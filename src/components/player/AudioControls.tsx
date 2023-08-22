@@ -6,7 +6,7 @@ import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 
 interface AudioControlsProps {
   loopMode?: string;
@@ -37,8 +37,8 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
       setLoopMode("none");
     } else {
       if (playingQueue === originMusicList) return;
-      const playingSong = playingQueue.songs[playingIndex];
-      const originIndex = originMusicList.songs.indexOf(playingSong);
+      const playingSong = playingQueue.musicContext[playingIndex];
+      const originIndex = originMusicList.musicContext.indexOf(playingSong);
       setPlayingIndex(originIndex);
       setPlayingQueue(originMusicList);
     }
@@ -53,7 +53,7 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
 
   const onNextClick = () => {
     if (playingIndex !== -1 && playingQueue) {
-      playingIndex >= playingQueue?.songs.length - 1
+      playingIndex >= playingQueue?.musicContext.length - 1
         ? setPlayingIndex(0)
         : setPlayingIndex((prev: number) => prev + 1);
     }
@@ -61,7 +61,7 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
   const onPrevClick = () => {
     if (playingIndex !== -1 && playingQueue) {
       playingIndex === 0
-        ? setPlayingIndex(playingQueue?.songs.length - 1)
+        ? setPlayingIndex(playingQueue?.musicContext.length - 1)
         : setPlayingIndex(playingIndex - 1);
     }
   };

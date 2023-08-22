@@ -1,5 +1,5 @@
 import React from "react";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 import AlbumItem from "./AlbumItem";
 
 type AlbumsProps = {

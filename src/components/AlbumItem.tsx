@@ -1,6 +1,6 @@
 import { MusicContext } from "@/contexts/MusicContext";
 import React, { useContext } from "react";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import Link from "next/link";
 
@@ -23,20 +23,20 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
 
   return (
     <div className="relative cursor-pointer text-center text-light">
-      {musicList.songs.length > 0 && (
+      {musicList && (
         <>
           <Link href={`/album/${musicList?.id}`} className="relative">
             <figure>
               <img
                 className="rounded-full"
-                src={musicList.songs[0]?.album?.picUrl}
-                alt={musicList.songs[0]?.album?.name}
+                src={musicList.musicContext[0].album.image}
+                alt={musicList.musicContext[0]?.album?.name}
               />
               <figcaption className="truncate text-base">
-                {musicList.songs[0]?.album?.name}
+                {musicList.musicContext[0]?.album?.name}
               </figcaption>
               <p className="truncate text-sm text-light-200">
-                {musicList.songs[0]?.artists?.map((artist) => artist.name)}
+                {musicList.musicContext[0]?.artist.name}
               </p>
             </figure>
           </Link>

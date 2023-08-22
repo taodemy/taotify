@@ -52,6 +52,8 @@ const MusicPlayer = () => {
     }, 1000);
 
     return () => clearInterval(intervalId);
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isPlaying, audioUrl]);
 
   const playAudio = () => {

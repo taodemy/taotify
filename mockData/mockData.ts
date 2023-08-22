@@ -1,36 +1,60 @@
-import { Album, Artist, MusicList, Song } from "types";
+import {
+  AlbumInContext,
+  ArtistInContext,
+  IMusicContext,
+  MusicList,
+  SongInContext,
+} from "@/types/context";
 
-const mockArtists: Artist[] = [
-  { id: 1, name: "Cam" },
-  { id: 2, name: "Mac" },
+const mockArtists: ArtistInContext = {
+  name: "Jon Batiste",
+  id: 123,
+  image: "image url",
+};
+
+const mockAlbum: AlbumInContext = { id: 1, name: "Hello World", image: "album image" };
+const mockSong1: SongInContext = {
+  id: 1,
+  name: "song1",
+  mp3Url: "url1",
+  time: 1000,
+  image: "song1 image",
+};
+
+const mockSong2: SongInContext = {
+  id: 2,
+  name: "song2",
+  mp3Url: "url2",
+  time: 1000,
+  image: "song2 image",
+};
+
+const mockSong3: SongInContext = {
+  id: 3,
+  name: "song3",
+  mp3Url: "url3",
+  time: 1000,
+  image: "song3 image",
+};
+
+export const mockContext: IMusicContext[] = [
+  {
+    song: mockSong1,
+    album: mockAlbum,
+    artist: mockArtists,
+  },
+  {
+    song: mockSong2,
+    album: mockAlbum,
+    artist: mockArtists,
+  },
+  {
+    song: mockSong3,
+    album: mockAlbum,
+    artist: mockArtists,
+  },
 ];
 
-const mockAlbum: Album = { id: 1, name: "Hello World", picUrl: "" };
+export const mockMusicList: MusicList = { id: 0, type: "album", musicContext: mockContext };
 
-export const mockSongs: Song[] = [
-  {
-    id: 1,
-    name: "song1",
-    album: mockAlbum,
-    artists: mockArtists,
-    mp3Url: "url1",
-  },
-  {
-    id: 2,
-    name: "song2",
-    album: mockAlbum,
-    artists: mockArtists,
-    mp3Url: "url2",
-  },
-  {
-    id: 3,
-    name: "song3",
-    album: mockAlbum,
-    artists: mockArtists,
-    mp3Url: "url3",
-  },
-];
-
-export const mockMusicList: MusicList = { id: 0, type: "newSongs", songs: mockSongs };
-
-export const mockEmptyMusicList: MusicList = { id: 0, type: "album", songs: [] };
+export const emptyMusicList: MusicList = { id: 0, type: "album", musicContext: [] };

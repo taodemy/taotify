@@ -1,7 +1,7 @@
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 
 export default function shuffleSongs(musicList: MusicList, index: number) {
-  const songs = [...musicList.songs];
+  const songs = [...musicList.musicContext];
   const playingSong = songs.splice(index, 1)[0];
 
   for (let i = songs.length - 1; i > 0; i--) {
@@ -12,7 +12,7 @@ export default function shuffleSongs(musicList: MusicList, index: number) {
   const shuffledMusicList = {
     id: musicList.id,
     type: musicList.type,
-    songs: [playingSong, ...songs],
+    musicContext: [playingSong, ...songs],
   };
 
   return shuffledMusicList;
