@@ -5,6 +5,6 @@ import { mockMusicList } from "mockData/mockData";
 describe("shuffleSongs function", () => {
   it("put the playing song at the first position", () => {
     const shuffledMusicList = shuffleSongs(mockMusicList, 1);
-    expect(shuffledMusicList.songs[0].name).toBe("song2");
+    expect(shuffledMusicList.musicContext[0].song.name).toBe("song2");
   });
 });

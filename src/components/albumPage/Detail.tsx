@@ -4,7 +4,7 @@ import { IoTimeOutline } from "react-icons/io5";
 import { FiHeadphones } from "react-icons/fi";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import { MusicContext } from "@/contexts/MusicContext";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 import formatTime from "@/utils/formatTime";
 
 type AlbumDetailType = {
@@ -13,7 +13,7 @@ type AlbumDetailType = {
 const AlbumDetail = ({ musicList }: AlbumDetailType) => {
   const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, playingIndex, setIsPlaying } =
     useContext(MusicContext);
-
+  const { musicContext } = musicList;
   const handleSongPlay = (index: number) => {
     if ((musicList && index !== playingIndex) || playingQueue?.id !== musicList.id) {
       setPlayingQueue(musicList);
@@ -27,17 +27,17 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
   return (
     <>
       <div className="mt-8 mb-6 flex items-center gap-4">
-        <span className="text-3xl">{musicList.songs[0].album.name}</span>
-        <span className="text-sm text-light-200">{musicList.songs.length} songs</span>
+        <span className="text-3xl">{musicContext[0].album.name}</span>
+        <span className="text-sm text-light-200">{musicContext.length} songs</span>
       </div>
       <table className="w-full text-left text-sm">
         <tbody>
-          {Array.isArray(musicList?.songs) &&
-            musicList?.songs.map((music, index) => {
-              const time = music.time ? Math.floor(music.time / 1000) : 0;
+          {Array.isArray(musicContext) &&
+            musicContext.map((context, index) => {
+              const time = context.song.time ? Math.floor(context.song.time / 1000) : 0;
               const duration = formatTime(time);
               return (
-                <tr className="border-t border-dark-100" key={music.id}>
+                <tr className="border-t border-dark-100" key={context.song.id}>
                   <td>
                     <div className="m-2 ml-0 flex items-center">
                       <div className="mr-8 hidden sm:inline-block">{index + 1}</div>
@@ -45,7 +45,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                         <img
                           className="rounded-full object-cover"
                           alt="singer avatar"
-                          src={music.album?.blurPicUrl}
+                          src={context.album?.image}
                         />
                         <div
                           className="group absolute top-0 flex h-full w-full items-center justify-center"
@@ -68,14 +68,14 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                     </div>
                   </td>
                   <td className="px-4">
-                    <div>{music.name}</div>
-                    <div className="lg:hidden">{music.album?.artist?.name}</div>
+                    <div>{context.song.name}</div>
+                    <div className="lg:hidden">{context.artist?.name}</div>
                   </td>
-                  <td className="hidden lg:table-cell">{music.album?.artist?.name}</td>
+                  <td className="hidden lg:table-cell">{context.artist?.name}</td>
                   <td>
                     <div className="hidden items-center sm:flex">
                       <FiHeadphones className=" inline-block h-5 w-5" />
-                      <span className="ml-2">{music.time}</span>
+                      <span className="ml-2">{context.song.time}</span>
                     </div>
                   </td>
                   <td>

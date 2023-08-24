@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { MusicList } from "types";
+import { MusicList } from "@/types/context";
 
 interface MusicContextProps {
   playingIndex: number;
