@@ -9,7 +9,7 @@ export interface IndicatorProps {
 
 export default function Indicator({ activeIndex, length, setActiveIndex }: IndicatorProps) {
   return (
-    <div className="flex items-center space-x-1 border border-primary-100 md:-bottom-10">
+    <div className="flex items-center space-x-1 md:-bottom-10">
       {Array.from(Array(length), (_, index) => {
         return (
           <div
