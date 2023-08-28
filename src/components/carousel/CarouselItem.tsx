@@ -5,8 +5,8 @@ import React, { Dispatch, SetStateAction } from "react";
 export interface CardProps {
   index: number;
   activeIndex: number;
-  slidesPerView: number;
   musicList: MusicList;
+  slidesPerView?: number;
   setActiveIndex: Dispatch<SetStateAction<number>>;
 }
 
@@ -36,9 +36,7 @@ const CarouselItem = ({
   };
   return (
     <div
-      className={`carousel-item ${
-        Math.abs(index - activeIndex) > slidesPerView - 1 ? "opacity-0" : "opacity-100"
-      }`}
+      className={`carousel-item ${absOffset >= slidesPerView ? "hidden" : "block"}`}
       style={{
         transform: cssTransformProperties,
         zIndex: `${10 - absOffset}`,
