@@ -18,7 +18,7 @@ export default function Home({ newAlbums }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Carousel />
+      <Carousel albums={newAlbums} />
       <FeaturedAlbums albums={newAlbums.slice(0, 7)} />
       <TopMusicAlbums albums={newAlbums.slice(7)} />
     </>

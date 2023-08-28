@@ -18,3 +18,14 @@
 }
 @tailwind components;
 @tailwind utilities;
+@layer components {
+  .carousel-container {
+    @apply relative h-32 w-3/6 sm:h-40 md:h-56;
+    perspective: 450px;
+    transform-style: preserve-3d;
+  }
+
+  .carousel-item {
+    @apply absolute h-full w-full cursor-pointer overflow-hidden rounded-3xl drop-shadow-[0_8px_30px_rgb(0,0,0,0.12)] transition-all duration-700 ease-in-out;
+  }
+}
