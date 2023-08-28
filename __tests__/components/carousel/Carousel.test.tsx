@@ -6,12 +6,8 @@ import mockRouter from "next-router-mock";
 jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 
 describe("Carousel", () => {
-  /*=====================================================*/
-  // test carousel rendering image
-  /*=====================================================*/
   it("render carousel image", () => {
     render(<Carousel albums={[mockMusicList]} />);
-
     const image = screen.getByRole("img");
     fireEvent.click(image);
     expect(image).toBeInTheDocument();
@@ -36,16 +32,8 @@ describe("Carousel", () => {
     expect(image).toBeInTheDocument();
     expect(mockRouter.asPath).toBe("/album/0");
   });
-  //   it("should redirect to new url when click", () => {
-  //     render(<Carousel albums={mockAlbums} />);
-  //     const image1 = screen.getAllByRole("img")[0];
-  //     fireEvent.click(image1);
-  //     fireEvent.click(image1);
-  //     expect(image1).toBeInTheDocument();
-  //     expect(mockRouter.asPath).toBe("/album/0");
-  //   });
 
-  it("It should adjust the number of slide previews when the `slidesPerView` is set", () => {
+  it("It should adjust the number of visible slide when the `slidesPerView` is set", () => {
     render(
       <Carousel
         albums={[mockMusicList, mockMusicList, mockMusicList, mockMusicList]}
