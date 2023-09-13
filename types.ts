@@ -11,6 +11,7 @@ export type Song = {
   album: Album;
   artists: Artist[];
   mp3Url: string;
+  time?: number;
 };
 
 export type Album = {
@@ -285,4 +286,39 @@ type AlbumDetailAr = {
   id: number;
   name: string;
   alia: string[];
+};
+
+export type SongFetchById = {
+  id: number;
+  url: string;
+  br: number;
+  size: number;
+  md5: string;
+  code: number;
+  expi: number;
+  type: string;
+  gain: number;
+  peak: number;
+  fee: number;
+  uf?: any;
+  payed: number;
+  flag: number;
+  canExtend: boolean;
+  freeTrialInfo?: any;
+  level: string;
+  encodeType: string;
+  freeTrialPrivilege: FreeTrialPrivilege;
+  freeTimeTrialPrivilege: FreeTimeTrialPrivilege;
+  urlSource: number;
+  rightSource: number;
+  podcastCtrp?: any;
+  effectTypes?: any;
+  time: number;
+};
+
+type FreeTimeTrialPrivilege = {
+  resConsumable: boolean;
+  userConsumable: boolean;
+  type: number;
+  remainTime: number;
 };

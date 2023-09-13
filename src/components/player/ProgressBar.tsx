@@ -1,5 +1,5 @@
 import React from "react";
-import formatTime from "../utils/formatTime";
+import formatTime from "../../utils/formatTime";
 interface ProgressBarProps {
   currentTime: number;
   endTime: number;
@@ -15,7 +15,7 @@ const ProgressBar = ({ currentTime, endTime, handleProgressChange }: ProgressBar
         {formatTime(Math.min(currentTime, endTime))}
       </p>
       <input
-        className="w-full"
+        className="h-1 w-full md:h-3"
         type="range"
         min={0}
         max={endTime}
@@ -24,9 +24,7 @@ const ProgressBar = ({ currentTime, endTime, handleProgressChange }: ProgressBar
           handleProgressChange(parseInt(e.target.value));
         }}
       />
-      {/* <div className="relative h-0.5 flex-1 rounded-full bg-dark-100 md:h-1">
-        <div className="absolute h-0.5 w-1/2 flex-1 rounded-full bg-light md:h-1" />
-      </div> */}
+
       <p role="endTime" className="text-xs md:text-sm">
         {formatTime(endTime)}
       </p>

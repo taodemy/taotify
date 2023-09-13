@@ -4,11 +4,11 @@ export type NormalButtonProps = {
   color?: ButtonColor;
   size?: "tiny" | "small" | "normal" | "large";
   outline?: boolean;
-  label?: string;
+  children?: React.ReactNode;
   onClick?: () => void;
 } & React.ComponentProps<"button">;
 
-const btn = " text-light text-base rounded-full font-[Roboto] flex justify-center items-center";
+const btn = " text-light text-base rounded-full flex justify-center items-center";
 const getButtonClass = (color: ButtonColor, outline: boolean) => {
   switch (color) {
     case "primary":
@@ -51,7 +51,7 @@ const NormalButton = ({
   outline = false,
   size = "normal",
   onClick,
-  label = "button",
+  children = "button",
   ...otherProps
 }: NormalButtonProps) => {
   const buttonSize = {
@@ -63,11 +63,11 @@ const NormalButton = ({
 
   return (
     <button
-      className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn} `}
+      className={`${getButtonClass(color, outline)} ${buttonSize[size]} ${btn}`}
       {...otherProps}
       onClick={onClick}
     >
-      {label}
+      {children}
     </button>
   );
 };

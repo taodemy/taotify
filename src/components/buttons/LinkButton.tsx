@@ -27,13 +27,18 @@ enum LINK_TEXT {
 
 export type LinkTypes = keyof typeof linkList;
 
-type IconProps = {
+type IconProps<T> = {
   linkTypes?: LinkTypes;
   onClick?: () => void;
   isActive?: boolean;
-};
+} & T;
 
-const LinkButton = ({ onClick, linkTypes = "home", isActive = false }: IconProps) => {
+const LinkButton = <T,>({
+  onClick,
+  linkTypes = "home",
+  isActive = false,
+  ...otherProps
+}: IconProps<T>) => {
   return (
     <div
       onClick={onClick}
@@ -46,6 +51,7 @@ const LinkButton = ({ onClick, linkTypes = "home", isActive = false }: IconProps
         className={`flex h-[72px] w-[72px] items-center justify-center bg-primary sm:h-8 sm:w-14 sm:bg-transparent ${
           isActive && "text-light sm:bg-gradient-to-r sm:from-primary sm:to-primary/0"
         }`}
+        {...otherProps}
       >
         {linkList[linkTypes]}
       </button>

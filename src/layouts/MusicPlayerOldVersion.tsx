@@ -1,9 +1,9 @@
-import ProgressBar from "@/components/ProgressBar";
+import ProgressBar from "@/components/player/ProgressBar";
 import { MusicContext } from "@/contexts/MusicContext";
 import Image from "next/image";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
-import AudioControls from "@/components/AudioControls";
+import AudioControls from "@/components/player/AudioControls";
 import useAudioSource from "@/hooks/musicPlayer/useAudioSource";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 import usePlayingQueueAndPlayingIndex from "@/hooks/usePlayingQueueAndPlayingIndex";

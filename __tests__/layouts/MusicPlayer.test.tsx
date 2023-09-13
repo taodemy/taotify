@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import MusicPlayer from "@/layouts/MusicPlayer";
+import MusicPlayer from "@/components/player";
 import { MusicContextProvider } from "@/contexts/MusicContext";
 import { mockMusicList } from "mockData/mockData";
 import { MusicList } from "types";

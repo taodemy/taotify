@@ -72,9 +72,6 @@ module.exports = {
         },
       ],
     },
-    fontFamily: {
-      sans: ["Roboto", "sans-serif"],
-    },
     extend: {
       colors: {
         primary: {
@@ -129,6 +126,10 @@ module.exports = {
       },
       dropShadow: {
         bgImgShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
+      },
+      fontFamily: {
+        sans: ["sans-serif"],
+        roboto: ["var(--font-roboto)"],
       },
     },
   },
