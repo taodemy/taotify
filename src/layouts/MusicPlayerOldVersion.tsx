@@ -137,13 +137,14 @@ const MusicPlayer = () => {
             <p className="text-sm"> - </p>
             <p className="text-xs">Jaxson Westervelt</p>
           </div>
-          <AudioControls
+          <AudioControls audioRef={audioRef} loopMode={loopMode} setLoopMode={setLoopMode} />
+          {/* <AudioControls
             loopMode={loopMode}
             toggleLoopMode={toggleLoopMode}
             onPrevClick={onPrevClick}
             onNextClick={onNextClick}
             onPlayPauseClick={onPlayPauseClick}
-          />
+          /> */}
           <ProgressBar
             currentTime={currentTime}
             endTime={endTime}

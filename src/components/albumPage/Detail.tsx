@@ -26,7 +26,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
 
   return (
     <>
-      <div className="mt-8 mb-6 flex items-center gap-4">
+      <div className="mb-6 mt-8 flex items-center gap-4">
         <span className="text-3xl">{musicList.songs[0].album.name}</span>
         <span className="text-sm text-light-200">{musicList.songs.length} songs</span>
       </div>

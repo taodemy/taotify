@@ -40,7 +40,7 @@ export default function VolumeSlideController() {
     return newVolumeLevel;
   };
   return (
-    <div className={`right-10 bottom-5 mx-auto w-52`} data-testid="volumeSlideContainer">
+    <div className={`bottom-5 right-10 mx-auto w-52`} data-testid="volumeSlideContainer">
       <div
         ref={volumeSlider}
         className={`relative h-5 cursor-pointer rounded bg-primary-100`}

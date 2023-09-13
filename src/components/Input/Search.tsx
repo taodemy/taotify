@@ -29,7 +29,7 @@ const Search = ({
       <input
         id="searchInput"
         placeholder={placeholder}
-        className="hidden h-9 w-full rounded-full border border-light-100 bg-black/75 py-2 px-3 pl-9 text-xl text-light-400 placeholder:text-light-100
+        className="hidden h-9 w-full rounded-full border border-light-100 bg-black/75 px-3 py-2 pl-9 text-xl text-light-400 placeholder:text-light-100
           hover:border-light-400 hover:placeholder:text-light-400 focus:border-light-400 focus:outline-none focus:placeholder:text-transparent sm:flex"
         onChange={handleInput}
         value={inputValue}

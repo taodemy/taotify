@@ -79,7 +79,7 @@ const MusicPlayer = () => {
 
   return (
     <section
-      className={`fixed -bottom-10 h-[78px] w-full transition-all duration-1000 md:left-[64px] md:-bottom-24 md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
+      className={`fixed -bottom-10 h-[78px] w-full transition-all duration-1000 md:-bottom-24 md:left-[64px] md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
         playingQueue && "-translate-y-24"
       }`}
     >

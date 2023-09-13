@@ -40,7 +40,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
               </p>
             </figure>
           </Link>
-          <div className="group absolute top-1/4 left-1/3 flex h-1/3 w-1/3 items-center justify-center">
+          <div className="group absolute left-1/3 top-1/4 flex h-1/3 w-1/3 items-center justify-center">
             {isPlaying &&
             playingQueue?.type === musicList.type &&
             playingQueue.id === musicList.id ? (
