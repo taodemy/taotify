@@ -3,6 +3,8 @@ import { MusicContext } from "@/contexts/MusicContext";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/player/AudioControls";
+import useAudioSource from "@/hooks/musicPlayer/useAudioSource";
+import useIsPlaying from "@/hooks/musicPlayer/useIsPlaying";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -13,8 +15,11 @@ const MusicPlayer = () => {
   const [audioUrl, setAudioUrl] = useState("");
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audio = audioRef.current;
-
   const musicContext = playingQueue?.musicContext;
+
+  useAudioSource();
+  useIsPlaying();
+
   const handlePlayEnd = () => {
     if (!musicContext) return;
 
@@ -70,6 +75,7 @@ const MusicPlayer = () => {
       }
     }
   };
+
   useEffect(() => {
     if (playingIndex !== -1) {
       isPlaying ? playAudio() : audio?.pause();
@@ -80,7 +86,7 @@ const MusicPlayer = () => {
 
   return (
     <section
-      className={`fixed -bottom-10 h-[78px] w-full transition-all duration-1000 md:left-[64px] md:-bottom-24 md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
+      className={`fixed -bottom-10 h-[78px] w-full transition-all duration-1000 md:-bottom-24 md:left-[64px] md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
         playingQueue && "-translate-y-24"
       }`}
     >
@@ -91,7 +97,7 @@ const MusicPlayer = () => {
       )}
 
       <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2">
-        <audio
+        {/* <audio
           ref={audioRef}
           src={audioUrl}
           role="audio"
@@ -100,7 +106,7 @@ const MusicPlayer = () => {
           onPause={() => setIsPlaying(false)}
           onDurationChange={handleDurationChange}
           onEnded={handlePlayEnd}
-        />
+        /> */}
         <div className="flex flex-col items-center justify-center gap-1 lg:justify-start">
           {musicContext && <CoverImage src={musicContext[0].album.image} />}
           <div className="hidden items-center justify-center gap-1 px-2 text-light md:flex md:flex-col lg:hidden">

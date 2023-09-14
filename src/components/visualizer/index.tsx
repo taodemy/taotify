@@ -7,7 +7,7 @@ import { MusicContext } from "@/contexts/MusicContext";
 export default function AudioVisualizer() {
   const { audioData, analyserNode, visualArr, setAudioData, setVisualArr } =
     useContext(WebAudioContext);
-  const { isPlaying } = useContext(MusicContext);
+  const { isPlaying, imgUrl } = useContext(MusicContext);
   const rafRef = useRef<number>();
   let lastTime: number;
   const POINT_NUM = 64;
@@ -70,7 +70,7 @@ export default function AudioVisualizer() {
         y: Y - R,
         width: 2 * R,
         height: 2 * R,
-        img: "/sample_cover.png",
+        src: imgUrl,
         clipPath: new Circle({
           style: {
             cx: X,
@@ -166,5 +166,5 @@ export default function AudioVisualizer() {
     }
   }, [audioData]);
 
-  return <div id="SLine" className="fixed left-0 top-1/4"></div>;
+  return <div id="SLine" className="fixed left-1/3 top-1/2"></div>;
 }

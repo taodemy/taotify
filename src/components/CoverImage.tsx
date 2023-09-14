@@ -1,4 +1,5 @@
 import React from "react";
+import { useRouter } from "next/router";
 import Image from "next/image";
 
 interface CoverImageProps {
@@ -6,6 +7,12 @@ interface CoverImageProps {
   src: string;
 }
 const CoverImage = ({ variant = "musicCover", src }: CoverImageProps) => {
+  const router = useRouter();
+  const onClickToVisualizer = () => {
+    router.push(`/visualizer`);
+    return;
+  };
+
   return variant === "avatars" ? (
     <img className="rounded-full" src={src} alt={`Picture of ${variant}`} width={48} height={48} />
   ) : (
@@ -16,6 +23,7 @@ const CoverImage = ({ variant = "musicCover", src }: CoverImageProps) => {
         alt={`Picture of ${variant}`}
         width={100}
         height={100}
+        onClick={onClickToVisualizer}
       />
     </div>
   );

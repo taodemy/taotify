@@ -72,16 +72,7 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
   // };
 
   const onPlayPauseClick = () => {
-    if (audioContext && audioSource && audioContext.state === "suspended") {
-      audioContext.resume();
-      setIsPlaying(true);
-      return;
-    }
-    if (audioContext && audioSource && audioContext.state === "running") {
-      audioContext.suspend();
-      setIsPlaying(false);
-      return;
-    }
+    setIsPlaying(!isPlaying);
   };
 
   const handleFastForward = () => {

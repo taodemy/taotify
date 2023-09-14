@@ -12,11 +12,19 @@ type BannerType = {
 
 function Banner({ musicList, id }: BannerType) {
   const [isSubscribed, setIsSubscribed] = useState<boolean>(false);
-  const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, playingIndex, setIsPlaying } =
-    useContext(MusicContext);
+  const {
+    isPlaying,
+    playingQueue,
+    setPlayingIndex,
+    setPlayingQueue,
+    playingIndex,
+    setIsPlaying,
+    setImgUrl,
+  } = useContext(MusicContext);
 
   const handleAlbumPlay = () => {
     if ((musicList && playingQueue?.type !== musicList.type) || playingQueue?.id !== musicList.id) {
+      setImgUrl(musicList.musicContext[0].album.image);
       setPlayingQueue(musicList);
       setPlayingIndex(0);
       setIsPlaying(true);
@@ -24,10 +32,13 @@ function Banner({ musicList, id }: BannerType) {
     }
     setIsPlaying(!isPlaying);
   };
+
   const handleSubscription = () => {
     setIsSubscribed(!isSubscribed);
   };
+
   const { musicContext } = musicList;
+
   return (
     <div className="relative mb-9 flex h-48 w-full flex-col justify-end text-light">
       <div className="absolute -top-28 -z-10 h-72 w-full">
