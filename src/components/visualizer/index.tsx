@@ -166,5 +166,5 @@ export default function AudioVisualizer() {
     }
   }, [audioData]);
 
-  return <div id="SLine" className="top-1/4 flex gap-2"></div>;
+  return <div id="SLine" className="fixed left-0 top-1/4"></div>;
 }

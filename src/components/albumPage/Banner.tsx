@@ -57,7 +57,7 @@ function Banner({ musicList, id }: BannerType) {
             {isPlaying && musicList.id === playingQueue?.id ? (
               <Button onClick={handleAlbumPlay}>Stop</Button>
             ) : (
-              <Button onClick={handleAlbumPlay}>Paly</Button>
+              <Button onClick={handleAlbumPlay}>Play</Button>
             )}
             {isSubscribed ? (
               <Button onClick={handleSubscription}>Following</Button>

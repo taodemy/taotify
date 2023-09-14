@@ -7,6 +7,7 @@ import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
 import { MusicList } from "@/types/context";
+import { WebAudioContext } from "@/contexts/WebAudioContext";
 
 interface AudioControlsProps {
   loopMode?: string;
@@ -16,6 +17,7 @@ interface AudioControlsProps {
 
 const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) => {
   const [isShuffle, setIsShuffle] = useState(false);
+  const { audioContext, audioSource } = useContext(WebAudioContext);
   const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
@@ -65,8 +67,21 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
         : setPlayingIndex(playingIndex - 1);
     }
   };
+  // const onPlayPauseClick = () => {
+  //   setIsPlaying((prev) => !prev);
+  // };
+
   const onPlayPauseClick = () => {
-    setIsPlaying((prev) => !prev);
+    if (audioContext && audioSource && audioContext.state === "suspended") {
+      audioContext.resume();
+      setIsPlaying(true);
+      return;
+    }
+    if (audioContext && audioSource && audioContext.state === "running") {
+      audioContext.suspend();
+      setIsPlaying(false);
+      return;
+    }
   };
 
   const handleFastForward = () => {
