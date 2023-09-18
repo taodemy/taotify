@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import CoverImage from "@/components/CoverImage";
 import "@testing-library/jest-dom";
+jest.mock("next/router", () => jest.requireActual("next-router-mock"));
 
 describe("Cover image", () => {
   it("should render music cover image with given image in success", () => {

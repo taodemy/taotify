@@ -16,10 +16,6 @@ const useIsPlaying = () => {
       return;
     }
   }, [isPlaying]);
-
-  useEffect(() => {
-    console.log(imgUrl);
-  }, [imgUrl]);
 };
 
 export default useIsPlaying;
