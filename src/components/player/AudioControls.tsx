@@ -67,11 +67,8 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
         : setPlayingIndex(playingIndex - 1);
     }
   };
-  // const onPlayPauseClick = () => {
-  //   setIsPlaying((prev) => !prev);
-  // };
 
-  const onPlayPauseClick = () => {
+  const handlePlayPauseClick = () => {
     setIsPlaying(!isPlaying);
   };
 
@@ -111,7 +108,7 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
           <button
             type="button"
             className="items-center justify-center"
-            onClick={onPlayPauseClick}
+            onClick={handlePlayPauseClick}
             role="playButton"
           >
             <BiPauseCircle className="h-8 w-8" />
@@ -120,7 +117,7 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
           <button
             type="button"
             className="items-center justify-center"
-            onClick={onPlayPauseClick}
+            onClick={handlePlayPauseClick}
             role="pauseButton"
           >
             <BiPlayCircle className="h-8 w-8" />

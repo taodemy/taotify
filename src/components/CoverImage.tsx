@@ -8,7 +8,7 @@ interface CoverImageProps {
 }
 const CoverImage = ({ variant = "musicCover", src }: CoverImageProps) => {
   const router = useRouter();
-  const onClickToVisualizer = () => {
+  const handleClickToVisualizer = () => {
     router.push(`/visualizer`);
     return;
   };
@@ -23,7 +23,7 @@ const CoverImage = ({ variant = "musicCover", src }: CoverImageProps) => {
         alt={`Picture of ${variant}`}
         width={100}
         height={100}
-        onClick={onClickToVisualizer}
+        onClick={handleClickToVisualizer}
       />
     </div>
   );
