@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useRef, useState } from "react";
-import { FFT_SIZE } from "@/constant/visualizer";
+import { FFT_SIZE, ARRAY_LENGTH } from "@/constant/visualizer";
 
 interface WebAudioContextProps {
   audioContext: AudioContext | null;
@@ -8,6 +8,7 @@ interface WebAudioContextProps {
   gainNode: GainNode | null;
   analyserNode: AnalyserNode | null;
   visualArr: Uint8Array | null;
+  setVisualArr: React.Dispatch<React.SetStateAction<Uint8Array | null>>;
   audioData: number[] | null;
   setAudioData: React.Dispatch<React.SetStateAction<number[] | null>>;
 }
@@ -19,6 +20,7 @@ const defaultValues = {
   gainNode: null,
   analyserNode: null,
   visualArr: null,
+  setVisualArr: () => {},
   audioData: null,
   setAudioData: () => {},
 };
@@ -32,9 +34,9 @@ interface Props {
 export const WebAudioContextProvider = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
-  const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const analyserNodeRef = useRef<AnalyserNode | null>(null);
+  const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
   const [visualArr, setVisualArr] = useState<Uint8Array | null>(null);
   const [audioData, setAudioData] = useState<number[] | null>(null);
 
@@ -62,7 +64,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
       try {
         audioSource.connect(analyserNodeRef.current);
         audioSource.start();
-        setVisualArr(new Uint8Array(analyserNodeRef.current.frequencyBinCount));
+        setAudioData(new Array(ARRAY_LENGTH).fill(0));
       } catch (err) {
         return;
       }
@@ -82,6 +84,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
         gainNode: gainNodeRef.current,
         analyserNode: analyserNodeRef.current,
         visualArr: visualArr,
+        setVisualArr: setVisualArr,
         audioData: audioData,
         setAudioData: setAudioData,
       }}

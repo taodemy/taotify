@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import IconButton from "../buttons/IconButton";
 import { IoTimeOutline } from "react-icons/io5";
 import { FiHeadphones } from "react-icons/fi";
@@ -11,11 +11,19 @@ type AlbumDetailType = {
   musicList: MusicList;
 };
 const AlbumDetail = ({ musicList }: AlbumDetailType) => {
-  const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, playingIndex, setIsPlaying } =
-    useContext(MusicContext);
+  const {
+    isPlaying,
+    playingQueue,
+    setPlayingIndex,
+    setPlayingQueue,
+    playingIndex,
+    setIsPlaying,
+    setImgUrl,
+  } = useContext(MusicContext);
   const { musicContext } = musicList;
   const handleSongPlay = (index: number) => {
     if ((musicList && index !== playingIndex) || playingQueue?.id !== musicList.id) {
+      setImgUrl(musicList.musicContext[index].album.image);
       setPlayingQueue(musicList);
       setPlayingIndex(index);
       setIsPlaying(true);
@@ -26,7 +34,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
 
   return (
     <>
-      <div className="mt-8 mb-6 flex items-center gap-4">
+      <div className="mb-6 mt-8 flex items-center gap-4">
         <span className="text-3xl">{musicContext[0].album.name}</span>
         <span className="text-sm text-light-200">{musicContext.length} songs</span>
       </div>

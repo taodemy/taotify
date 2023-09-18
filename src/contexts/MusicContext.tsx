@@ -1,4 +1,4 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { MusicList } from "@/types/context";
 
 interface MusicContextProps {
@@ -10,6 +10,8 @@ interface MusicContextProps {
   setNoResourceAlert: React.Dispatch<React.SetStateAction<boolean>>;
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+  imgUrl: string;
+  setImgUrl: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const defaultValues = {
@@ -21,6 +23,8 @@ const defaultValues = {
   setNoResourceAlert: () => {},
   isPlaying: false,
   setIsPlaying: () => {},
+  imgUrl: "",
+  setImgUrl: () => {},
 };
 
 export const MusicContext = createContext<MusicContextProps>(defaultValues);
@@ -42,6 +46,7 @@ export const MusicContextProvider = ({
   const [playingQueue, setPlayingQueue] = useState<MusicList | null>(queue);
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(alert);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [imgUrl, setImgUrl] = useState<string>("");
 
   return (
     <MusicContext.Provider
@@ -54,6 +59,8 @@ export const MusicContextProvider = ({
         setNoResourceAlert,
         isPlaying,
         setIsPlaying,
+        imgUrl,
+        setImgUrl,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import { MusicContext } from "@/contexts/MusicContext";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { MusicList } from "@/types/context";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import Link from "next/link";
@@ -9,10 +9,11 @@ type AlbumItemProps = {
 };
 
 export default function AlbumItem({ musicList }: AlbumItemProps) {
-  const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, setIsPlaying } =
+  const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, setIsPlaying, setImgUrl } =
     useContext(MusicContext);
   const handleAlbumPlay = () => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
+      setImgUrl(musicList.musicContext[0].album.image);
       setPlayingQueue(musicList);
       setPlayingIndex(0);
       setIsPlaying(true);
@@ -40,7 +41,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
               </p>
             </figure>
           </Link>
-          <div className="group absolute top-1/4 left-1/3 flex h-1/3 w-1/3 items-center justify-center">
+          <div className="group absolute left-1/3 top-1/4 flex h-1/3 w-1/3 items-center justify-center">
             {isPlaying &&
             playingQueue?.type === musicList.type &&
             playingQueue.id === musicList.id ? (
