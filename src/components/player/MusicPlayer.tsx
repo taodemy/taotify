@@ -127,11 +127,7 @@ const MusicPlayer = () => {
             <p className="text-xs">{playingQueue?.musicContext[playingIndex].artist.name}</p>
           </div>
           <AudioControls audioRef={audioRef} loopMode={loopMode} setLoopMode={setLoopMode} />
-          <ProgressBar
-            currentTime={currentTime}
-            endTime={endTime}
-            handleProgressChange={handleProgressChange}
-          />
+          <ProgressBar />
         </div>
       </div>
     </section>
