@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
-import { VolumeContext } from "@/contexts/VolumeContext";
+import { AudioContext } from "@/contexts/AudioContext";
 import { VolumeParam } from "@/constant/volume";
 
 export default function VolumeMuteController() {
-  const { volumeLevel, setVolumeLevel, preMuteVolumeLevel } = useContext(VolumeContext);
+  const { volumeLevel, setVolumeLevel, preMuteVolumeLevel } = useContext(AudioContext);
   const handleClick = () => {
     const newVolumeLevel =
       volumeLevel === VolumeParam.MIN_VOLUME ? preMuteVolumeLevel : VolumeParam.MIN_VOLUME;

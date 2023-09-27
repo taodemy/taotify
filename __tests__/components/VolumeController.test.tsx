@@ -2,14 +2,14 @@ import { render, fireEvent, screen } from "@testing-library/react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
 import "@testing-library/jest-dom";
 import VolumeController from "@/components/volumeController";
-import { VolumeContextProvider } from "@/contexts/VolumeContext";
+import { AudioContextProvider } from "@/contexts/AudioContext";
 
 describe("VolumeController", () => {
   beforeEach(() => {
     render(
-      <VolumeContextProvider>
+      <AudioContextProvider>
         <VolumeController />
-      </VolumeContextProvider>
+      </AudioContextProvider>
     );
   });
 
