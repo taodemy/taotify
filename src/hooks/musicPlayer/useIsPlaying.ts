@@ -3,10 +3,11 @@ import { WebAudioContext } from "@/contexts/WebAudioContext";
 import { useContext, useEffect } from "react";
 
 const useIsPlaying = () => {
-  const { isPlaying, imgUrl } = useContext(MusicContext);
-  const { audioSource, analyserNode, setAudioSource, audioContext } = useContext(WebAudioContext);
+  const { isPlaying } = useContext(MusicContext);
+  const { audioSource, audioContext } = useContext(WebAudioContext);
 
   useEffect(() => {
+    console.log(audioContext?.currentTime);
     if (audioContext && audioSource && audioContext.state === "suspended" && isPlaying) {
       audioContext.resume();
       return;

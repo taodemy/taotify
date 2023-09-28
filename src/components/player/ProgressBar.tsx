@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import formatTime from "../../utils/formatTime";
 import { AudioContext } from "@/contexts/AudioContext";
 import { usePlayingQueueAndPlayingIndexToloadAudioDuration } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
+import { WebAudioContext } from "@/contexts/WebAudioContext";
 
 const ProgressBar = () => {
   const { audioDuration } = useContext(AudioContext);

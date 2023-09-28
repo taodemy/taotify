@@ -8,6 +8,8 @@ interface AudioContextType {
   setPreMuteVolumeLevel: React.Dispatch<React.SetStateAction<number>>;
   audioDuration: number;
   setAudioDuration: React.Dispatch<React.SetStateAction<number>>;
+  audioStartTime: number;
+  setAudioStartTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const AudioContext = createContext<AudioContextType>({
@@ -17,6 +19,8 @@ export const AudioContext = createContext<AudioContextType>({
   setPreMuteVolumeLevel: () => {},
   audioDuration: 0,
   setAudioDuration: () => {},
+  audioStartTime: 0,
+  setAudioStartTime: () => {},
 });
 
 interface Props {
@@ -27,6 +31,7 @@ export const AudioContextProvider = ({ children }: Props) => {
   const [volumeLevel, setVolumeLevel] = useState<number>(VolumeParam.DEFAULT_VALUE);
   const [preMuteVolumeLevel, setPreMuteVolumeLevel] = useState<number>(VolumeParam.DEFAULT_VALUE);
   const [audioDuration, setAudioDuration] = useState<number>(0);
+  const [audioStartTime, setAudioStartTime] = useState<number>(0);
 
   useEffect(() => {
     if (volumeLevel > VolumeParam.MAX_VOLUME) {
@@ -49,12 +54,14 @@ export const AudioContextProvider = ({ children }: Props) => {
   return (
     <AudioContext.Provider
       value={{
-        volumeLevel,
-        setVolumeLevel,
-        preMuteVolumeLevel,
-        setPreMuteVolumeLevel,
-        audioDuration,
-        setAudioDuration,
+        volumeLevel: volumeLevel,
+        setVolumeLevel: setVolumeLevel,
+        preMuteVolumeLevel: preMuteVolumeLevel,
+        setPreMuteVolumeLevel: setPreMuteVolumeLevel,
+        audioDuration: audioDuration,
+        setAudioDuration: setAudioDuration,
+        audioStartTime: audioStartTime,
+        setAudioStartTime: setAudioStartTime,
       }}
     >
       {children}

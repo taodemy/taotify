@@ -21,7 +21,7 @@ async function getAudioBuffer(mp3Url: string) {
   const res = await getAudioBuffer(mp3Url);
   if (res.status && res.audioBuffer && audioContext) {
     const audioSource = audioContext.createBufferSource();
-    audioContext.decodeAudioData(res.audioBuffer, (buffer) => {
+    await audioContext.decodeAudioData(res.audioBuffer, (buffer) => {
       audioSource.buffer = buffer;
     });
     return { audioSource: audioSource, status: true };

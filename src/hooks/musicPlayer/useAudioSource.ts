@@ -2,9 +2,11 @@ import { MusicContext } from "@/contexts/MusicContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 import { useContext, useEffect } from "react";
 import { getAudioSource } from "@/utils/getAudioSource";
+import { AudioContext } from "@/contexts/AudioContext";
 
 const useAudioSource = () => {
   const { playingIndex, playingQueue } = useContext(MusicContext);
+  const { setAudioDuration } = useContext(AudioContext);
   const { audioSource, analyserNode, setAudioSource, audioContext } = useContext(WebAudioContext);
   const loadSong = async () => {
     try {

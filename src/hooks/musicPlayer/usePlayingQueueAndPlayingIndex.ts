@@ -1,16 +1,17 @@
 import { useContext, useEffect } from "react";
 import { AudioContext } from "@/contexts/AudioContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
-import { MusicContext } from "@/contexts/MusicContext";
 
 const usePlayingQueueAndPlayingIndexToloadAudioDuration = () => {
-  const { setAudioDuration } = useContext(AudioContext);
-  const { audioSource } = useContext(WebAudioContext);
-  const { playingIndex, playingQueue } = useContext(MusicContext);
+  const { setAudioDuration, setAudioStartTime } = useContext(AudioContext);
+  const { audioSource, audioContext } = useContext(WebAudioContext);
   useEffect(() => {
     if (audioSource && audioSource.buffer?.duration) {
       setAudioDuration(Math.floor(audioSource.buffer.duration));
     }
-  }, [playingIndex, playingQueue]);
+    if (audioContext) {
+      setAudioStartTime(audioContext.currentTime);
+    }
+  }, [audioSource]);
 };
 export { usePlayingQueueAndPlayingIndexToloadAudioDuration };

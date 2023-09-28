@@ -63,7 +63,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
     if (audioContextRef.current && analyserNodeRef.current && gainNodeRef.current && audioSource) {
       try {
         audioSource.connect(analyserNodeRef.current);
-        audioSource.start();
+        audioSource.start(audioContextRef.current.currentTime);
         setAudioData(new Array(ARRAY_LENGTH).fill(0));
       } catch (err) {
         return;
