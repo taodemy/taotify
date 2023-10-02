@@ -17,12 +17,9 @@ interface AudioControlsProps {
 
 const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) => {
   const [isShuffle, setIsShuffle] = useState(false);
-  const { audioContext, audioSource } = useContext(WebAudioContext);
   const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
-	const animationFrameIdRef = useRef<number | null>(null);
-
   const audio = audioRef.current;
   //if there is a new queue playing, store the copy of it
   useEffect(() => {

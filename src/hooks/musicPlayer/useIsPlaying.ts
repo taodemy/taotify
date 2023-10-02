@@ -6,15 +6,13 @@ import { useContext, useEffect, useRef } from "react";
 const useIsPlayingTriggerPlayPause = () => {
   const { isPlaying } = useContext(MusicContext);
   const { audioSource, audioContext } = useContext(WebAudioContext);
-  const { currentAudioTime, setCurrentAudioTime, audioStartTime } = useContext(AudioContext);
+  const { setCurrentAudioTime, audioStartTime, currentAudioTime } = useContext(AudioContext);
   const animationFrameRef = useRef<number | null>(null);
 
   const updateProgressBar = () => {
-    const currentTime = currentAudioTime;
-    console.log(audioStartTime);
+    const currentTime = audioContext!.currentTime - audioStartTime;
+    setCurrentAudioTime(currentTime);
     console.log(currentAudioTime);
-    const newCurrentAduioTime = currentTime + audioContext!.currentTime - audioStartTime;
-    setCurrentAudioTime(newCurrentAduioTime);
     animationFrameRef.current = requestAnimationFrame(updateProgressBar);
   };
 

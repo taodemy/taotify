@@ -9,7 +9,11 @@ const usePlayingQueueAndPlayingIndexLoadSong = () => {
   const { audioSource, analyserNode, setAudioSource, audioContext } = useContext(WebAudioContext);
   const loadSong = async () => {
     try {
-      if (analyserNode && audioSource) audioSource.disconnect(analyserNode);
+      if (analyserNode && audioSource) {
+        audioSource.stop();
+        audioSource.disconnect(analyserNode);
+        audioSource.disconnect();
+      }
     } catch (err) {
       return;
     }
@@ -30,17 +34,13 @@ const usePlayingQueueAndPlayingIndexLoadSong = () => {
   }, [playingQueue, playingIndex]);
 };
 
-const usePlayingQueueAndPlayingIndexResetCurrentAudioTime = () => {
+const usePlayingQueueAndPlayingIndexResetStartTime = (startTime: number) => {
   const { playingIndex, playingQueue } = useContext(MusicContext);
   const { setCurrentAudioTime, setAudioStartTime, audioStartTime } = useContext(AudioContext);
   const { audioContext } = useContext(WebAudioContext);
   useEffect(() => {
-    setCurrentAudioTime(0);
     setAudioStartTime(audioContext!.currentTime);
   }, [playingQueue, playingIndex]);
 };
 
-export {
-  usePlayingQueueAndPlayingIndexLoadSong,
-  usePlayingQueueAndPlayingIndexResetCurrentAudioTime,
-};
+export { usePlayingQueueAndPlayingIndexLoadSong, usePlayingQueueAndPlayingIndexResetStartTime };
