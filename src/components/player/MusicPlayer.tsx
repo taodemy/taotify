@@ -5,7 +5,7 @@ import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/player/AudioControls";
 import { usePlayingQueueAndPlayingIndexLoadSong } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
 import { useIsPlayingTriggerPlayPause } from "@/hooks/musicPlayer/useIsPlaying";
-import { useAudioSourceConnectAudioContext } from "@/hooks/musicPlayer/useAudioSource";
+import { useAudioSourceInitalizeContext } from "@/hooks/musicPlayer/useAudioSource";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -19,8 +19,9 @@ const MusicPlayer = () => {
   const musicContext = playingQueue?.musicContext;
 
   usePlayingQueueAndPlayingIndexLoadSong();
+	useAudioSourceInitalizeContext();
   useIsPlayingTriggerPlayPause();
-	useAudioSourceConnectAudioContext();
+	
 
   const handlePlayEnd = () => {
     if (!musicContext) return;

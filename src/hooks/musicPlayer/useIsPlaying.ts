@@ -12,12 +12,13 @@ const useIsPlayingTriggerPlayPause = () => {
   const updateProgressBar = () => {
     const currentTime = audioContext!.currentTime - audioStartTime;
     setCurrentAudioTime(currentTime);
-    console.log(currentAudioTime);
     animationFrameRef.current = requestAnimationFrame(updateProgressBar);
   };
 
   useEffect(() => {
     if (audioContext && audioSource && audioContext.state === "suspended" && isPlaying) {
+      console.log("start playing");
+      cancelAnimationFrame(animationFrameRef.current!);
       updateProgressBar();
       audioContext.resume();
       return;
@@ -27,6 +28,10 @@ const useIsPlayingTriggerPlayPause = () => {
       audioContext.suspend();
       return;
     }
+  }, [isPlaying, audioSource]);
+
+  useEffect(() => {
+    console.log("change isPlaying state");
   }, [isPlaying]);
 };
 

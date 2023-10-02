@@ -56,7 +56,6 @@ export const AudioContextProvider = ({ children }: Props) => {
     }
   }, [preMuteVolumeLevel]);
 
-  useEffect(() => {});
   return (
     <AudioContext.Provider
       value={{

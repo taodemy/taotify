@@ -8,6 +8,7 @@ const usePlayingQueueAndPlayingIndexLoadSong = () => {
   const { playingIndex, playingQueue } = useContext(MusicContext);
   const { audioSource, analyserNode, setAudioSource, audioContext } = useContext(WebAudioContext);
   const loadSong = async () => {
+    console.log("load song");
     try {
       if (analyserNode && audioSource) {
         audioSource.stop();
@@ -34,13 +35,4 @@ const usePlayingQueueAndPlayingIndexLoadSong = () => {
   }, [playingQueue, playingIndex]);
 };
 
-const usePlayingQueueAndPlayingIndexResetStartTime = (startTime: number) => {
-  const { playingIndex, playingQueue } = useContext(MusicContext);
-  const { setCurrentAudioTime, setAudioStartTime, audioStartTime } = useContext(AudioContext);
-  const { audioContext } = useContext(WebAudioContext);
-  useEffect(() => {
-    setAudioStartTime(audioContext!.currentTime);
-  }, [playingQueue, playingIndex]);
-};
-
-export { usePlayingQueueAndPlayingIndexLoadSong, usePlayingQueueAndPlayingIndexResetStartTime };
+export { usePlayingQueueAndPlayingIndexLoadSong };
