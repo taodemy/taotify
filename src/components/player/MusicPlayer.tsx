@@ -3,8 +3,9 @@ import { MusicContext } from "@/contexts/MusicContext";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/player/AudioControls";
-import useAudioSource from "@/hooks/musicPlayer/useAudioSource";
-import useIsPlaying from "@/hooks/musicPlayer/useIsPlaying";
+import { usePlayingQueueAndPlayingIndexLoadSong } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
+import { useIsPlayingTriggerPlayPause } from "@/hooks/musicPlayer/useIsPlaying";
+import { useAudioSourceConnectAudioContext } from "@/hooks/musicPlayer/useAudioSource";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -17,8 +18,9 @@ const MusicPlayer = () => {
   const audio = audioRef.current;
   const musicContext = playingQueue?.musicContext;
 
-  useAudioSource();
-  useIsPlaying();
+  usePlayingQueueAndPlayingIndexLoadSong();
+  useIsPlayingTriggerPlayPause();
+	useAudioSourceConnectAudioContext();
 
   const handlePlayEnd = () => {
     if (!musicContext) return;

@@ -59,18 +59,6 @@ export const WebAudioContextProvider = ({ children }: Props) => {
     initWebAuidoContext();
   }, []);
 
-  useEffect(() => {
-    if (audioContextRef.current && analyserNodeRef.current && gainNodeRef.current && audioSource) {
-      try {
-        audioSource.connect(analyserNodeRef.current);
-        audioSource.start(audioContextRef.current.currentTime);
-        setAudioData(new Array(ARRAY_LENGTH).fill(0));
-      } catch (err) {
-        return;
-      }
-    }
-  }, [audioSource]);
-
   if (!isInitialized) {
     return null;
   }

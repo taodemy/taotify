@@ -1,27 +1,29 @@
 import React, { useContext, useEffect } from "react";
 import formatTime from "../../utils/formatTime";
 import { AudioContext } from "@/contexts/AudioContext";
-import { usePlayingQueueAndPlayingIndexToloadAudioDuration } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
-import { WebAudioContext } from "@/contexts/WebAudioContext";
+import { useAudioSourceSetAudioDuration, useAudioSourceSetAudioStartTime } from "@/hooks/musicPlayer/useAudioSource";
+import { usePlayingQueueAndPlayingIndexResetCurrentAudioTime } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
 
 const ProgressBar = () => {
-  const { audioDuration } = useContext(AudioContext);
+  const { audioDuration, currentAudioTime } = useContext(AudioContext);
   const handleProgressChange = (time: number) => {};
-  usePlayingQueueAndPlayingIndexToloadAudioDuration();
+  useAudioSourceSetAudioDuration();
+	useAudioSourceSetAudioStartTime();
+	usePlayingQueueAndPlayingIndexResetCurrentAudioTime();	
   return (
     <div
       className="relative flex h-[14px] w-full items-center justify-center gap-4 text-light"
       role="progressbar"
     >
       <p role="currentTime" className="text-xs md:text-sm">
-        {0}
+        {formatTime(Math.floor(currentAudioTime))}
       </p>
       <input
         className="h-1 w-full md:h-3"
         type="range"
         min={0}
         max={audioDuration}
-        value={0}
+        value={currentAudioTime}
         onChange={(e) => {
           handleProgressChange(parseInt(e.target.value));
         }}

@@ -1,34 +1,50 @@
-import { MusicContext } from "@/contexts/MusicContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 import { useContext, useEffect } from "react";
-import { getAudioSource } from "@/utils/getAudioSource";
 import { AudioContext } from "@/contexts/AudioContext";
+import { ARRAY_LENGTH } from "@/constant/visualizer";
 
-const useAudioSource = () => {
-  const { playingIndex, playingQueue } = useContext(MusicContext);
-  const { setAudioDuration } = useContext(AudioContext);
-  const { audioSource, analyserNode, setAudioSource, audioContext } = useContext(WebAudioContext);
-  const loadSong = async () => {
-    try {
-      if (analyserNode && audioSource) audioSource.disconnect(analyserNode);
-    } catch (err) {
-      return;
-    }
-    if (playingQueue && playingQueue.musicContext[playingIndex].song) {
-      const url = playingQueue.musicContext[playingIndex].song.mp3Url;
-      const res = await getAudioSource({
-        mp3Url: url,
-        audioContext: audioContext,
-      });
-      if (res.status) {
-        setAudioSource(res.audioSource);
-      }
-    }
-  };
+const useAudioSourceConnectAudioContext = () => {
+  const { audioContext, analyserNode, gainNode, audioSource, setAudioData } =
+    useContext(WebAudioContext);
 
   useEffect(() => {
-    loadSong();
-  }, [playingQueue, playingIndex]);
+    if (audioContext && analyserNode && gainNode && audioSource) {
+      try {
+        audioSource.connect(analyserNode);
+        audioSource.start(audioContext.currentTime);
+        setAudioData(new Array(ARRAY_LENGTH).fill(0));
+      } catch (err) {
+        return;
+      }
+    }
+  }, [audioSource]);
 };
 
-export default useAudioSource;
+const useAudioSourceSetAudioStartTime = () => {
+  const { setAudioStartTime } = useContext(AudioContext);
+  const { audioContext, audioSource } = useContext(WebAudioContext);
+  useEffect(() => {
+    if (audioContext) {
+      setAudioStartTime(audioContext.currentTime);
+    }
+  }, [audioSource]);
+};
+
+const useAudioSourceSetAudioDuration = () => {
+  const { setAudioDuration, setAudioStartTime } = useContext(AudioContext);
+  const { audioSource, audioContext } = useContext(WebAudioContext);
+  useEffect(() => {
+    if (audioSource && audioSource.buffer?.duration) {
+      setAudioDuration(Math.floor(audioSource.buffer.duration));
+    }
+    if (audioContext) {
+      setAudioStartTime(audioContext.currentTime);
+    }
+  }, [audioSource]);
+};
+
+export {
+  useAudioSourceConnectAudioContext,
+  useAudioSourceSetAudioDuration,
+  useAudioSourceSetAudioStartTime,
+};
