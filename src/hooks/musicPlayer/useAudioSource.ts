@@ -24,8 +24,8 @@ const useAudioSourceInitalizeContext = () => {
     if (audioSource && audioSource.buffer?.duration) {
       setAudioDuration(Math.floor(audioSource.buffer.duration));
     }
+    console.log("reset audio start time by audioSource");
     if (audioContext) {
-      console.log("reset audio start time by audioSource");
       setAudioStartTime(audioContext.currentTime);
     }
   }, [audioSource]);
