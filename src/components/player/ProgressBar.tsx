@@ -10,7 +10,8 @@ const ProgressBar = () => {
   const { audioContext, audioSource, audioBuffer, analyserNode, setAudioSource } =
     useContext(WebAudioContext);
   const { isPlaying } = useContext(MusicContext);
-  let currentAudioTime: number = audioContext!.currentTime - audioStartTime;
+  let currentAudioTime: number = 0;
+  if (audioContext) currentAudioTime = audioContext.currentTime - audioStartTime;
   const handleProgressChange = (time: number) => {
     if (audioContext && audioSource && analyserNode) {
       console.log("handleProgressChange: disconnect first");
