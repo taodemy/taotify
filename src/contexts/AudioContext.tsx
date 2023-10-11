@@ -10,8 +10,6 @@ interface AudioContextType {
   setAudioDuration: React.Dispatch<React.SetStateAction<number>>;
   audioStartTime: number;
   setAudioStartTime: React.Dispatch<React.SetStateAction<number>>;
-  currentAudioTime: number;
-  setCurrentAudioTime: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const AudioContext = createContext<AudioContextType>({
@@ -23,8 +21,6 @@ export const AudioContext = createContext<AudioContextType>({
   setAudioDuration: () => {},
   audioStartTime: 0,
   setAudioStartTime: () => {},
-  currentAudioTime: 0,
-  setCurrentAudioTime: () => {},
 });
 
 interface Props {
@@ -67,8 +63,6 @@ export const AudioContextProvider = ({ children }: Props) => {
         setAudioDuration: setAudioDuration,
         audioStartTime: audioStartTime,
         setAudioStartTime: setAudioStartTime,
-        currentAudioTime: currentAudioTime,
-        setCurrentAudioTime: setCurrentAudioTime,
       }}
     >
       {children}

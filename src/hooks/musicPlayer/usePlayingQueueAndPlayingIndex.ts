@@ -1,12 +1,12 @@
 import { AudioContext } from "@/contexts/AudioContext";
 import { MusicContext } from "@/contexts/MusicContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
-import { getAudioSource } from "@/utils/getAudioSource";
+import { getAudioBuffer } from "@/utils/getAudioBuffer";
 import { useEffect, useContext } from "react";
 
 const usePlayingQueueAndPlayingIndexLoadSong = () => {
   const { playingIndex, playingQueue } = useContext(MusicContext);
-  const { audioSource, analyserNode, setAudioSource, audioContext } = useContext(WebAudioContext);
+  const { audioSource, analyserNode, setAudioBuffer, audioContext } = useContext(WebAudioContext);
   const loadSong = async () => {
     console.log("load song");
     try {
@@ -16,16 +16,16 @@ const usePlayingQueueAndPlayingIndexLoadSong = () => {
         audioSource.disconnect();
       }
     } catch (err) {
-      return;
+      console.log(err);
     }
     if (playingQueue && playingQueue.musicContext[playingIndex].song) {
       const url = playingQueue.musicContext[playingIndex].song.mp3Url;
-      const res = await getAudioSource({
+      const res = await getAudioBuffer({
         mp3Url: url,
         audioContext: audioContext,
       });
       if (res.status) {
-        setAudioSource(res.audioSource);
+        res.audioBuffer && setAudioBuffer(res.audioBuffer);
       }
     }
   };

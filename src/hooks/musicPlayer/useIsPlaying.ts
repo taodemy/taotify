@@ -1,24 +1,23 @@
 import { AudioContext } from "@/contexts/AudioContext";
 import { MusicContext } from "@/contexts/MusicContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 
 const useIsPlayingTriggerPlayPause = () => {
   const { isPlaying } = useContext(MusicContext);
+  const [currentTime, setCurrentTime] = useState<number>(0);
   const { audioSource, audioContext } = useContext(WebAudioContext);
-  const { setCurrentAudioTime, audioStartTime, currentAudioTime } = useContext(AudioContext);
+  const { audioStartTime } = useContext(AudioContext);
   const animationFrameRef = useRef<number | null>(null);
 
   const updateProgressBar = () => {
-    const currentTime = audioContext!.currentTime - audioStartTime;
-    setCurrentAudioTime(currentTime);
+    const newCurrentTime = audioContext!.currentTime - audioStartTime;
+    setCurrentTime(newCurrentTime);
     animationFrameRef.current = requestAnimationFrame(updateProgressBar);
   };
 
   useEffect(() => {
     if (audioContext && audioSource && audioContext.state === "suspended" && isPlaying) {
-      console.log("start playing");
-      cancelAnimationFrame(animationFrameRef.current!);
       updateProgressBar();
       audioContext.resume();
       return;
@@ -28,10 +27,6 @@ const useIsPlayingTriggerPlayPause = () => {
       audioContext.suspend();
       return;
     }
-  }, [isPlaying, audioSource]);
-
-  useEffect(() => {
-    console.log("change isPlaying state");
   }, [isPlaying]);
 };
 

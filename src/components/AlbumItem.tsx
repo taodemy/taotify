@@ -14,9 +14,9 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
   const handleAlbumPlay = () => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setImgUrl(musicList.musicContext[0].album.image);
+			setIsPlaying(false);
       setPlayingQueue(musicList);
       setPlayingIndex(0);
-      setIsPlaying(true);
     } else {
       setIsPlaying((prev) => !prev);
     }

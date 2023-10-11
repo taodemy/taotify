@@ -2,14 +2,32 @@ import React, { useContext, useEffect } from "react";
 import formatTime from "../../utils/formatTime";
 import { AudioContext } from "@/contexts/AudioContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
-import { useAudioSourceInitalizeContext } from "@/hooks/musicPlayer/useAudioSource";
+import { useAudioBufferInitalizeAudioSource } from "@/hooks/musicPlayer/useAudioBuffer";
+import { MusicContext } from "@/contexts/MusicContext";
 
 const ProgressBar = () => {
-  const { audioDuration, audioStartTime } = useContext(AudioContext);
-  const { audioContext } = useContext(WebAudioContext);
+  const { audioDuration, audioStartTime, setAudioStartTime } = useContext(AudioContext);
+  const { audioContext, audioSource, audioBuffer, analyserNode, setAudioSource } =
+    useContext(WebAudioContext);
+  const { isPlaying } = useContext(MusicContext);
   let currentAudioTime: number = audioContext!.currentTime - audioStartTime;
-  const handleProgressChange = (time: number) => {};
-  useAudioSourceInitalizeContext();
+  const handleProgressChange = (time: number) => {
+    if (audioContext && audioSource && analyserNode) {
+      console.log("handleProgressChange: disconnect first");
+      audioSource.stop();
+      audioSource.disconnect();
+      console.log(`handleProgressChange: set new audio source. Start at: ${time}`);
+      const newAudioSource = audioContext.createBufferSource();
+      newAudioSource.buffer = audioBuffer;
+      audioContext && setAudioStartTime(audioContext.currentTime - time);
+      setAudioSource(newAudioSource);
+      newAudioSource.start(0, time);
+      newAudioSource.connect(analyserNode);
+      isPlaying && audioContext.resume();
+      !isPlaying && audioContext.suspend();
+    }
+  };
+  useAudioBufferInitalizeAudioSource();
 
   return (
     <div

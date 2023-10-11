@@ -3,6 +3,8 @@ import { FFT_SIZE, ARRAY_LENGTH } from "@/constant/visualizer";
 
 interface WebAudioContextProps {
   audioContext: AudioContext | null;
+  audioBuffer: AudioBuffer | null;
+  setAudioBuffer: React.Dispatch<React.SetStateAction<AudioBuffer | null>>;
   audioSource: AudioBufferSourceNode | null;
   setAudioSource: React.Dispatch<React.SetStateAction<AudioBufferSourceNode | null>>;
   gainNode: GainNode | null;
@@ -15,6 +17,8 @@ interface WebAudioContextProps {
 
 const defaultValues = {
   audioContext: null,
+  audioBuffer: null,
+  setAudioBuffer: () => {},
   audioSource: null,
   setAudioSource: () => {},
   gainNode: null,
@@ -34,6 +38,7 @@ interface Props {
 export const WebAudioContextProvider = ({ children }: Props) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const audioContextRef = useRef<AudioContext | null>(null);
+  const [audioBuffer, setAudioBuffer] = useState<AudioBuffer | null>(null);
   const gainNodeRef = useRef<GainNode | null>(null);
   const analyserNodeRef = useRef<AnalyserNode | null>(null);
   const [audioSource, setAudioSource] = useState<AudioBufferSourceNode | null>(null);
@@ -47,6 +52,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
     analyserNodeRef.current.connect(gainNodeRef.current);
     analyserNodeRef.current.fftSize = FFT_SIZE;
     gainNodeRef.current.connect(audioContextRef.current.destination);
+    setAudioSource(audioContextRef.current.createBufferSource());
     setIsInitialized(true);
     return () => {
       if (audioContextRef.current) {
@@ -67,6 +73,8 @@ export const WebAudioContextProvider = ({ children }: Props) => {
     <WebAudioContext.Provider
       value={{
         audioContext: audioContextRef.current,
+        audioBuffer: audioBuffer,
+        setAudioBuffer: setAudioBuffer,
         audioSource: audioSource,
         setAudioSource: setAudioSource,
         gainNode: gainNodeRef.current,
