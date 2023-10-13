@@ -22,14 +22,14 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
   } = useContext(MusicContext);
   const { musicContext } = musicList;
   const handleSongPlay = (index: number) => {
-    if ((musicList && index !== playingIndex) || playingQueue?.id !== musicList.id) {
-      setImgUrl(musicList.musicContext[index].album.image);
+    if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
+      setImgUrl(musicList.musicContext[0].album.image);
+      setIsPlaying(false);
       setPlayingQueue(musicList);
-      setPlayingIndex(index);
-      setIsPlaying(true);
-      return;
+      setPlayingIndex(0);
+    } else {
+      setIsPlaying((prev) => !prev);
     }
-    setIsPlaying(!isPlaying);
   };
 
   return (
