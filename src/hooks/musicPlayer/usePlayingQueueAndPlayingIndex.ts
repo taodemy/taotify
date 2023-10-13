@@ -19,7 +19,8 @@ const usePlayingQueueAndPlayingIndexLoadSong = () => {
       console.log(err);
     }
     if (playingQueue && playingQueue.musicContext[playingIndex].song) {
-      const url = playingQueue.musicContext[playingIndex].song.mp3Url;
+      let url = playingQueue.musicContext[playingIndex].song.mp3Url;
+      url = url.replace(/http(?!\w+:)/g, "https");
       const res = await getAudioBuffer({
         mp3Url: url,
         audioContext: audioContext,
