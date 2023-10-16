@@ -53,6 +53,7 @@ export const WebAudioContextProvider = ({ children }: Props) => {
     analyserNodeRef.current.fftSize = FFT_SIZE;
     gainNodeRef.current.connect(audioContextRef.current.destination);
     setAudioSource(audioContextRef.current.createBufferSource());
+    setVisualArr(new Uint8Array(analyserNodeRef.current.frequencyBinCount));
     setIsInitialized(true);
     return () => {
       if (audioContextRef.current) {
