@@ -1,12 +1,12 @@
 import React, { useContext, useRef } from "react";
 import volumeUtils from "@/utils/volumeUtils/volumeUtils";
-import { VolumeContext } from "@/contexts/VolumeContext";
+import { AudioContext } from "@/contexts/AudioContext";
 import { VolumeParam } from "@/constant/volume";
 
 export default function VolumeSlideController() {
   const halfThumb = (5 * 0.25) / 2;
   const { volumeLevel, setVolumeLevel, preMuteVolumeLevel, setPreMuteVolumeLevel } =
-    useContext(VolumeContext);
+    useContext(AudioContext);
   const volumeSlider = useRef<HTMLDivElement>(null);
   const handleDragSlideStart = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -40,7 +40,7 @@ export default function VolumeSlideController() {
     return newVolumeLevel;
   };
   return (
-    <div className={`right-10 bottom-5 mx-auto w-52`} data-testid="volumeSlideContainer">
+    <div className={`bottom-5 right-10 mx-auto w-52`} data-testid="volumeSlideContainer">
       <div
         ref={volumeSlider}
         className={`relative h-5 cursor-pointer rounded bg-primary-100`}

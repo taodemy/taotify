@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { getAudioBuffer } from "@/utils/getAudioSource";
+import { getArrayBuffer } from "@/utils/getAudioBuffer";
 
 describe("loadSong utils", () => {
   describe("getAudioBuffer", () => {
@@ -10,10 +10,10 @@ describe("loadSong utils", () => {
       });
 
       const mp3Url = "http://example.com/audio.mp3";
-      const result = await getAudioBuffer(mp3Url);
+      const result = await getArrayBuffer(mp3Url);
 
       expect(result.status).toBe(true);
-      expect(result.audioBuffer).toBe("mocked audio data");
+      expect(result.arrayBuffer).toBe("mocked audio data");
     });
 
     it("should handle failed audio data fetch", async () => {
@@ -22,10 +22,10 @@ describe("loadSong utils", () => {
       });
 
       const mp3Url = "http://test.com/test.mp3";
-      const result = await getAudioBuffer(mp3Url);
+      const result = await getArrayBuffer(mp3Url);
 
       expect(result.status).toBe(false);
-      expect(result.audioBuffer).toBe(null);
+      expect(result.arrayBuffer).toBe(null);
     });
   });
 });

@@ -1,10 +1,10 @@
 import VolumeController from "@/components/volumeController";
-import { VolumeContextProvider } from "@/contexts/VolumeContext";
+import { AudioContextProvider } from "@/contexts/AudioContext";
 const VolumeControllerDemo = () => {
   return (
-    <VolumeContextProvider>
+    <AudioContextProvider>
       <VolumeController></VolumeController>
-    </VolumeContextProvider>
+    </AudioContextProvider>
   );
 };
 export default VolumeControllerDemo;

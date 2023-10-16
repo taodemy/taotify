@@ -3,8 +3,8 @@ import { MusicContext } from "@/contexts/MusicContext";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/player/AudioControls";
-import useAudioSource from "@/hooks/musicPlayer/useAudioSource";
-import useIsPlaying from "@/hooks/musicPlayer/useIsPlaying";
+import { usePlayingQueueAndPlayingIndexLoadSong } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
+import { useIsPlayingTriggerPlayPause } from "@/hooks/musicPlayer/useIsPlaying";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -17,8 +17,8 @@ const MusicPlayer = () => {
   const audio = audioRef.current;
   const musicContext = playingQueue?.musicContext;
 
-  useAudioSource();
-  useIsPlaying();
+  usePlayingQueueAndPlayingIndexLoadSong();
+  useIsPlayingTriggerPlayPause();
 
   const handlePlayEnd = () => {
     if (!musicContext) return;
@@ -127,11 +127,7 @@ const MusicPlayer = () => {
             <p className="text-xs">{playingQueue?.musicContext[playingIndex].artist.name}</p>
           </div>
           <AudioControls audioRef={audioRef} loopMode={loopMode} setLoopMode={setLoopMode} />
-          <ProgressBar
-            currentTime={currentTime}
-            endTime={endTime}
-            handleProgressChange={handleProgressChange}
-          />
+          <ProgressBar />
         </div>
       </div>
     </section>

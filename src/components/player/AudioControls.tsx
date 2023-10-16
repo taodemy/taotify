@@ -5,7 +5,7 @@ import { TbArrowsShuffle } from "react-icons/tb";
 import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
-import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
 import { MusicList } from "@/types/context";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 
@@ -17,11 +17,9 @@ interface AudioControlsProps {
 
 const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) => {
   const [isShuffle, setIsShuffle] = useState(false);
-  const { audioContext, audioSource } = useContext(WebAudioContext);
   const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
-
   const audio = audioRef.current;
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
