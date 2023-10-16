@@ -9,7 +9,7 @@ export default function AudioVisualizer() {
     useContext(WebAudioContext);
   const { isPlaying, imgUrl } = useContext(MusicContext);
   const rafRef = useRef<number>();
-  let lastTime: number;
+  let lastTime: number | null;
   const POINT_NUM = 64;
   const OFFSET = 10;
   const RECT_WIDTH = 4;
@@ -36,9 +36,11 @@ export default function AudioVisualizer() {
     const progress = timestamp - lastTime;
     if (progress === 0 || progress > 0) {
       try {
-        analyserNode?.getByteFrequencyData(visualArr!);
-        setAudioData(Array.from(visualArr!));
-        lastTime = timestamp;
+        if (analyserNode && visualArr) {
+          analyserNode.getByteFrequencyData(visualArr);
+          setAudioData(Array.from(visualArr));
+          lastTime = timestamp;
+        }
       } catch (err) {
         console.log(err);
       }
@@ -124,20 +126,14 @@ export default function AudioVisualizer() {
     canvasRef.current = newCanvas;
   };
 
-  const initVisualArr = () => {
-    if (analyserNode) {
-      const newVisualArr = new Uint8Array(analyserNode.frequencyBinCount);
-      setVisualArr(newVisualArr);
-    }
-  };
-
   const cleanVisualArr = () => {
-    setVisualArr(new Uint8Array());
+    if (analyserNode) setVisualArr(new Uint8Array(analyserNode.frequencyBinCount));
+    else setVisualArr(new Uint8Array());
+    rafRef.current && cancelAnimationFrame(rafRef.current);
   };
 
   useEffect(() => {
     initCanvas();
-    initVisualArr();
     return () => {
       cleanVisualArr();
     };
