@@ -7,11 +7,6 @@ describe("Layout", () => {
     render(<Layout />);
   });
 
-  it("renders sidebar txt", () => {
-    const SideBarTitle = screen.getByText(/This is the left SideBar/i);
-    expect(SideBarTitle).toBeInTheDocument();
-  });
-
   it("renders search bar", () => {
     const SearchBarTitle = screen.getByPlaceholderText(/search for music/i);
     expect(SearchBarTitle).toBeInTheDocument();

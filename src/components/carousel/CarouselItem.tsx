@@ -1,6 +1,7 @@
 import { MusicList } from "@/types/context";
 import { useRouter } from "next/router";
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useContext, useEffect } from "react";
+import { MusicContext } from "@/contexts/MusicContext";
 
 export interface CardProps {
   index: number;
@@ -18,6 +19,7 @@ const CarouselItem = ({
   musicList,
 }: CardProps) => {
   const router = useRouter();
+  const { setSelectedAlbum } = useContext(MusicContext);
   const offset = index - activeIndex;
   const absOffset = Math.abs(offset);
 
@@ -33,7 +35,15 @@ const CarouselItem = ({
       return;
     }
     setActiveIndex(index);
+    setSelectedAlbum(musicList);
   };
+
+  useEffect(() => {
+    if (index === activeIndex) {
+      setSelectedAlbum(musicList);
+    }
+  }, []);
+
   return (
     <div
       className={`carousel-item ${absOffset >= slidesPerView ? "hidden" : "block"}`}

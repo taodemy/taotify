@@ -9,24 +9,35 @@ type AlbumItemProps = {
 };
 
 export default function AlbumItem({ musicList }: AlbumItemProps) {
-  const { isPlaying, playingQueue, setPlayingIndex, setPlayingQueue, setIsPlaying, setImgUrl } =
-    useContext(MusicContext);
+  const {
+    isPlaying,
+    playingQueue,
+    setPlayingIndex,
+    setPlayingQueue,
+    setIsPlaying,
+    setImgUrl,
+    setSelectedAlbum,
+  } = useContext(MusicContext);
   const handleAlbumPlay = () => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setImgUrl(musicList.musicContext[0].album.image);
       setPlayingQueue(musicList);
       setPlayingIndex(0);
       setIsPlaying(true);
+      setSelectedAlbum(musicList);
     } else {
       setIsPlaying((prev) => !prev);
     }
+  };
+  const handleAlbumClick = () => {
+    setSelectedAlbum(musicList);
   };
 
   return (
     <div className="relative cursor-pointer text-center text-light">
       {musicList && (
         <>
-          <Link href={`/album/${musicList?.id}`} className="relative">
+          <Link href={`/album/${musicList?.id}`} className="relative" onClick={handleAlbumClick}>
             <figure>
               <img
                 className="rounded-full"
