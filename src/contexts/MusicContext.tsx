@@ -12,6 +12,8 @@ interface MusicContextProps {
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
   imgUrl: string;
   setImgUrl: React.Dispatch<React.SetStateAction<string>>;
+  selectedAlbum: MusicList | null;
+  setSelectedAlbum: React.Dispatch<React.SetStateAction<MusicList | null>>;
 }
 
 const defaultValues = {
@@ -25,6 +27,8 @@ const defaultValues = {
   setIsPlaying: () => {},
   imgUrl: "",
   setImgUrl: () => {},
+  selectedAlbum: null,
+  setSelectedAlbum: () => {},
 };
 
 export const MusicContext = createContext<MusicContextProps>(defaultValues);
@@ -47,6 +51,7 @@ export const MusicContextProvider = ({
   const [noResourceAlert, setNoResourceAlert] = useState<boolean>(alert);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
   const [imgUrl, setImgUrl] = useState<string>("");
+  const [selectedAlbum, setSelectedAlbum] = useState<MusicList | null>(null);
 
   return (
     <MusicContext.Provider
@@ -61,6 +66,8 @@ export const MusicContextProvider = ({
         setIsPlaying,
         imgUrl,
         setImgUrl,
+        selectedAlbum,
+        setSelectedAlbum,
       }}
     >
       {children}
