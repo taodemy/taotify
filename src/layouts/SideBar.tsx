@@ -28,7 +28,7 @@ const SideBar = () => {
           <h2 className="hidden lg:block">Taotify</h2>
           <IoEllipsisHorizontalSharp className="ml-[63px] hidden h-8 w-8 lg:block" />
         </div>
-        <div className="flex flex-col font-roboto text-lg lg:items-start">
+        <div className="flex flex-col overflow-auto font-roboto text-lg lg:items-start">
           <div className="invisible mb-8 mt-[54px] text-primary-100 lg:visible lg:ml-[36px]">
             MENU
           </div>
@@ -60,11 +60,15 @@ const SideBar = () => {
           <div className="flex flex-col items-center gap-8 font-roboto text-lg text-light-200 lg:ml-[36px]">
             <div className="flex items-center gap-4">
               <TbClockPlay className="h-6 w-6" />
-              <p className="hidden lg:block">Recently Played</p>
+              <Link className="hidden lg:block" href="/recently-played">
+                Recently Played
+              </Link>
             </div>
             <div className="flex items-center gap-4">
               <RiHeartLine className="h-6 w-6" />
-              <p className="hidden lg:block">Favourite songs</p>
+              <Link className="hidden lg:block" href="/favourite-songs">
+                Favourite songs
+              </Link>
             </div>
           </div>
           <div className="mt-12 mb-8 flex items-center gap-[146px] lg:ml-[36px] ">
@@ -72,21 +76,13 @@ const SideBar = () => {
             <FiPlus className="h-6 w-6" />
           </div>
           <div className="flex flex-col items-center gap-8 font-roboto text-lg text-light-200 lg:ml-[36px]">
-            <div className="flex items-center">
-              <MdQueueMusic className="h-6 w-6" />
-              <p className="ml-4 mr-[51px] hidden lg:block">Top Hit 2023 - USA</p>
-              <RiDeleteBinLine className="hidden h-6 w-6 lg:block" />
-            </div>
-            <div className="flex items-center">
-              <MdQueueMusic className="h-6 w-6" />
-              <p className="ml-4 mr-[51px] hidden lg:block">Top Hit 2023 - USA</p>
-              <RiDeleteBinLine className="hidden h-6 w-6 lg:block" />
-            </div>
-            <div className="flex items-center">
-              <MdQueueMusic className="h-6 w-6" />
-              <p className="ml-4 mr-[51px] hidden lg:block">Top Hit 2023 - USA</p>
-              <RiDeleteBinLine className="hidden h-6 w-6 lg:block" />
-            </div>
+            {Array.from({ length: 3 }).map((_, index) => (
+              <Link key={index} className="flex items-center" href="/playlist">
+                <MdQueueMusic className="h-6 w-6" />
+                <p className="ml-4 mr-[51px] hidden lg:block">Top Hit 2023 - USA</p>
+                <RiDeleteBinLine className="hidden h-6 w-6 lg:block" />
+              </Link>
+            ))}
           </div>
         </div>
       </div>
