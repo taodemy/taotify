@@ -22,7 +22,7 @@ const SideBar = () => {
           <img src={musicContext[0]?.artist?.image} alt="Sidebar artist image" />
         </div>
       )}
-      <div className="fixed bottom-0 top-0 w-0 flex-col bg-dark-400 bg-opacity-80 text-white backdrop-blur-2xl md:flex md:w-[64px] lg:w-[320px]">
+      <div className="fixed bottom-0 top-0 hidden flex-col bg-dark-400 bg-opacity-80 text-white backdrop-blur-2xl md:flex md:w-[64px] lg:w-[320px]">
         <div className="mt-8 flex items-center justify-center gap-2 font-roboto lg:ml-[36px] lg:justify-start">
           <SiYoutubemusic className="h-10 w-10" />
           <h2 className="hidden lg:block">Taotify</h2>
@@ -75,7 +75,7 @@ const SideBar = () => {
             <p className="invisible text-primary-100 lg:visible">PlAYLISTS</p>
             <FiPlus className="h-6 w-6" />
           </div>
-          <div className="flex flex-col items-center gap-8 font-roboto text-lg text-light-200 lg:ml-[36px]">
+          <div className="flex flex-col items-center gap-8 pb-12 font-roboto text-lg text-light-200 lg:ml-[36px]">
             {Array.from({ length: 3 }).map((_, index) => (
               <Link key={index} className="flex items-center" href="/playlist">
                 <MdQueueMusic className="h-6 w-6" />
