@@ -29,9 +29,7 @@ const SideBar = () => {
           <IoEllipsisHorizontalSharp className="ml-[63px] hidden h-8 w-8 lg:block" />
         </div>
         <div className="flex flex-col overflow-auto font-roboto text-lg lg:items-start">
-          <div className="invisible mb-8 mt-[54px] text-primary-100 lg:visible lg:ml-[36px]">
-            MENU
-          </div>
+          <p className="invisible mb-8 mt-[54px] text-primary-100 lg:visible lg:ml-[36px]">MENU</p>
           {
             <ul className="flex w-full flex-col gap-8 font-roboto text-lg text-light-200">
               {Object.keys(menuList).map((menuItem, index) => (
@@ -54,9 +52,9 @@ const SideBar = () => {
               ))}
             </ul>
           }
-          <div className="invisible mt-12 mb-8 text-primary-100 lg:visible lg:ml-[36px] ">
+          <p className="invisible mt-12 mb-8 text-primary-100 lg:visible lg:ml-[36px] ">
             YOUR LIBRARY
-          </div>
+          </p>
           <div className="flex flex-col items-center gap-8 font-roboto text-lg text-light-200 lg:ml-[36px]">
             <div className="flex items-center gap-4">
               <TbClockPlay className="h-6 w-6" />
