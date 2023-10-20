@@ -1,5 +1,15 @@
 @tailwind base;
 @layer base {
+  p,
+  h1,
+  h2,
+  h3,
+  h4,
+  span,
+  a,
+  input {
+    @apply antialiased;
+  }
   h1 {
     @apply text-5xl;
   }
