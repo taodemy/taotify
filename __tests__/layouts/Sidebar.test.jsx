@@ -2,6 +2,13 @@ import { render, screen } from "@testing-library/react";
 import Sidebar from "../../src/layouts/SideBar";
 import "@testing-library/jest-dom";
 
+jest.mock("next/router", () => ({
+  ...jest.requireActual("next/router"),
+  useRouter: () => ({
+    asPath: "/",
+  }),
+}));
+
 describe("Sidebar", () => {
   beforeEach(() => {
     render(<Sidebar />);
