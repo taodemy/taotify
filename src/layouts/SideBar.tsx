@@ -103,8 +103,49 @@ export const iconList: Record<string, React.ReactNode> = {
   Delete: <RiDeleteBinLine className="h-4 w-4" />,
 };
 
-const RenderSidebarItems = (category: SidebarCategory) => {
+interface RenderSidebarItemProps {
+  isPlaylistsCategory: boolean;
+  menuItem: SidebarMenuItem;
+}
+
+const RenderSidebarItem: React.FC<RenderSidebarItemProps> = ({ isPlaylistsCategory, menuItem }) => {
   const router = useRouter();
+  return (
+    <Link
+      href={isPlaylistsCategory ? `${menuItem.path}/${menuItem.id}` : menuItem.path}
+      className="group flex items-center"
+    >
+      <div
+        className={`h-8 w-2 ${
+          router.asPath.split("?")[0] ===
+          (isPlaylistsCategory ? `${menuItem.path}/${menuItem.id}` : menuItem.path)
+            ? "bg-primary"
+            : ""
+        }`}
+      ></div>
+      <div
+        className={`flex h-8 items-center pl-4 pr-5 group-hover:text-light group-focus:text-light lg:ml-0 lg:pl-6 ${
+          router.asPath.split("?")[0] ===
+          (isPlaylistsCategory ? `${menuItem.path}/${menuItem.id}` : menuItem.path)
+            ? "bg-gradient-to-r from-primary to-transparent"
+            : ""
+        }`}
+      >
+        {isPlaylistsCategory ? iconList["playlist"] : iconList[menuItem.label]}
+      </div>
+      <li className="flex items-center lg:gap-[51px]">
+        <p className="hidden group-hover:text-light group-focus:text-light lg:block">
+          {menuItem.label}
+        </p>
+        <div className="hidden h-6 w-6 items-center justify-center hover:text-light lg:flex">
+          {isPlaylistsCategory && iconList["Delete"]}
+        </div>
+      </li>
+    </Link>
+  );
+};
+
+const RenderSidebarItems = (category: SidebarCategory) => {
   const isPlaylistsCategory = category.label === "PLAYLISTS";
   return (
     <div key={category.label}>
@@ -116,38 +157,11 @@ const RenderSidebarItems = (category: SidebarCategory) => {
       </div>
       <ul className="flex flex-col gap-8 font-roboto text-lg text-light-200">
         {category.subCategories.map((menuItem, subIndex) => (
-          <Link
+          <RenderSidebarItem
+            isPlaylistsCategory={isPlaylistsCategory}
+            menuItem={menuItem}
             key={subIndex}
-            href={isPlaylistsCategory ? `${menuItem.path}/${menuItem.id}` : menuItem.path}
-            className="group flex items-center"
-          >
-            <div
-              className={`h-8 w-2 ${
-                router.asPath.split("?")[0] ===
-                (isPlaylistsCategory ? `${menuItem.path}/${menuItem.id}` : menuItem.path)
-                  ? "bg-primary"
-                  : ""
-              }`}
-            ></div>
-            <div
-              className={`flex h-8 items-center pl-4 pr-5 group-hover:text-light group-focus:text-light lg:ml-0 lg:pl-6 ${
-                router.asPath.split("?")[0] ===
-                (isPlaylistsCategory ? `${menuItem.path}/${menuItem.id}` : menuItem.path)
-                  ? "bg-gradient-to-r from-primary to-transparent"
-                  : ""
-              }`}
-            >
-              {isPlaylistsCategory ? iconList["playlist"] : iconList[menuItem.label]}
-            </div>
-            <li className="flex items-center lg:gap-[51px]">
-              <p className="hidden group-hover:text-light group-focus:text-light lg:block">
-                {menuItem.label}
-              </p>
-              <div className="hidden h-6 w-6 items-center justify-center hover:text-light lg:flex">
-                {isPlaylistsCategory && iconList["Delete"]}
-              </div>
-            </li>
-          </Link>
+          />
         ))}
       </ul>
     </div>

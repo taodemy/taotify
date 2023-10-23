@@ -18,7 +18,11 @@ const BottomNavBar = () => {
       <div className="absolute top-0 left-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 backdrop-blur-2xl md:hidden">
         <ul className="mx-auto flex text-light-200">
           {menuList.map((menuItem, index) => (
-            <Link className="flex" key={index} href={menuItem.path}>
+            <Link
+              className="flex hover:text-light focus:text-light"
+              key={index}
+              href={menuItem.path}
+            >
               <li
                 className={`flex items-center px-6 ${
                   currentPath === menuItem.path ? "bg-primary" : ""
