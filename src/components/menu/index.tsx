@@ -1,45 +1,31 @@
-import { SiYoutubemusic } from "react-icons/si";
-import { IoEllipsisHorizontalSharp } from "react-icons/io5";
-import { MdHomeFilled, MdQueueMusic } from "react-icons/md";
-import {
-  RiRocket2Fill,
-  RiAlbumFill,
-  RiHeartLine,
-  RiDeleteBinLine,
-  RiFolderMusicFill,
-} from "react-icons/ri";
-import { FiPlus } from "react-icons/fi";
-import { FaUsers } from "react-icons/fa";
-import { TbClockPlay } from "react-icons/tb";
+import Link from "next/link";
 
-interface MenuItem {
+export interface MenuItem {
   icon: React.ReactElement;
   path: string;
 }
 
-type MenuList = {
-  [key: string]: MenuItem;
-};
+interface MenuProps {
+  menuName: string;
+  menuItem: MenuItem;
+}
 
-export const menuList: MenuList = {
-  Home: {
-    icon: <MdHomeFilled className="h-6 w-6" />,
-    path: "/",
-  },
-  Discover: {
-    icon: <RiRocket2Fill className="h-6 w-6" />,
-    path: "/discover",
-  },
-  Albums: {
-    icon: <RiAlbumFill className="h-6 w-6" />,
-    path: "/albums",
-  },
-  Artists: {
-    icon: <FaUsers className="h-6 w-6" />,
-    path: "/artists",
-  },
-  Videos: {
-    icon: <RiFolderMusicFill className="h-6 w-6" />,
-    path: "/videos",
-  },
+export const RenderMenuItem: React.FC<MenuProps> = ({ menuName, menuItem }) => {
+  const currentPath = window.location.pathname;
+  console.log(menuItem);
+  return (
+    <Link className="flex w-full" href={menuItem.path}>
+      <div className={`h-8 w-2 ${currentPath === menuItem.path && "bg-primary"}`}></div>
+      <li className={`flex w-full items-center`}>
+        <div
+          className={`${
+            currentPath === menuItem.path && "bg-gradient-to-r from-primary to-transparent"
+          } flex h-full items-center pl-3 pr-5 lg:pl-6`}
+        >
+          {menuItem.icon}
+        </div>
+        <p className="hidden lg:block">{menuName}</p>
+      </li>
+    </Link>
+  );
 };
