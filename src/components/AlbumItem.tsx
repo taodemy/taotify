@@ -14,7 +14,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
   const handleAlbumPlay = () => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setImgUrl(musicList.musicContext[0].album.image);
-			setIsPlaying(false);
+      setIsPlaying(false);
       setPlayingQueue(musicList);
       setPlayingIndex(0);
     } else {
@@ -33,7 +33,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
                 src={musicList.musicContext[0].album.image}
                 alt={musicList.musicContext[0]?.album?.name}
               />
-              <figcaption className="truncate text-base">
+              <figcaption className="mt-1 truncate text-base">
                 {musicList.musicContext[0]?.album?.name}
               </figcaption>
               <p className="truncate text-sm text-light-200">

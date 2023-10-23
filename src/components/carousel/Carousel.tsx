@@ -14,7 +14,7 @@ const Carousel = ({ albums, slidesPerView }: CarouselProps) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="relative h-[30vh] w-2/3">
+      <div className="relative h-[30vh] w-[71%]">
         {albums.map((musicList, index) => (
           <CarouselItem
             key={index}

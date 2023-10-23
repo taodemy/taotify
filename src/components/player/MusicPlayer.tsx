@@ -86,7 +86,7 @@ const MusicPlayer = () => {
 
   return (
     <section
-      className={`fixed -bottom-10 h-[78px] w-full transition-all duration-1000 md:-bottom-24 md:left-[64px] md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
+      className={`fixed -bottom-6 h-[78px] w-full transition-all duration-1000 md:-bottom-24 md:left-[64px] md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
         playingQueue && "-translate-y-24"
       }`}
     >
@@ -96,7 +96,12 @@ const MusicPlayer = () => {
         </div>
       )}
 
-      <div className="absolute left-0 top-0 flex h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2">
+      <div
+        className={`absolute left-0 top-0 ${
+          playingQueue ? "flex" : "hidden"
+        } h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2`}
+      >
+        {" "}
         {/* <audio
           ref={audioRef}
           src={audioUrl}
@@ -114,12 +119,10 @@ const MusicPlayer = () => {
             <p className="text-sm">{playingQueue?.musicContext[playingIndex].artist.name}</p>
           </div>
         </div>
-
         <div className="hidden items-start justify-center gap-[10px] px-2 text-light lg:flex lg:flex-col ">
           <p className="text-base">{playingQueue?.musicContext[playingIndex].song.name}</p>
           <p className="text-sm">By {playingQueue?.musicContext[playingIndex].artist.name}</p>
         </div>
-
         <div className="flex flex-grow flex-col items-center md:justify-center md:gap-2 md:p-[10px]">
           <div className="flex items-center justify-center gap-1 px-2 pt-1 text-light md:hidden">
             <p className="text-sm">{playingQueue?.musicContext[playingIndex].song.name}</p>

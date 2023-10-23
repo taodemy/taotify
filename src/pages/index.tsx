@@ -2,8 +2,7 @@ import Head from "next/head";
 import { MusicList } from "@/types/context";
 import getNewAlbums from "@/utils/getNewAlbums";
 import Carousel from "@/components/carousel";
-import FeaturedAlbums from "@/components/featuredAlbums";
-import TopMusicAlbums from "@/components/topMusicAlbums";
+import AlbumsCollection from "@/components/AlbumsCollection";
 
 type HomeProps = {
   newAlbums: MusicList[];
@@ -19,8 +18,7 @@ export default function Home({ newAlbums }: HomeProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Carousel albums={newAlbums} />
-      <FeaturedAlbums albums={newAlbums.slice(0, 7)} />
-      <TopMusicAlbums albums={newAlbums.slice(7)} />
+      <AlbumsCollection albums={newAlbums} />
     </>
   );
 }
