@@ -12,7 +12,7 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="relative font-roboto">
       <SideBar />
-      <main className="fixed bottom-0 top-0 flex w-full flex-col overflow-y-auto bg-dark px-4 md:left-[64px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)]">
+      <main className="fixed bottom-0 top-0 flex w-full flex-col overflow-y-auto bg-dark px-2 md:left-[64px] md:w-[calc(100vw-64px)] md:px-6 lg:left-[320px] lg:w-[calc(100vw-320px)] lg:px-10">
         <SearchBar />
         <div className="mb-32 flex w-full flex-col">{children}</div>
       </main>

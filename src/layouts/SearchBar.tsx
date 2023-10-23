@@ -5,7 +5,7 @@ import React from "react";
 
 const SearchBar = () => {
   return (
-    <div className="flex w-full items-center p-2 pb-8 md:px-6 md:pt-6 lg:px-10 lg:pt-8">
+    <div className="flex w-full items-center pb-8 md:pt-6 lg:pt-8">
       <Link className="mr-2 text-light" href={"/"}>
         Home
       </Link>
