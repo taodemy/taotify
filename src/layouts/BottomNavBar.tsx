@@ -3,7 +3,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { sidebarContent } from "./SideBar";
-import { iconList } from "./SideBar";
+import { iconList } from "@/components/sidebar/SidebarItem";
 
 const BottomNavBar = () => {
   const router = useRouter();
