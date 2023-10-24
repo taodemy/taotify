@@ -99,7 +99,7 @@ export const iconList: Record<string, React.ReactNode> = {
   "Recently Played": <TbClockPlay className="h-6 w-6" />,
   "Favourite Songs": <RiHeartLine className="h-6 w-6" />,
   playlist: <MdQueueMusic className="h-6 w-6" />,
-  Plus: <FiPlus className="w-[14px h-[14px]" />,
+  Plus: <FiPlus className="h-4 w-4" />,
   Delete: <RiDeleteBinLine className="h-4 w-4" />,
 };
 
@@ -137,7 +137,7 @@ const RenderSidebarItem: React.FC<RenderSidebarItemProps> = ({ isPlaylistsCatego
         <p className="hidden group-hover:text-light group-focus:text-light lg:block">
           {menuItem.label}
         </p>
-        <div className="hidden h-6 w-6 items-center justify-center hover:text-light lg:flex">
+        <div className="hidden h-6 w-6 items-center justify-center text-light-100 hover:text-light lg:flex">
           {isPlaylistsCategory && iconList["Delete"]}
         </div>
       </li>
@@ -151,7 +151,7 @@ const RenderSidebarItems = (category: SidebarCategory) => {
     <div key={category.label}>
       <div className="invisible mb-8 mt-[54px] flex items-center text-light-200 lg:visible lg:ml-[36px] lg:gap-[146px]">
         <p className="text-primary-100 lg:inline-block lg:whitespace-nowrap">{category.label}</p>
-        <div className="hidden h-6 w-6 items-center justify-center hover:text-light lg:flex">
+        <div className="hidden h-6 w-6 items-center justify-center text-light-300 hover:text-light lg:flex">
           {isPlaylistsCategory && iconList["Plus"]}
         </div>
       </div>
