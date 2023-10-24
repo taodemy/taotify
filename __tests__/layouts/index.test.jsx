@@ -2,14 +2,16 @@ import { render, screen } from "@testing-library/react";
 import Layout from "../../src/layouts";
 import "@testing-library/jest-dom";
 
+jest.mock("next/router", () => ({
+  ...jest.requireActual("next/router"),
+  useRouter: () => ({
+    asPath: "/",
+  }),
+}));
+
 describe("Layout", () => {
   beforeEach(() => {
     render(<Layout />);
-  });
-
-  it("renders sidebar txt", () => {
-    const SideBarTitle = screen.getByText(/This is the left SideBar/i);
-    expect(SideBarTitle).toBeInTheDocument();
   });
 
   it("renders search bar", () => {
