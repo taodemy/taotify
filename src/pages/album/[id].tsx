@@ -2,8 +2,8 @@ import Detail from "@/components/albumPage";
 import Banner from "@/components/albumPage/Banner";
 import { AlbumFetchedById } from "@/types/AlbumFetchedById";
 import { RootObjectBySongId, SongFetchedById } from "@/types/SongFetchedById";
-import getAlbumById from "@/utils/getAlbumById";
-import getSongsById from "@/utils/getSongsById";
+import { getAlbumById } from "@/utils/fetchHandler";
+import { getSongsById } from "@/utils/fetchHandler";
 import { IMusicContext, MusicList, SongInContext } from "@/types/context";
 
 type AlbumDetailProps = {
@@ -26,10 +26,10 @@ type SsrProps = {
 export async function getServerSideProps(context: SsrProps) {
   const { id } = context.params;
 
-  const albumData: AlbumFetchedById = await getAlbumById(id);
+  const albumData: AlbumFetchedById = await getAlbumById({ albumId: id });
   const { album, songs } = albumData;
   const albumSongIds = songs.map((song) => song.id);
-  const songObjectById: RootObjectBySongId = await getSongsById(albumSongIds);
+  const songObjectById: RootObjectBySongId = await getSongsById({ songId: albumSongIds });
 
   let musicContext: IMusicContext[] = [];
 
