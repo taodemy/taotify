@@ -22,7 +22,7 @@ async function getAlbumsDetails(newAlbums: AlbumDetail[]): Promise<AlbumFetchedB
   return albumDetails;
 }
 
-async function getSongsFromAlbums(songs: SongInAlbum[]) {
+export async function getSongsFromAlbums(songs: SongInAlbum[]) {
   const albumSongIdArray = songs.map((song) => song.id);
   const songObjectById: RootObjectBySongId = await getSongsById({
     songId: albumSongIdArray,
@@ -31,8 +31,8 @@ async function getSongsFromAlbums(songs: SongInAlbum[]) {
   return songObjectById;
 }
 
-async function formatMusicContextAndPushToContext(
-  songObjectById: Promise<RootObjectBySongId>,
+export async function formatMusicContextAndPushToContext(
+  songObjectById: RootObjectBySongId,
   album: AlbumDetailById,
   songs: SongInAlbum[]
 ) {
@@ -49,11 +49,11 @@ async function formatMusicContextAndPushToContext(
   return musicContext;
 }
 
-async function addAlbumIdAndTypeToMusicList(albumsDetails: AlbumFetchedById[]) {
+export async function addAlbumIdAndTypeToMusicList(albumsDetails: AlbumFetchedById[]) {
   const musicLists = await Promise.all(
     albumsDetails.map(async (detail) => {
       const { songs, album } = detail;
-      const songObjectById = getSongsFromAlbums(songs);
+      const songObjectById = await getSongsFromAlbums(songs);
       const musicContext = await formatMusicContextAndPushToContext(songObjectById, album, songs);
       const musicList: MusicList = {
         id: album.id,
