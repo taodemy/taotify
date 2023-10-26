@@ -8,7 +8,7 @@ type AlbumsProps = {
 
 export default function Albums({ albums }: AlbumsProps) {
   return (
-    <div className="grid auto-rows-[0] grid-cols-4 grid-rows-1 gap-x-1 overflow-y-hidden md:grid-cols-5 md:gap-x-8 lg:grid-cols-7">
+    <div className="grid auto-rows-[0] grid-cols-4 grid-rows-1 gap-x-2 overflow-y-hidden md:grid-cols-5 md:gap-x-4 lg:grid-cols-7 lg:gap-x-6">
       {albums.map((album, index) => (
         <AlbumItem key={index} musicList={album} />
       ))}
