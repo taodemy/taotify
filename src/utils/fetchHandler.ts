@@ -48,5 +48,6 @@ export async function getAlbum(props: fetchParamProps) {
   const fetchedData: TopAlbumObject = await fetchHandler({ area, limit });
   return await transformFetchedData(fetchedData);
 }
+
 export const getAlbumById = fetchHandler;
 export const getSongsById = fetchHandler;
