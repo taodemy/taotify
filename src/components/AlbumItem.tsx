@@ -37,11 +37,7 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
     <div className="relative cursor-pointer text-center text-light">
       {musicList && (
         <>
-          <Link
-            href={`/album/${musicList?.id}`}
-            className="relative"
-            onMouseEnter={handleAlbumEnter}
-          >
+          <Link href={`/album/${musicList?.id}`} className="relative" onClick={handleAlbumEnter}>
             <figure>
               <img
                 className="rounded-full"
