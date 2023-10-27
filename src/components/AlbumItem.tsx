@@ -29,7 +29,8 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
       setIsPlaying((prev) => !prev);
     }
   };
-  const handleAlbumClick = () => {
+
+  const handleAlbumEnter = () => {
     setSelectedAlbum(musicList);
   };
 
@@ -37,7 +38,11 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
     <div className="relative cursor-pointer text-center text-light">
       {musicList && (
         <>
-          <Link href={`/album/${musicList?.id}`} className="relative" onClick={handleAlbumClick}>
+          <Link
+            href={`/album/${musicList?.id}`}
+            className="relative"
+            onMouseEnter={handleAlbumEnter}
+          >
             <figure>
               <img
                 className="rounded-full"
