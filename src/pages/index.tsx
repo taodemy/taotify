@@ -18,7 +18,7 @@ export default function Home({ albums }: AlbumsCollectionProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Carousel albums={westernAlbum} />
+      <Carousel albums={westernAlbum.slice(7)} />
       <AlbumsCollection albums={albums} />
     </>
   );

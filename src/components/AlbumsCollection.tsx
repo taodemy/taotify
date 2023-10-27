@@ -52,9 +52,9 @@ const AlbumsCollection = ({ albums }: AlbumsCollectionProps) => {
   function getAlbumsForCollection(collection: (typeof albumCollectionContent)[0]) {
     switch (collection.collectionName) {
       case "FEATURED":
-        return featureAlbum.slice(1, 8);
+        return featureAlbum.slice(7, 14);
       case "TOP MUSIC":
-        return westernAlbum.slice(0, 7);
+        return westernAlbum.slice(7);
       case "MandoPop":
         return chineseAlbum.slice(7);
       case "KPop":
