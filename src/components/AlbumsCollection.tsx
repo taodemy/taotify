@@ -2,44 +2,12 @@ import React from "react";
 import Albums from "@/components/Albums";
 import { IoIosArrowForward } from "react-icons/io";
 import { MusicList } from "@/types/context";
-
-const albumCollectionContent = [
-  {
-    collectionName: "FEATURED",
-    collectionDescription: "This Week",
-    area: "ALL",
-    limit: 14,
-  },
-  {
-    collectionName: "TOP MUSIC",
-    collectionDescription: "English",
-    area: "EA",
-    limit: 14,
-  },
-  {
-    collectionName: "MandoPop",
-    collectionDescription: "Chinese",
-    area: "ZH",
-    limit: 14,
-  },
-  {
-    collectionName: "KPop",
-    collectionDescription: "Korean",
-    area: "KR",
-    limit: 14,
-  },
-  {
-    collectionName: "JPop",
-    collectionDescription: "Japan",
-    area: "JP",
-    limit: 14,
-  },
-];
+import { GENRES } from "@/constant/genres";
 
 export type AlbumsCollectionProps = {
   albums: {
     featureAlbum: MusicList[];
-    westernAlbum: MusicList[];
+    englishAlbum: MusicList[];
     koreanAlbum: MusicList[];
     chineseAlbum: MusicList[];
     japanAlbum: MusicList[];
@@ -47,20 +15,20 @@ export type AlbumsCollectionProps = {
 };
 
 const AlbumsCollection = ({ albums }: AlbumsCollectionProps) => {
-  const { featureAlbum, westernAlbum, koreanAlbum, chineseAlbum, japanAlbum } = albums;
+  const { featureAlbum, englishAlbum, koreanAlbum, chineseAlbum, japanAlbum } = albums;
 
-  function getAlbumsForCollection(collection: (typeof albumCollectionContent)[0]) {
+  function getAlbumsForCollection(collection: (typeof GENRES)[0]) {
     switch (collection.collectionName) {
       case "FEATURED":
-        return featureAlbum.slice(7, 14);
+        return featureAlbum;
       case "TOP MUSIC":
-        return westernAlbum.slice(7);
-      case "MandoPop":
-        return chineseAlbum.slice(7);
-      case "KPop":
-        return koreanAlbum.slice(7);
-      case "JPop":
-        return japanAlbum.slice(7);
+        return englishAlbum;
+      case "C-Pop":
+        return chineseAlbum;
+      case "K-Pop":
+        return koreanAlbum;
+      case "J-Pop":
+        return japanAlbum;
       default:
         return [];
     }
@@ -68,7 +36,7 @@ const AlbumsCollection = ({ albums }: AlbumsCollectionProps) => {
 
   return (
     <div>
-      {albumCollectionContent.map((collection) => (
+      {GENRES.map((collection) => (
         <div className="mt-8" key={collection.collectionName}>
           <div className="flex max-w-[200px] cursor-pointer items-center gap-1 text-light">
             <h3>{collection.collectionName}</h3>

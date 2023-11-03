@@ -9,6 +9,7 @@ import {
   formatMusicContextAndPushToContext,
 } from "@/utils/transformFetchedData";
 import { GetServerSideProps } from "next";
+import ConvertStringToDecimal from "@/utils/convertStringtoDecimalNumber";
 
 type AlbumDetailProps = {
   musicList: MusicList;
@@ -24,17 +25,13 @@ const AlbumDetail = ({ musicList }: AlbumDetailProps) => {
 };
 export default AlbumDetail;
 
-function parseFunc(id: string) {
-  return parseInt(id, 10);
-}
-
 export const getServerSideProps: GetServerSideProps = async ({ res, params }) => {
   res.setHeader(
     "Cache-Control",
     "public, s-maxage=600, stale-while-revalidate=3600" // 600 seconds for fresh, 3600 seconds for stale and still using but fetch on background
   );
   const paramId = params as { id: string };
-  const id = parseFunc(paramId.id);
+  const id = ConvertStringToDecimal(paramId.id);
   const albumData: AlbumFetchedById = await getAlbumById({ albumId: id });
   const { album, songs } = albumData;
   const songObjectById: RootObjectBySongId = await getSongsFromAlbums(songs);

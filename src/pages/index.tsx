@@ -1,12 +1,12 @@
 import Head from "next/head";
-import { MusicList } from "@/types/context";
 import { getAlbum } from "@/utils/fetchHandler";
 import Carousel from "@/components/carousel";
 import AlbumsCollection from "@/components/AlbumsCollection";
 import { AlbumsCollectionProps } from "@/components/AlbumsCollection";
+import { ALL_REGIONS, CHINESE, KOREAN, JAPANESE, ENGLISH } from "@/constant/genres";
 
 export default function Home({ albums }: AlbumsCollectionProps) {
-  const { westernAlbum } = albums;
+  const { englishAlbum } = albums;
   return (
     <>
       <Head>
@@ -18,7 +18,7 @@ export default function Home({ albums }: AlbumsCollectionProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Carousel albums={westernAlbum.slice(7)} />
+      <Carousel albums={englishAlbum} />
       <AlbumsCollection albums={albums} />
     </>
   );
@@ -27,20 +27,23 @@ export default function Home({ albums }: AlbumsCollectionProps) {
 export async function getStaticProps() {
   try {
     const promises = [
-      getAlbum({ area: "ALL", limit: 14 }),
-      getAlbum({ area: "EA", limit: 14 }),
-      getAlbum({ area: "KR", limit: 14 }),
-      getAlbum({ area: "ZH", limit: 14 }),
-      getAlbum({ area: "JP", limit: 14 }),
+      getAlbum({
+        area: ALL_REGIONS,
+        limit: 14,
+      }),
+      getAlbum({ area: ENGLISH, limit: 14 }),
+      getAlbum({ area: KOREAN, limit: 14 }),
+      getAlbum({ area: CHINESE, limit: 14 }),
+      getAlbum({ area: JAPANESE, limit: 14 }),
     ];
 
-    const [featureAlbum, westernAlbum, koreanAlbum, chineseAlbum, japanAlbum] = await Promise.all(
+    const [featureAlbum, englishAlbum, koreanAlbum, chineseAlbum, japanAlbum] = await Promise.all(
       promises
     );
 
     const albums = {
       featureAlbum,
-      westernAlbum,
+      englishAlbum,
       chineseAlbum,
       koreanAlbum,
       japanAlbum,
