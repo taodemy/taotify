@@ -1,10 +1,15 @@
 import Detail from "@/components/albumPage";
 import Banner from "@/components/albumPage/Banner";
 import { AlbumFetchedById } from "@/types/AlbumFetchedById";
-import { RootObjectBySongId, SongFetchedById } from "@/types/SongFetchedById";
-import getAlbumById from "@/utils/getAlbumById";
-import getSongsById from "@/utils/getSongsById";
-import { IMusicContext, MusicList, SongInContext } from "@/types/context";
+import { RootObjectBySongId } from "@/types/SongFetchedById";
+import { getAlbumById } from "@/utils/fetchHandler";
+import { IMusicContext, MusicList } from "@/types/context";
+import {
+  getSongsFromAlbums,
+  formatMusicContextAndPushToContext,
+} from "@/utils/transformFetchedData";
+import { GetServerSideProps } from "next";
+import ConvertStringToDecimal from "@/utils/convertStringtoDecimalNumber";
 
 type AlbumDetailProps = {
   musicList: MusicList;
@@ -20,53 +25,27 @@ const AlbumDetail = ({ musicList }: AlbumDetailProps) => {
 };
 export default AlbumDetail;
 
-type SsrProps = {
-  params: { id: number };
-};
-export async function getServerSideProps(context: SsrProps) {
-  const { id } = context.params;
-
-  const albumData: AlbumFetchedById = await getAlbumById(id);
+export const getServerSideProps: GetServerSideProps = async ({ res, params }) => {
+  res.setHeader(
+    "Cache-Control",
+    "public, s-maxage=600, stale-while-revalidate=3600" // 600 seconds for fresh, 3600 seconds for stale and still using but fetch on background
+  );
+  const paramId = params as { id: string };
+  const id = ConvertStringToDecimal(paramId.id);
+  const albumData: AlbumFetchedById = await getAlbumById({ albumId: id });
   const { album, songs } = albumData;
-  const albumSongIds = songs.map((song) => song.id);
-  const songObjectById: RootObjectBySongId = await getSongsById(albumSongIds);
+  const songObjectById: RootObjectBySongId = await getSongsFromAlbums(songs);
+  let musicContext: IMusicContext[] = await formatMusicContextAndPushToContext(
+    songObjectById,
+    album,
+    songs
+  );
 
-  let musicContext: IMusicContext[] = [];
-
-  songObjectById.data.map((songDetail: SongFetchedById, index: number) => {
-    const albumInContext = {
-      name: album.name,
-      id: album.id,
-      mark: album.mark,
-      image: album.picUrl,
-    };
-
-    const artistInContext = {
-      name: album.artist.name,
-      id: album.artist.id,
-      image: album.artist.picUrl,
-    };
-
-    const songInContext = {
-      id: songs[index].id,
-      name: songs[index].name,
-      mp3Url: songDetail.url,
-      time: songDetail.time,
-      image: album?.blurPicUrl,
-    };
-    musicContext = [
-      ...musicContext,
-      {
-        song: songInContext,
-        album: albumInContext,
-        artist: artistInContext,
-      },
-    ];
-  });
   const musicList: MusicList = {
     id,
     type: "album",
     musicContext,
   };
+
   return { props: { musicList } };
-}
+};

@@ -1,14 +1,12 @@
 import Head from "next/head";
-import { MusicList } from "@/types/context";
-import getNewAlbums from "@/utils/getNewAlbums";
+import { getAlbum } from "@/utils/fetchHandler";
 import Carousel from "@/components/carousel";
 import AlbumsCollection from "@/components/AlbumsCollection";
+import { AlbumsCollectionProps } from "@/components/AlbumsCollection";
+import { ALL_REGIONS, CHINESE, KOREAN, JAPANESE, ENGLISH } from "@/constant/genres";
 
-type HomeProps = {
-  newAlbums: MusicList[];
-};
-
-export default function Home({ newAlbums }: HomeProps) {
+export default function Home({ albums }: AlbumsCollectionProps) {
+  const { englishAlbum } = albums;
   return (
     <>
       <Head>
@@ -20,16 +18,46 @@ export default function Home({ newAlbums }: HomeProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Carousel albums={newAlbums} />
-      <AlbumsCollection albums={newAlbums} />
+      <Carousel albums={englishAlbum} />
+      <AlbumsCollection albums={albums} />
     </>
   );
 }
 
-export /* istanbul ignore next */ async function getStaticProps() {
-  const newAlbums = await getNewAlbums("EA", 14);
-  return {
-    props: { newAlbums },
-    revalidate: 600,
-  };
+export async function getStaticProps() {
+  try {
+    const promises = [
+      getAlbum({
+        area: ALL_REGIONS,
+        limit: 14,
+      }),
+      getAlbum({ area: ENGLISH, limit: 14 }),
+      getAlbum({ area: KOREAN, limit: 14 }),
+      getAlbum({ area: CHINESE, limit: 14 }),
+      getAlbum({ area: JAPANESE, limit: 14 }),
+    ];
+
+    const [featureAlbum, englishAlbum, koreanAlbum, chineseAlbum, japanAlbum] = await Promise.all(
+      promises
+    );
+
+    const albums = {
+      featureAlbum,
+      englishAlbum,
+      chineseAlbum,
+      koreanAlbum,
+      japanAlbum,
+    };
+
+    return {
+      props: { albums },
+      revalidate: 600,
+    };
+  } catch (error) {
+    console.error(error);
+    return {
+      props: { albums: {} },
+      revalidate: 600,
+    };
+  }
 }

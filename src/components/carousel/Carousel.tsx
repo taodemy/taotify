@@ -2,6 +2,7 @@ import { useState } from "react";
 import CarouselItem from "./CarouselItem";
 import { MusicList } from "@/types/context";
 import Indicator from "./Indicator";
+import sliceArray from "@/utils/sliceArray";
 
 interface CarouselProps {
   albums: MusicList[];
@@ -9,7 +10,10 @@ interface CarouselProps {
 }
 
 const Carousel = ({ albums, slidesPerView }: CarouselProps) => {
-  const initialIndex = albums.length >= 3 ? 2 : 0;
+  const startAlbumIndex = 0;
+  const endAlbumIndex = 7;
+  const slicedAlbum = sliceArray(albums, startAlbumIndex, endAlbumIndex);
+  const initialIndex = Math.floor(slicedAlbum.length / 2);
   const [activeIndex, setActiveIndex] = useState<number>(initialIndex);
 
   return (
@@ -26,7 +30,11 @@ const Carousel = ({ albums, slidesPerView }: CarouselProps) => {
           />
         ))}
       </div>
-      <Indicator length={albums.length} activeIndex={activeIndex} setActiveIndex={setActiveIndex} />
+      <Indicator
+        length={slicedAlbum.length}
+        activeIndex={activeIndex}
+        setActiveIndex={setActiveIndex}
+      />
     </div>
   );
 };
