@@ -7,6 +7,7 @@ import { AlbumDetail } from "@/types/TopAlbums";
 import { AlbumDetailById } from "@/types/AlbumFetchedById";
 import { getAlbumById, getSongsById } from "./fetchHandler";
 import { musicQuality } from "@/constant/song";
+import { AlbumResult } from "@/types/SearchTypes";
 
 interface SongInAlbum {
   id: number;
@@ -66,7 +67,7 @@ export async function addAlbumIdAndTypeToMusicList(albumsDetails: AlbumFetchedBy
   return musicLists;
 }
 
-export async function transformFetchedData(fetchedData: TopAlbumObject) {
+export async function transformFetchedData(fetchedData: TopAlbumObject | AlbumResult) {
   const newAlbums = fetchedData.albums;
   const albumsDetails: AlbumFetchedById[] = await getAlbumsDetails(newAlbums);
   return addAlbumIdAndTypeToMusicList(albumsDetails);
