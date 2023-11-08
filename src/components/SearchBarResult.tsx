@@ -1,6 +1,4 @@
-import React, { useEffect, useState } from "react";
-import debounce from "@/utils/debounce";
-import { getSearchedAlbums, getSearchedArtists, getSearchedSongs } from "@/utils/fetchHandler";
+import React, { useState } from "react";
 import {
   ArtistRootObject,
   AlbumRootObject,
@@ -10,75 +8,15 @@ import {
 import AlbumItem from "./AlbumItem";
 import sliceArray from "@/utils/sliceArray";
 
-const handleDebounceFn = async (keywords: string) => {
-  if (!keywords) {
-    return {
-      matchedArtists: {} as ArtistRootObject,
-      matchedAlbums: [],
-      matchedSongs: {} as SongRootObject,
-    };
-  }
-
-  try {
-    const matchedArtists = await getSearchedArtists({ keywords: keywords, type: 100 });
-    const matchedAlbums = await getSearchedAlbums({ keywords: keywords, type: 10 });
-    const matchedSongs = await getSearchedSongs({ keywords: keywords, type: 1 });
-
-    const searchResults = {
-      matchedArtists,
-      matchedAlbums,
-      matchedSongs,
-    };
-
-    return searchResults;
-  } catch (error) {
-    console.error("Error fetching data:", error);
-    throw error;
-  }
-};
-
-const debounceFn = debounce(handleDebounceFn, 1000);
-
 interface SearchBarResultProps {
-  inputValue: string;
+  searchResults: SearchResults;
 }
 
-const SearchBarResult = ({ inputValue }: SearchBarResultProps) => {
-  const [searchResults, setSearchResults] = useState<SearchResults>({
-    matchedArtists: {} as ArtistRootObject,
-    matchedAlbums: [],
-    matchedSongs: {} as SongRootObject,
-  });
-
+const SearchBarResult = ({ searchResults }: SearchBarResultProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    const fetchSearchedData = async () => {
-      setIsLoading(true);
-
-      try {
-        const results = await debounceFn(inputValue);
-        setSearchResults(results as SearchResults);
-      } catch (error) {
-        console.error("Error in component:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (inputValue) {
-      fetchSearchedData();
-    } else {
-      setSearchResults({
-        matchedArtists: {} as ArtistRootObject,
-        matchedAlbums: [],
-        matchedSongs: {} as SongRootObject,
-      });
-    }
-  }, [inputValue]);
-
   const artists = searchResults.matchedArtists?.result?.artists;
-  const albums = sliceArray(searchResults.matchedAlbums, 0, 5);
+  const albums = sliceArray(searchResults.matchedAlbums, 0, 7);
   const songs = searchResults.matchedSongs?.result?.songs;
 
   return (
@@ -88,9 +26,9 @@ const SearchBarResult = ({ inputValue }: SearchBarResultProps) => {
       ) : (
         <>
           <h3 className="items-center pt-4 pb-8 text-primary-100">Search results:</h3>
-          <div className="grid auto-rows-[0] grid-cols-3 grid-rows-1 overflow-y-hidden px-8 pb-9 md:grid-cols-5 md:gap-x-12">
+          <div className="grid auto-rows-[0] grid-cols-3 grid-rows-1 gap-x-2 overflow-y-hidden sm:grid-cols-4 md:grid-cols-5 md:gap-x-4 lg:grid-cols-6 lg:gap-x-6 xl:grid-cols-7">
             {albums.map((album, index) => (
-              <div className="max-h-[100px] max-w-[100px] px-[6px]" key={index}>
+              <div className="mb-8 max-h-[100px] max-w-[100px] px-[6px]" key={index}>
                 <AlbumItem key={index} musicList={album} />
               </div>
             ))}

@@ -1,12 +1,25 @@
 import { render, screen, fireEvent } from "@testing-library/react";
 import Search from "@/components/Input/Search";
 import React, { useState } from "react";
+import { SearchResults, ArtistRootObject, SongRootObject } from "@/types/SearchTypes";
 
 describe("search bar", () => {
   it("should render the input element in the search bar", () => {
     const Wrapper = () => {
       const [inputValue, setInputValue] = useState("");
-      return <Search inputValue={inputValue} setInputValue={setInputValue} />;
+      const [searchResults, setSearchResults] = useState<SearchResults>({
+        matchedArtists: {} as ArtistRootObject,
+        matchedAlbums: [],
+        matchedSongs: {} as SongRootObject,
+      });
+      return (
+        <Search
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          searchResults={searchResults}
+          setSearchResults={setSearchResults}
+        />
+      );
     };
 
     render(<Wrapper />);
@@ -21,10 +34,22 @@ describe("search bar", () => {
   });
 
   it("should render the search icon in the phone viewport", () => {
-    jest.spyOn(window.screen, "width", "get").mockReturnValue(300);
     const Wrapper = () => {
       const [inputValue, setInputValue] = useState("");
-      return <Search inputValue={inputValue} setInputValue={setInputValue} />;
+      const [searchResults, setSearchResults] = useState<SearchResults>({
+        matchedArtists: {} as ArtistRootObject,
+        matchedAlbums: [],
+        matchedSongs: {} as SongRootObject,
+      });
+      jest.spyOn(window.screen, "width", "get").mockReturnValue(300);
+      return (
+        <Search
+          inputValue={inputValue}
+          setInputValue={setInputValue}
+          searchResults={searchResults}
+          setSearchResults={setSearchResults}
+        />
+      );
     };
 
     render(<Wrapper />);

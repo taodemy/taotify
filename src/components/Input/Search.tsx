@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import SearchBarResult from "@/components/SearchBarResult";
+import {
+  ArtistRootObject,
+  AlbumRootObject,
+  SongRootObject,
+  SearchResults,
+} from "@/types/SearchTypes";
+import { getSearchedReturn } from "@/utils/getSearchedReturn";
 
 interface ISearchProps {
   inputValue: string;
   setInputValue: (value: string) => void;
+  searchResults: SearchResults;
+  setSearchResults: (searchResults: SearchResults) => void;
   placeholder?: string;
 }
 
@@ -12,13 +21,45 @@ const Search = ({
   placeholder = "Search for music, album and artist",
   inputValue,
   setInputValue,
+  searchResults,
+  setSearchResults,
 }: ISearchProps) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchSearchData = async () => {
+      setIsLoading(true);
+
+      try {
+        const results = await getSearchedReturn(inputValue); // Call your getSearchedReturn function
+        setSearchResults(results);
+      } catch (error) {
+        console.error("Error in component:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (inputValue) {
+      fetchSearchData();
+    } else {
+      setSearchResults({
+        matchedArtists: {} as ArtistRootObject,
+        matchedAlbums: [],
+        matchedSongs: {} as SongRootObject,
+      });
+    }
+  }, [inputValue]);
+
   return (
-    <form className="relative flex grow items-center justify-end">
+    <form
+      className="relative flex grow items-center justify-end"
+      onClick={(e) => e.stopPropagation()}
+    >
       <div className="flex w-full">
         <label htmlFor="searchInput" className="sr-only">
           Search for music, album and artist
@@ -36,9 +77,6 @@ const Search = ({
           value={inputValue}
         ></input>
         <label className="sr-only">Search for music, album and artist</label>
-      </div>
-      <div className="absolute top-9 left-0 z-[999] flex flex-col items-center bg-dark-300 text-white">
-        {inputValue && <SearchBarResult inputValue={inputValue} />}
       </div>
     </form>
   );
