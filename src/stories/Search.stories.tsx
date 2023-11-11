@@ -15,6 +15,8 @@ export const SearchBar: ComponentStory<typeof Search> = () => {
     matchedAlbums: [],
     matchedSongs: {} as SongRootObject,
   });
+  const [searchInputShown, setSearchInputShown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Search
@@ -22,6 +24,8 @@ export const SearchBar: ComponentStory<typeof Search> = () => {
       setInputValue={setInputValue}
       searchResults={searchResults}
       setSearchResults={setSearchResults}
+      setSearchInputShown={setSearchInputShown}
+      setIsLoading={setIsLoading}
     />
   );
 };

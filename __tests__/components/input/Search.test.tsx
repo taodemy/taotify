@@ -12,12 +12,16 @@ describe("search bar", () => {
         matchedAlbums: [],
         matchedSongs: {} as SongRootObject,
       });
+      const [searchInputShown, setSearchInputShown] = useState(false);
+      const [isLoading, setIsLoading] = useState(false);
       return (
         <Search
           inputValue={inputValue}
           setInputValue={setInputValue}
           searchResults={searchResults}
           setSearchResults={setSearchResults}
+          setSearchInputShown={setSearchInputShown}
+          setIsLoading={setIsLoading}
         />
       );
     };
@@ -41,6 +45,8 @@ describe("search bar", () => {
         matchedAlbums: [],
         matchedSongs: {} as SongRootObject,
       });
+      const [searchInputShown, setSearchInputShown] = useState(false);
+      const [isLoading, setIsLoading] = useState(false);
       jest.spyOn(window.screen, "width", "get").mockReturnValue(300);
       return (
         <Search
@@ -48,6 +54,8 @@ describe("search bar", () => {
           setInputValue={setInputValue}
           searchResults={searchResults}
           setSearchResults={setSearchResults}
+          setSearchInputShown={setSearchInputShown}
+          setIsLoading={setIsLoading}
         />
       );
     };

@@ -1,10 +1,11 @@
+import useInputSanitization from "@/hooks/useInputSanitization";
 import {
   ArtistRootObject,
   AlbumRootObject,
   SongRootObject,
   SearchResults,
 } from "@/types/SearchTypes";
-import debounce from "@/utils/debounce";
+import debounce, { DebounceFunction } from "@/utils/debounce";
 
 import { getSearchedAlbums, getSearchedArtists, getSearchedSongs } from "@/utils/fetchHandler";
 
@@ -35,8 +36,12 @@ const handleDebounceFn = async (keywords: string) => {
   }
 };
 
+const debounceFn: DebounceFunction<[string], Promise<SearchResults>> = debounce(
+  (inputValue) => handleDebounceFn(inputValue),
+  1000
+);
+
 export const getSearchedReturn = async (inputValue: string): Promise<SearchResults> => {
-  const debounceFn = debounce(handleDebounceFn, 1000);
   if (!inputValue) {
     return {
       matchedArtists: {} as ArtistRootObject,
@@ -45,6 +50,7 @@ export const getSearchedReturn = async (inputValue: string): Promise<SearchResul
     };
   }
 
+  // const { sanitizedValue } = useInputSanitization(inputValue);
   try {
     const results = await debounceFn(inputValue);
     return results as SearchResults;

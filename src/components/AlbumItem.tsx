@@ -6,9 +6,10 @@ import Link from "next/link";
 
 type AlbumItemProps = {
   musicList: MusicList;
+  isCanAlbumPlayed?: boolean;
 };
 
-export default function AlbumItem({ musicList }: AlbumItemProps) {
+export default function AlbumItem({ musicList, isCanAlbumPlayed = true }: AlbumItemProps) {
   const {
     isPlaying,
     playingQueue,
@@ -52,23 +53,27 @@ export default function AlbumItem({ musicList }: AlbumItemProps) {
               </p>
             </figure>
           </Link>
-          <div className="group absolute left-1/3 top-1/4 flex h-1/3 w-1/3 items-center justify-center">
-            {isPlaying &&
-            playingQueue?.type === musicList.type &&
-            playingQueue.id === musicList.id ? (
-              <button className="h-full w-full" role="pauseAlbum" onClick={handleAlbumPlay}>
-                <ImPause className="h-full w-full" />
-              </button>
-            ) : (
-              <button
-                className="invisible h-full w-full group-hover:visible"
-                onClick={handleAlbumPlay}
-                role="playAlbum"
-              >
-                <ImPlay2 className="h-full w-full" />
-              </button>
-            )}
-          </div>
+          {isCanAlbumPlayed ? (
+            <div className="group absolute left-1/3 top-1/4 flex h-1/3 w-1/3 items-center justify-center">
+              {isPlaying &&
+              playingQueue?.type === musicList.type &&
+              playingQueue.id === musicList.id ? (
+                <button className="h-full w-full" role="pauseAlbum" onClick={handleAlbumPlay}>
+                  <ImPause className="h-full w-full" />
+                </button>
+              ) : (
+                <button
+                  className="invisible h-full w-full group-hover:visible"
+                  onClick={handleAlbumPlay}
+                  role="playAlbum"
+                >
+                  <ImPlay2 className="h-full w-full" />
+                </button>
+              )}
+            </div>
+          ) : (
+            <></>
+          )}
         </>
       )}
     </div>

@@ -61,7 +61,6 @@ export async function getSearchedAlbums(props: fetchParamProps) {
   const fetchedResData: AlbumRootObject = await fetchHandler({ keywords, type });
   return await transformFetchedData(fetchedResData.result);
 }
-
 export const getAlbumById = fetchHandler;
 export const getSongsById = fetchHandler;
 // export const getSearchedAlbums = fetchHandler;

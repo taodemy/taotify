@@ -11,6 +11,7 @@ import {
   SearchResults,
 } from "@/types/SearchTypes";
 import SearchBarResult from "@/components/SearchBarResult";
+import { RxCross1 } from "react-icons/rx";
 
 const SearchBar = () => {
   const [searchInputShown, setSearchInputShown] = useState(false);
@@ -20,6 +21,7 @@ const SearchBar = () => {
     matchedSongs: {} as SongRootObject,
   });
   const [inputValue, setInputValue] = useState<string>("");
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="flex items-center pt-2 pb-8 md:pt-6 lg:pt-8">
@@ -30,15 +32,29 @@ const SearchBar = () => {
         <SiYoutubemusic className="h-8 w-8" />
         <h3 className="">Taotify</h3>
       </div>
-      <div className="hidden w-full sm:flex sm:flex-col">
+      <div className="relative hidden w-full sm:flex sm:flex-col">
         <Search
           inputValue={inputValue}
           setInputValue={setInputValue}
           searchResults={searchResults}
           setSearchResults={setSearchResults}
+          setSearchInputShown={setSearchInputShown}
+          setIsLoading={setIsLoading}
         />
-        <div className="z-[999] flex flex-col items-center bg-dark-300 text-white">
-          {inputValue && <SearchBarResult searchResults={searchResults} />}
+        <div className="absolute top-9 z-20 flex w-full flex-col items-center bg-dark-300 text-white">
+          {inputValue ? (
+            <>
+              <SearchBarResult searchResults={searchResults} isLoading={isLoading} />
+              <RxCross1
+                className="absolute right-8 top-8 -translate-y-1/2"
+                onClick={() => {
+                  setSearchInputShown(false), setInputValue("");
+                }}
+              ></RxCross1>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <AiOutlineSearch
@@ -51,25 +67,35 @@ const SearchBar = () => {
         <IconButton iconTypes="setting"></IconButton>
         <IconButton iconTypes="notification"></IconButton>
       </div>
-      {searchInputShown && (
+      {searchInputShown ? (
         <div
-          className="fixed left-0 top-0 z-[998] mt-2 h-screen w-screen bg-dark bg-opacity-90 px-2 sm:hidden"
-          onClick={() => setSearchInputShown(false)}
+          className="fixed top-0 left-0 z-20 mt-2 h-screen w-screen bg-dark bg-opacity-90 px-2 sm:hidden"
+          onClick={() => {
+            setSearchInputShown(false), setInputValue("");
+          }}
         >
-          <div className="absolute left-1/2 top-8 flex w-full -translate-x-1/2 items-center">
-            <div className="mx-auto w-[327px]">
+          <div className="absolute left-1/2 top-8 flex w-full -translate-x-1/2 items-center justify-center">
+            <div className="mx-10 w-[327px]">
               <Search
                 inputValue={inputValue}
                 setInputValue={setInputValue}
                 searchResults={searchResults}
                 setSearchResults={setSearchResults}
+                setSearchInputShown={setSearchInputShown}
+                setIsLoading={setIsLoading}
               />
             </div>
-            <div className="absolute top-9 left-0 z-[999] mt-[28px] flex h-screen w-full flex-col items-center bg-dark-300">
-              {inputValue && <SearchBarResult searchResults={searchResults} />}
-            </div>
+            {inputValue ? (
+              <div className="absolute top-9 left-0 z-20 mt-[28px] flex h-screen w-full flex-col items-center bg-dark-300">
+                <SearchBarResult searchResults={searchResults} isLoading={isLoading} />
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
+      ) : (
+        <></>
       )}
     </div>
   );

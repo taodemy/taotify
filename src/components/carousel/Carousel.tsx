@@ -16,6 +16,11 @@ const Carousel = ({ albums, slidesPerView }: CarouselProps) => {
   const initialIndex = Math.floor(slicedAlbum.length / 2);
   const [activeIndex, setActiveIndex] = useState<number>(initialIndex);
 
+  if (!Array.isArray(albums)) {
+    console.error("Invalid 'albums' prop:", albums);
+    return null;
+  }
+
   return (
     <div className="flex flex-col items-center justify-center">
       <div className="relative h-[30vh] w-[71%]">
