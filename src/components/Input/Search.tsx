@@ -44,7 +44,6 @@ const Search = ({
         handleKeywordsChange(inputValue);
         const results = await getSearchedReturn(sanitizedKeywords);
         setSearchResults(results);
-        console.log(results);
       } catch (error) {
         console.error("Error in component:", error);
       } finally {

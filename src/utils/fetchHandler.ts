@@ -1,6 +1,7 @@
 import { TopAlbumObject } from "@/types/TopAlbums";
 import { transformFetchedData } from "./transformFetchedData";
-import { AlbumRootObject } from "@/types/SearchTypes";
+import { AlbumRootObject, SearchedAlbumInContext } from "@/types/SearchTypes";
+import { ArtistInContext, IMusicContext, MusicList, SongInContext } from "@/types/context";
 
 interface fetchParamProps {
   area?: string;
@@ -19,8 +20,8 @@ function fetchUrlGenerator(props: fetchParamProps) {
     ? `${baseUrl}/album/new?area=${area}&limit=${limit}`
     : albumId
     ? `${baseUrl}/album?id=${albumId}`
-    : type && keywords
-    ? `${baseUrl}/search?keywords=${keywords}&type=${type}`
+    : type && keywords && limit
+    ? `${baseUrl}/search?keywords=${keywords}&type=${type}&limit=${limit}`
     : Array.isArray(songId)
     ? `${baseUrl}/song/url/v1?id=${[...songId]}&level=${level}`
     : `${baseUrl}/song/url/v1?id=${songId}&level=${level}`;
@@ -57,10 +58,32 @@ export async function getAlbum(props: fetchParamProps) {
 }
 
 export async function getSearchedAlbums(props: fetchParamProps) {
-  const { keywords, type } = props;
-  const fetchedResData: AlbumRootObject = await fetchHandler({ keywords, type });
-  return await transformFetchedData(fetchedResData.result);
+  const { keywords, type, limit } = props;
+  const fetchedResData: AlbumRootObject = await fetchHandler({ keywords, type, limit });
+  console.log(fetchedResData.result.albums);
+  let musicContext: IMusicContext[] = [];
+  let musicList = {} as MusicList;
+  const searchedAlbumsDetail = await Promise.all(
+    fetchedResData.result.albums.map((detail) => {
+      const { id, name, artists, picUrl } = detail;
+      const artistName = artists[0].name;
+      const image = picUrl;
+      const musicContextItem: IMusicContext = {
+        album: { id, name, image, artistName } as SearchedAlbumInContext,
+        artist: {} as ArtistInContext,
+        song: {} as SongInContext,
+      };
+      musicContext = [musicContextItem];
+      return (musicList = {
+        id: id,
+        type: "album",
+        musicContext,
+      });
+    })
+  );
+  return searchedAlbumsDetail;
 }
+
 export const getAlbumById = fetchHandler;
 export const getSongsById = fetchHandler;
 // export const getSearchedAlbums = fetchHandler;

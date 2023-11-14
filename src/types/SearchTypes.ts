@@ -35,6 +35,13 @@ export interface SearchResults {
   matchedSongs: SongRootObject;
 }
 
+export interface SearchedAlbumInContext {
+  id: number;
+  name: string;
+  image: string;
+  artistName: string;
+}
+
 export interface AlbumRootObject {
   result: AlbumResult;
   code: number;

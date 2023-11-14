@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { MusicList } from "@/types/context";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import Link from "next/link";
+import { SearchedAlbumInContext } from "@/types/SearchTypes";
 
 type AlbumItemProps = {
   musicList: MusicList;
@@ -34,6 +35,7 @@ export default function AlbumItem({ musicList, isCanAlbumPlayed = true }: AlbumI
     setSelectedAlbum(musicList);
   };
 
+  const searchedArtistName = (musicList.musicContext[0].album as SearchedAlbumInContext).artistName;
   return (
     <div className="relative cursor-pointer text-center text-light">
       {musicList && (
@@ -49,7 +51,7 @@ export default function AlbumItem({ musicList, isCanAlbumPlayed = true }: AlbumI
                 {musicList.musicContext[0]?.album?.name}
               </figcaption>
               <p className="truncate text-sm text-light-200">
-                {musicList.musicContext[0]?.artist.name}
+                {isCanAlbumPlayed ? musicList.musicContext[0]?.artist.name : searchedArtistName}
               </p>
             </figure>
           </Link>

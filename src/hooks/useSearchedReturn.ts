@@ -20,15 +20,16 @@ const handleDebounceFn = async (keywords: string) => {
     };
   }
   try {
-    const matchedArtists = await getSearchedArtists({ keywords, type: 100 });
-    const matchedAlbums = await getSearchedAlbums({ keywords, type: 10 });
-    const matchedSongs = await getSearchedSongs({ keywords, type: 1 });
+    const matchedArtists = await getSearchedArtists({ keywords, type: 100, limit: 7 });
+    const matchedAlbums = await getSearchedAlbums({ keywords, type: 10, limit: 7 });
+    const matchedSongs = await getSearchedSongs({ keywords, type: 1, limit: 7 });
 
     const searchResults = {
       matchedArtists,
       matchedAlbums,
       matchedSongs,
     };
+    console.log(searchResults);
     return searchResults;
   } catch (error) {
     console.error("Error fetching data:", error);

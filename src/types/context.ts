@@ -1,3 +1,5 @@
+import { SearchedAlbumInContext } from "./SearchTypes";
+
 //custom types & shared types
 export interface MusicList {
   id: number;
@@ -7,7 +9,7 @@ export interface MusicList {
 
 export interface IMusicContext {
   song: SongInContext;
-  album: AlbumInContext;
+  album: AlbumInContext | SearchedAlbumInContext;
   artist: ArtistInContext;
 }
 
