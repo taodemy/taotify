@@ -86,6 +86,5 @@ export async function getSearchedAlbums(props: fetchParamProps) {
 
 export const getAlbumById = fetchHandler;
 export const getSongsById = fetchHandler;
-// export const getSearchedAlbums = fetchHandler;
 export const getSearchedArtists = fetchHandler;
 export const getSearchedSongs = fetchHandler;

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { AiOutlineSearch } from "react-icons/ai";
 import { RxCross1 } from "react-icons/rx";
 import {
@@ -24,7 +24,6 @@ const Search = ({
   placeholder = "Search for music, album and artist",
   inputValue = "",
   setInputValue,
-  searchResults,
   setSearchResults,
   setSearchInputShown,
   setIsLoading,
@@ -34,7 +33,7 @@ const Search = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
-  const { results, getSearchedReturn } = useSearchedReturn(inputValue); // Call useSearchedReturn
+  const { getSearchedReturn } = useSearchedReturn(inputValue); // Call useSearchedReturn
 
   useEffect(() => {
     const fetchSearchData = async () => {

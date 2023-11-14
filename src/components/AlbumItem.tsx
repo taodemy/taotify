@@ -1,5 +1,5 @@
 import { MusicContext } from "@/contexts/MusicContext";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { MusicList } from "@/types/context";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import Link from "next/link";
