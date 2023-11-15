@@ -7,6 +7,7 @@ import { AlbumDetail } from "@/types/TopAlbums";
 import { AlbumDetailById } from "@/types/AlbumFetchedById";
 import { getAlbumById, getSongsById } from "./fetchHandler";
 import { musicQuality } from "@/constant/song";
+import { AlbumResult } from "@/types/SearchTypes";
 
 interface SongInAlbum {
   id: number;
@@ -14,6 +15,10 @@ interface SongInAlbum {
 }
 
 async function getAlbumsDetails(newAlbums: AlbumDetail[]): Promise<AlbumFetchedById[]> {
+  if (!newAlbums) {
+    return [];
+  }
+
   const albumDetails: AlbumFetchedById[] = await Promise.all(
     newAlbums.map(async (album) => {
       return await getAlbumById({ albumId: album.id });
@@ -66,7 +71,10 @@ export async function addAlbumIdAndTypeToMusicList(albumsDetails: AlbumFetchedBy
   return musicLists;
 }
 
-export async function transformFetchedData(fetchedData: TopAlbumObject) {
+export async function transformFetchedData(fetchedData: TopAlbumObject | AlbumResult) {
+  if (!fetchedData) {
+    return [];
+  }
   const newAlbums = fetchedData.albums;
   const albumsDetails: AlbumFetchedById[] = await getAlbumsDetails(newAlbums);
   return addAlbumIdAndTypeToMusicList(albumsDetails);

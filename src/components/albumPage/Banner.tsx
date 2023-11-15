@@ -3,7 +3,7 @@ import Button from "@/components/buttons";
 import { AiFillCheckCircle } from "react-icons/ai";
 import { useContext, useEffect, useState } from "react";
 import { MusicContext } from "@/contexts/MusicContext";
-import { MusicList } from "@/types/context";
+import { MusicList, AlbumInContext } from "@/types/context";
 
 type BannerType = {
   musicList: MusicList;
@@ -38,7 +38,7 @@ function Banner({ musicList, id }: BannerType) {
   };
 
   const { musicContext } = musicList;
-
+  const albumMark = (musicContext[0].album as AlbumInContext).mark;
   return (
     <div className="relative mb-9 flex h-48 w-full flex-col justify-end text-light">
       <div className="absolute -top-28 -z-10 h-72 w-full">
@@ -61,7 +61,7 @@ function Banner({ musicList, id }: BannerType) {
         <div className="flex justify-between">
           <div className="flex items-center">
             <FiMusic className="h-5 w-5" />
-            <span className="ml-4 text-sm">{musicContext[0]?.album.mark}</span>
+            <span className="ml-4 text-sm">{albumMark}</span>
             <p className="ml-4 text-sm">Total Subscriptions</p>
           </div>
           <div className="flex justify-end gap-6">
