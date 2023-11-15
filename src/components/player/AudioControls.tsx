@@ -7,19 +7,27 @@ import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
 import { MusicList } from "@/types/context";
+import { useGlobalContext } from "@/contexts/GlobalContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 
 interface AudioControlsProps {
   loopMode?: string;
   setLoopMode: Dispatch<SetStateAction<"none" | "single" | "all">>;
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+  setIsSongArchived: (isSongArchived: boolean) => void;
 }
 
-const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) => {
+const AudioControls = ({
+  loopMode,
+  setLoopMode,
+  audioRef,
+  setIsSongArchived,
+}: AudioControlsProps) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
+  const { likedSongsIdList } = useGlobalContext();
   const audio = audioRef.current;
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
@@ -78,7 +86,13 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
   };
   return (
     <div className="flex h-8 w-full items-center justify-between text-light md:h-16">
-      <button type="button" className="flex h-8 w-8 items-center justify-center">
+      <button
+        type="button"
+        className="flex h-8 w-8 items-center justify-center"
+        onClick={() => {
+          setIsSongArchived(true);
+        }}
+      >
         <BiHeart className="h-6 w-6" />
       </button>
 

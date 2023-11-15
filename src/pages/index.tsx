@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { useEffect } from "react";
 import { getAlbum } from "@/utils/fetchHandler";
 import Carousel from "@/components/carousel";
 import AlbumsCollection from "@/components/AlbumsCollection";
@@ -6,6 +7,18 @@ import { AlbumsCollectionProps } from "@/components/AlbumsCollection";
 import { ALL_REGIONS, CHINESE, KOREAN, JAPANESE, ENGLISH } from "@/constant/genres";
 
 export default function Home({ albums }: AlbumsCollectionProps) {
+  useEffect(() => {
+    const defaultStoredPlaylists = localStorage.getItem("playlists");
+
+    if (!defaultStoredPlaylists) {
+      const defaultPlaylists = {
+        favourites: [],
+      };
+
+      localStorage.setItem("playlists", JSON.stringify(defaultPlaylists));
+    }
+  }, []);
+
   const { englishAlbum } = albums;
   return (
     <>
