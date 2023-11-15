@@ -5,6 +5,8 @@ import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/player/AudioControls";
 import { usePlayingQueueAndPlayingIndexLoadSong } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
 import { useIsPlayingTriggerPlayPause } from "@/hooks/musicPlayer/useIsPlaying";
+import PlayListManagement from "@/components/playlist";
+import { IMusicContext } from "@/types/context";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -13,6 +15,7 @@ const MusicPlayer = () => {
   const [endTime, setEndTime] = useState(0);
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
   const [audioUrl, setAudioUrl] = useState("");
+  const [isSongArchived, setIsSongArchived] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audio = audioRef.current;
   const musicContext = playingQueue?.musicContext;
@@ -85,24 +88,25 @@ const MusicPlayer = () => {
   }, [isPlaying, audio]);
 
   return (
-    <section
-      className={`fixed -bottom-6 h-[78px] w-full transition-all duration-1000 md:-bottom-24 md:left-[64px] md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
-        playingQueue && "-translate-y-24"
-      }`}
-    >
-      {musicContext && (
-        <div className="relative h-full drop-shadow-bgImgShadow">
-          <img src={musicContext[0].album.image} alt="Player background image" />
-        </div>
-      )}
-
-      <div
-        className={`absolute left-0 top-0 ${
-          playingQueue ? "flex" : "hidden"
-        } h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2`}
+    <>
+      <section
+        className={`fixed -bottom-6 h-[78px] w-full transition-all duration-1000 md:-bottom-24 md:left-[64px] md:h-[120px] md:w-[calc(100vw-64px)] lg:left-[320px] lg:w-[calc(100vw-320px)] ${
+          playingQueue && "-translate-y-24"
+        }`}
       >
-        {" "}
-        {/* <audio
+        {musicContext && (
+          <div className="relative h-full drop-shadow-bgImgShadow">
+            <img src={musicContext[0].album.image} alt="Player background image" />
+          </div>
+        )}
+
+        <div
+          className={`absolute left-0 top-0 ${
+            playingQueue ? "flex" : "hidden"
+          } h-full w-full gap-2 bg-dark-400 bg-opacity-80 px-2 backdrop-blur-2xl md:gap-4 md:px-4 md:py-2`}
+        >
+          {" "}
+          {/* <audio
           ref={audioRef}
           src={audioUrl}
           role="audio"
@@ -112,28 +116,43 @@ const MusicPlayer = () => {
           onDurationChange={handleDurationChange}
           onEnded={handlePlayEnd}
         /> */}
-        <div className="flex flex-col items-center justify-center gap-1 lg:justify-start">
-          {musicContext && <CoverImage src={musicContext[0].album.image} />}
-          <div className="hidden items-center justify-center gap-1 px-2 text-light md:flex md:flex-col lg:hidden">
+          <div className="flex flex-col items-center justify-center gap-1 lg:justify-start">
+            {musicContext && <CoverImage src={musicContext[0].album.image} />}
+            <div className="hidden items-center justify-center gap-1 px-2 text-light md:flex md:flex-col lg:hidden">
+              <p className="text-base">{playingQueue?.musicContext[playingIndex].song.name}</p>
+              <p className="text-sm">{playingQueue?.musicContext[playingIndex].artist.name}</p>
+            </div>
+          </div>
+          <div className="hidden items-start justify-center gap-[10px] px-2 text-light lg:flex lg:flex-col ">
             <p className="text-base">{playingQueue?.musicContext[playingIndex].song.name}</p>
-            <p className="text-sm">{playingQueue?.musicContext[playingIndex].artist.name}</p>
+            <p className="text-sm">By {playingQueue?.musicContext[playingIndex].artist.name}</p>
+          </div>
+          <div className="flex flex-grow flex-col items-center md:justify-center md:gap-2 md:p-[10px]">
+            <div className="flex items-center justify-center gap-1 px-2 pt-1 text-light md:hidden">
+              <p className="text-sm">{playingQueue?.musicContext[playingIndex].song.name}</p>
+              <p className="text-sm"> - </p>
+              <p className="text-xs">{playingQueue?.musicContext[playingIndex].artist.name}</p>
+            </div>
+            <AudioControls
+              audioRef={audioRef}
+              loopMode={loopMode}
+              setLoopMode={setLoopMode}
+              setIsSongArchived={setIsSongArchived}
+            />
+            <ProgressBar />
           </div>
         </div>
-        <div className="hidden items-start justify-center gap-[10px] px-2 text-light lg:flex lg:flex-col ">
-          <p className="text-base">{playingQueue?.musicContext[playingIndex].song.name}</p>
-          <p className="text-sm">By {playingQueue?.musicContext[playingIndex].artist.name}</p>
-        </div>
-        <div className="flex flex-grow flex-col items-center md:justify-center md:gap-2 md:p-[10px]">
-          <div className="flex items-center justify-center gap-1 px-2 pt-1 text-light md:hidden">
-            <p className="text-sm">{playingQueue?.musicContext[playingIndex].song.name}</p>
-            <p className="text-sm"> - </p>
-            <p className="text-xs">{playingQueue?.musicContext[playingIndex].artist.name}</p>
-          </div>
-          <AudioControls audioRef={audioRef} loopMode={loopMode} setLoopMode={setLoopMode} />
-          <ProgressBar />
-        </div>
-      </div>
-    </section>
+      </section>
+      {isSongArchived ? (
+        <PlayListManagement
+          isSongArchived={isSongArchived}
+          setIsSongArchived={setIsSongArchived}
+          playlistContext={{} as IMusicContext}
+        />
+      ) : (
+        <></>
+      )}
+    </>
   );
 };
 

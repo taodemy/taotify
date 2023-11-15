@@ -7,7 +7,7 @@ import { MusicList, AlbumInContext } from "@/types/context";
 
 type BannerType = {
   musicList: MusicList;
-  id: number;
+  id: number | string;
 };
 
 function Banner({ musicList, id }: BannerType) {

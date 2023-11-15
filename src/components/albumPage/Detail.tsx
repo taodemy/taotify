@@ -1,16 +1,19 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import IconButton from "../buttons/IconButton";
 import { IoTimeOutline } from "react-icons/io5";
 import { FiHeadphones } from "react-icons/fi";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import { MusicContext } from "@/contexts/MusicContext";
-import { MusicList } from "@/types/context";
+import { IMusicContext, MusicList } from "@/types/context";
 import formatTime from "@/utils/formatTime";
+import PlayListManagement from "../playlist";
 
 type AlbumDetailType = {
   musicList: MusicList;
 };
 const AlbumDetail = ({ musicList }: AlbumDetailType) => {
+  const [isSongArchived, setIsSongArchived] = useState(false);
+  const [playlistContext, setPlaylistContext] = useState({} as IMusicContext);
   const {
     isPlaying,
     playingQueue,
@@ -35,7 +38,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
 
   return (
     <>
-      <div className="mb-6 mt-8 flex items-center gap-4">
+      <div className="mt-8 mb-6 flex items-center gap-4">
         <span className="text-3xl">{musicContext[0].album.name}</span>
         <span className="text-sm text-light-200">{musicContext.length} songs</span>
       </div>
@@ -83,7 +86,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                   <td className="hidden lg:table-cell">{context.artist?.name}</td>
                   <td>
                     <div className="hidden items-center sm:flex">
-                      <FiHeadphones className=" inline-block h-5 w-5" />
+                      <FiHeadphones className="inline-block h-5 w-5 " />
                       <span className="ml-2">{context.song.time}</span>
                     </div>
                   </td>
@@ -94,7 +97,13 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                     </div>
                   </td>
                   <td className="hidden sm:table-cell">
-                    <IconButton iconTypes="like" />
+                    <IconButton
+                      iconTypes="like"
+                      onClick={() => {
+                        setIsSongArchived(true);
+                        setPlaylistContext(context);
+                      }}
+                    />
                   </td>
                   <td>
                     <IconButton iconTypes="dot" />
@@ -104,6 +113,15 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
             })}
         </tbody>
       </table>
+      {isSongArchived ? (
+        <PlayListManagement
+          isSongArchived={isSongArchived}
+          setIsSongArchived={setIsSongArchived}
+          playlistContext={playlistContext}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };
