@@ -26,8 +26,9 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
       setImgUrl(musicList.musicContext[0].album.image);
       setIsPlaying(false);
       setPlayingQueue(musicList);
-      setPlayingIndex(0);
+      setPlayingIndex(index);
     } else {
+      setPlayingIndex(index);
       setIsPlaying((prev) => !prev);
     }
   };
