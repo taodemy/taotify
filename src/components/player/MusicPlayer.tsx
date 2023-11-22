@@ -5,7 +5,7 @@ import CoverImage from "@/components/CoverImage";
 import AudioControls from "@/components/player/AudioControls";
 import { usePlayingQueueAndPlayingIndexLoadSong } from "@/hooks/musicPlayer/usePlayingQueueAndPlayingIndex";
 import { useIsPlayingTriggerPlayPause } from "@/hooks/musicPlayer/useIsPlaying";
-import PlayListManagement from "@/components/playlist";
+import PlayListManagement from "@/components/playlists";
 import { IMusicContext } from "@/types/context";
 
 const MusicPlayer = () => {

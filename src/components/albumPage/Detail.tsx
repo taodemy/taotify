@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import IconButton from "../buttons/IconButton";
 import { IoTimeOutline } from "react-icons/io5";
 import { FiHeadphones } from "react-icons/fi";
@@ -6,7 +6,8 @@ import { ImPause, ImPlay2 } from "react-icons/im";
 import { MusicContext } from "@/contexts/MusicContext";
 import { IMusicContext, MusicList } from "@/types/context";
 import formatTime from "@/utils/formatTime";
-import PlayListManagement from "../playlist";
+import PlayListManagement from "../playlists";
+import { useGlobalContext } from "@/contexts/GlobalContext";
 
 type AlbumDetailType = {
   musicList: MusicList;
@@ -23,7 +24,11 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
     setIsPlaying,
     setImgUrl,
   } = useContext(MusicContext);
+  const { likedSongsIdList } = useGlobalContext();
   const { musicContext } = musicList;
+  const [isLikedList, setIsLikedList] = useState(
+    musicContext.map((context) => likedSongsIdList.includes(context.song.id.toString()))
+  );
   const handleSongPlay = (index: number) => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setImgUrl(musicList.musicContext[0].album.image);
@@ -35,6 +40,28 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
       setIsPlaying((prev) => !prev);
     }
   };
+  useEffect(() => {
+    setIsLikedList(
+      musicContext.map((context) => likedSongsIdList.includes(context.song.id.toString()))
+    );
+  }, [likedSongsIdList, musicContext]);
+
+  useEffect(() => {
+    const playlists = localStorage.getItem("playlists");
+    if (playlists) {
+      const parsedPlaylists = JSON.parse(playlists);
+      const playlistsName = Object.keys(parsedPlaylists);
+      const defaultPlaylistName = playlistsName[0];
+      const defaultPlaylist = parsedPlaylists[defaultPlaylistName];
+      const likedSongsIdList = defaultPlaylist.map((item: IMusicContext) =>
+        item.song.id.toString()
+      );
+      const likedIdList = musicContext.map((context) =>
+        likedSongsIdList.includes(context.song.id.toString())
+      );
+      setIsLikedList(likedIdList);
+    }
+  }, []);
 
   return (
     <>
@@ -99,6 +126,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                   <td className="hidden sm:table-cell">
                     <IconButton
                       iconTypes="like"
+                      className={`${isLikedList[index] ? "text-primary" : ""}`}
                       onClick={() => {
                         setIsSongArchived(true);
                         setPlaylistContext(context);
