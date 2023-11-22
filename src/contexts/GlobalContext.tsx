@@ -1,26 +1,40 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 
-// Define the types for the context
 interface GlobalContextProps {
   likedSongsIdList: string[];
   setLikedSongsIdList: React.Dispatch<React.SetStateAction<string[]>>;
+  playlistsName: string[];
+  setPlaylistsName: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-// Create a new context
 const GlobalContext = createContext<GlobalContextProps | undefined>(undefined);
 
-// Create a provider component
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [likedSongsIdList, setLikedSongsIdList] = useState<string[]>([]);
+  const [playlistsName, setPlaylistsName] = useState<string[]>([]);
 
+  useEffect(() => {
+    const playlists = localStorage.getItem("playlists");
+    if (playlists) {
+      const parsedPlaylists = JSON.parse(playlists);
+      const playlistsName = Object.keys(parsedPlaylists);
+      setPlaylistsName(playlistsName);
+    }
+  }, []);
   return (
-    <GlobalContext.Provider value={{ likedSongsIdList, setLikedSongsIdList }}>
+    <GlobalContext.Provider
+      value={{
+        likedSongsIdList,
+        setLikedSongsIdList,
+        playlistsName,
+        setPlaylistsName,
+      }}
+    >
       {children}
     </GlobalContext.Provider>
   );
 };
 
-// Create a custom hook for using the global context
 export const useGlobalContext = (): GlobalContextProps => {
   const context = useContext(GlobalContext);
   if (!context) {
