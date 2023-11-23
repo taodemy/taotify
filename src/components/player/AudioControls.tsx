@@ -6,7 +6,7 @@ import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
-import { MusicList } from "@/types/context";
+import { IMusicContext, MusicList } from "@/types/context";
 import { useGlobalContext } from "@/contexts/GlobalContext";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 
@@ -14,6 +14,7 @@ interface AudioControlsProps {
   loopMode?: string;
   setLoopMode: Dispatch<SetStateAction<"none" | "single" | "all">>;
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+  isSongArchived: boolean;
   setIsSongArchived: (isSongArchived: boolean) => void;
 }
 
@@ -27,7 +28,12 @@ const AudioControls = ({
   const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
-  const { likedSongsIdList } = useGlobalContext();
+  const { setPlaylistContext, likedSongsIdList } = useGlobalContext();
+  let currentPlayingSong = playingQueue?.musicContext[playingIndex] ?? null;
+  const [isLiked, setIsLiked] = useState(
+    currentPlayingSong ? likedSongsIdList.includes(currentPlayingSong.song.id.toString()) : false
+  );
+
   const audio = audioRef.current;
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
@@ -51,6 +57,24 @@ const AudioControls = ({
       setPlayingQueue(originMusicList);
     }
   }, [isShuffle, originMusicList]);
+
+  useEffect(() => {
+    const playlists = localStorage.getItem("playlists");
+    if (playlists) {
+      const parsedPlaylists = JSON.parse(playlists);
+      const playlistsName = Object.keys(parsedPlaylists);
+      const defaultPlaylistName = playlistsName[0];
+      const defaultPlaylist = parsedPlaylists[defaultPlaylistName];
+      const likedSongsIdList = defaultPlaylist.map((item: IMusicContext) =>
+        item.song.id.toString()
+      );
+      setIsLiked(
+        currentPlayingSong
+          ? likedSongsIdList.includes(currentPlayingSong.song.id.toString())
+          : false
+      );
+    }
+  }, [likedSongsIdList, playingIndex]);
 
   const toggleLoopMode = () => {
     setIsShuffle(false);
@@ -84,6 +108,7 @@ const AudioControls = ({
   const handleRewind = () => {
     audio && (audio.currentTime -= 10);
   };
+
   return (
     <div className="flex h-8 w-full items-center justify-between text-light md:h-16">
       <button
@@ -91,9 +116,12 @@ const AudioControls = ({
         className="flex h-8 w-8 items-center justify-center"
         onClick={() => {
           setIsSongArchived(true);
+          if (playingQueue) {
+            setPlaylistContext(playingQueue.musicContext[playingIndex]);
+          }
         }}
       >
-        <BiHeart className="h-6 w-6" />
+        <BiHeart className={`${isLiked ? "text-primary" : ""} h-6 w-6`} />
       </button>
 
       <div className="flex items-center gap-6">

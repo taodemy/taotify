@@ -1,10 +1,13 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
+import { IMusicContext } from "@/types/context";
 
 interface GlobalContextProps {
   likedSongsIdList: string[];
   setLikedSongsIdList: React.Dispatch<React.SetStateAction<string[]>>;
   playlistsName: string[];
   setPlaylistsName: React.Dispatch<React.SetStateAction<string[]>>;
+  playlistContext: IMusicContext;
+  setPlaylistContext: React.Dispatch<React.SetStateAction<IMusicContext>>;
 }
 
 const GlobalContext = createContext<GlobalContextProps | undefined>(undefined);
@@ -12,6 +15,7 @@ const GlobalContext = createContext<GlobalContextProps | undefined>(undefined);
 export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [likedSongsIdList, setLikedSongsIdList] = useState<string[]>([]);
   const [playlistsName, setPlaylistsName] = useState<string[]>([]);
+  const [playlistContext, setPlaylistContext] = useState({} as IMusicContext);
 
   useEffect(() => {
     const playlists = localStorage.getItem("playlists");
@@ -21,6 +25,7 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({ child
       setPlaylistsName(playlistsName);
     }
   }, []);
+
   return (
     <GlobalContext.Provider
       value={{
@@ -28,6 +33,8 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({ child
         setLikedSongsIdList,
         playlistsName,
         setPlaylistsName,
+        playlistContext,
+        setPlaylistContext,
       }}
     >
       {children}

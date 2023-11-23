@@ -14,7 +14,6 @@ type AlbumDetailType = {
 };
 const AlbumDetail = ({ musicList }: AlbumDetailType) => {
   const [isSongArchived, setIsSongArchived] = useState(false);
-  const [playlistContext, setPlaylistContext] = useState({} as IMusicContext);
   const {
     isPlaying,
     playingQueue,
@@ -24,7 +23,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
     setIsPlaying,
     setImgUrl,
   } = useContext(MusicContext);
-  const { likedSongsIdList } = useGlobalContext();
+  const { likedSongsIdList, playlistContext, setPlaylistContext } = useGlobalContext();
   const { musicContext } = musicList;
   const [isLikedList, setIsLikedList] = useState(
     musicContext.map((context) => likedSongsIdList.includes(context.song.id.toString()))

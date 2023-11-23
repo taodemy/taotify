@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { RxCross1 } from "react-icons/rx";
 import CreateNewPlaylist from "./createNewPlaylist";
 import { IMusicContext } from "@/types/context";

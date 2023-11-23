@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { HiLockClosed } from "react-icons/hi";
 import { IMusicContext } from "@/types/context";
 import { useGlobalContext } from "@/contexts/GlobalContext";
@@ -34,33 +34,41 @@ const updateSongsToLocalStorage = (
 
 const PlaylistItem: React.FC<IPlaylistProps> = ({ playlistName, playlistContext }) => {
   const { setLikedSongsIdList } = useGlobalContext();
+  const [isChecked, setIsChecked] = useState(false);
 
   const handleUpdateLikedSongs = () => {
     const songsBeforeEdited = localStorage.getItem("playlists");
-    if (songsBeforeEdited) {
-      const parsedSongsBeforeEdited = JSON.parse(songsBeforeEdited);
-      const playlistToBeEdited = parsedSongsBeforeEdited?.[playlistName] || [];
-      const updatedSongs = isPlaylistContextExists(playlistContext, playlistToBeEdited)
-        ? removePlaylistContext(playlistContext, playlistToBeEdited)
-        : [...playlistToBeEdited, { ...playlistContext }];
+    const parsedSongsBeforeEdited = JSON.parse(songsBeforeEdited ? songsBeforeEdited : "");
+    const playlistToBeEdited = parsedSongsBeforeEdited?.[playlistName] || [];
+    setIsChecked(!isPlaylistContextExists(playlistContext, playlistToBeEdited));
+    const updatedSongs = isPlaylistContextExists(playlistContext, playlistToBeEdited)
+      ? removePlaylistContext(playlistContext, playlistToBeEdited)
+      : [...playlistToBeEdited, { ...playlistContext }];
 
-      const likedSongsIdList = updateSongsToLocalStorage(
-        playlistName,
-        parsedSongsBeforeEdited,
-        updatedSongs
-      );
-      setLikedSongsIdList(likedSongsIdList);
-    }
+    const likedSongsIdList = updateSongsToLocalStorage(
+      playlistName,
+      parsedSongsBeforeEdited,
+      updatedSongs
+    );
+    setLikedSongsIdList(likedSongsIdList);
   };
+
+  useEffect(() => {
+    const songsBeforeEdited = localStorage.getItem("playlists");
+    const parsedSongsBeforeEdited = JSON.parse(songsBeforeEdited ? songsBeforeEdited : "");
+    const playlistToBeEdited = parsedSongsBeforeEdited?.[playlistName] || [];
+    setIsChecked(isPlaylistContextExists(playlistContext, playlistToBeEdited));
+  }, []);
 
   return (
     <div className="flex flex-col items-center gap-6 pt-10 pb-10">
       <div className="flex w-full items-center">
         <div className="flex items-center gap-4">
           <input
+            checked={isChecked}
             type="checkbox"
             className="h-5 w-5"
-            onClick={() => {
+            onChange={() => {
               handleUpdateLikedSongs();
             }}
           />

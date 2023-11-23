@@ -7,6 +7,7 @@ import { usePlayingQueueAndPlayingIndexLoadSong } from "@/hooks/musicPlayer/useP
 import { useIsPlayingTriggerPlayPause } from "@/hooks/musicPlayer/useIsPlaying";
 import PlayListManagement from "@/components/playlists";
 import { IMusicContext } from "@/types/context";
+import { useGlobalContext } from "@/contexts/GlobalContext";
 
 const MusicPlayer = () => {
   const { playingQueue, playingIndex, setPlayingIndex, isPlaying, setIsPlaying } =
@@ -16,6 +17,7 @@ const MusicPlayer = () => {
   const [loopMode, setLoopMode] = useState<"none" | "single" | "all">("none");
   const [audioUrl, setAudioUrl] = useState("");
   const [isSongArchived, setIsSongArchived] = useState(false);
+  const { playlistContext } = useGlobalContext();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const audio = audioRef.current;
   const musicContext = playingQueue?.musicContext;
@@ -137,7 +139,9 @@ const MusicPlayer = () => {
               audioRef={audioRef}
               loopMode={loopMode}
               setLoopMode={setLoopMode}
+              isSongArchived={isSongArchived}
               setIsSongArchived={setIsSongArchived}
+              key={playingQueue?.id}
             />
             <ProgressBar />
           </div>
@@ -147,7 +151,7 @@ const MusicPlayer = () => {
         <PlayListManagement
           isSongArchived={isSongArchived}
           setIsSongArchived={setIsSongArchived}
-          playlistContext={{} as IMusicContext}
+          playlistContext={playlistContext}
         />
       ) : (
         <></>
