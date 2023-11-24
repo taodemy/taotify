@@ -2,62 +2,45 @@ import React, { useState, useEffect } from "react";
 import { HiLockClosed } from "react-icons/hi";
 import { IMusicContext } from "@/types/context";
 import { useGlobalContext } from "@/contexts/GlobalContext";
+import useLocalStorage from "@/hooks/useLocalStorage";
+import usePlaylists from "@/hooks/usePlaylists";
 
 interface IPlaylistProps {
   playlistName: string;
   playlistContext: IMusicContext;
 }
 
-const removePlaylistContext = (playlistContext: IMusicContext, array: IMusicContext[]) => {
-  return array.filter((item) => item.song.id !== playlistContext.song.id);
-};
-
-const isPlaylistContextExists = (playlistContext: IMusicContext, array: IMusicContext[]) => {
-  return array.some((item) => item.song.id === playlistContext.song.id);
-};
-
-const updateSongsToLocalStorage = (
-  playlistName: string,
-  parsedSongsBeforeEdited: IMusicContext[],
-  songsAfterEdited: IMusicContext[]
-) => {
-  const likedSongsIdList = songsAfterEdited.map((item: IMusicContext) => item.song.id.toString());
-  localStorage.setItem(
-    "playlists",
-    JSON.stringify({
-      ...parsedSongsBeforeEdited,
-      [playlistName]: songsAfterEdited,
-    })
-  );
-  return likedSongsIdList;
-};
-
 const PlaylistItem: React.FC<IPlaylistProps> = ({ playlistName, playlistContext }) => {
   const { setLikedSongsIdList } = useGlobalContext();
+  const { setDataToLocalStorage } = useLocalStorage();
+  const {
+    getPlaylistData,
+    removeSongFromPlaylist,
+    addSongToPlaylist,
+    checkIsSongExistsInPlaylist,
+    extractSongIdsFromPlaylist,
+  } = usePlaylists();
   const [isChecked, setIsChecked] = useState(false);
 
   const handleUpdateLikedSongs = () => {
-    const songsBeforeEdited = localStorage.getItem("playlists");
-    const parsedSongsBeforeEdited = JSON.parse(songsBeforeEdited ? songsBeforeEdited : "");
-    const playlistToBeEdited = parsedSongsBeforeEdited?.[playlistName] || [];
-    setIsChecked(!isPlaylistContextExists(playlistContext, playlistToBeEdited));
-    const updatedSongs = isPlaylistContextExists(playlistContext, playlistToBeEdited)
-      ? removePlaylistContext(playlistContext, playlistToBeEdited)
-      : [...playlistToBeEdited, { ...playlistContext }];
-
-    const likedSongsIdList = updateSongsToLocalStorage(
-      playlistName,
-      parsedSongsBeforeEdited,
-      updatedSongs
-    );
+    const playlistToBeEdited = getPlaylistData(playlistName);
+    const isSongExistsInPlaylist = checkIsSongExistsInPlaylist(playlistContext, playlistToBeEdited);
+    setIsChecked(!isSongExistsInPlaylist);
+    const updatedSongs = isSongExistsInPlaylist
+      ? removeSongFromPlaylist(playlistContext, playlistToBeEdited)
+      : addSongToPlaylist(playlistContext, playlistToBeEdited);
+    const formatUpdatedSongs = JSON.stringify({
+      [playlistName]: updatedSongs,
+    });
+    setDataToLocalStorage("playlists", formatUpdatedSongs);
+    const likedSongsIdList = extractSongIdsFromPlaylist(updatedSongs);
     setLikedSongsIdList(likedSongsIdList);
   };
 
   useEffect(() => {
-    const songsBeforeEdited = localStorage.getItem("playlists");
-    const parsedSongsBeforeEdited = JSON.parse(songsBeforeEdited ? songsBeforeEdited : "");
-    const playlistToBeEdited = parsedSongsBeforeEdited?.[playlistName] || [];
-    setIsChecked(isPlaylistContextExists(playlistContext, playlistToBeEdited));
+    const playlistToBeEdited = getPlaylistData(playlistName);
+    const isSongExistsInPlaylist = checkIsSongExistsInPlaylist(playlistContext, playlistToBeEdited);
+    setIsChecked(isSongExistsInPlaylist);
   }, []);
 
   return (

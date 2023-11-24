@@ -6,8 +6,9 @@ import { BsRepeat, BsRepeat1 } from "react-icons/bs";
 import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
-import { IMusicContext, MusicList } from "@/types/context";
+import { MusicList } from "@/types/context";
 import { useGlobalContext } from "@/contexts/GlobalContext";
+import usePlaylists from "@/hooks/usePlaylists";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 
 interface AudioControlsProps {
@@ -29,9 +30,15 @@ const AudioControls = ({
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
   const { setPlaylistContext, likedSongsIdList } = useGlobalContext();
+  const {
+    getDefaultPlaylistName,
+    getPlaylistData,
+    extractSongIdsFromPlaylist,
+    checkSongIsLikedInPlaylists,
+  } = usePlaylists();
   let currentPlayingSong = playingQueue?.musicContext[playingIndex] ?? null;
   const [isLiked, setIsLiked] = useState(
-    currentPlayingSong ? likedSongsIdList.includes(currentPlayingSong.song.id.toString()) : false
+    currentPlayingSong ? checkSongIsLikedInPlaylists(likedSongsIdList, currentPlayingSong) : false
   );
 
   const audio = audioRef.current;
@@ -59,21 +66,12 @@ const AudioControls = ({
   }, [isShuffle, originMusicList]);
 
   useEffect(() => {
-    const playlists = localStorage.getItem("playlists");
-    if (playlists) {
-      const parsedPlaylists = JSON.parse(playlists);
-      const playlistsName = Object.keys(parsedPlaylists);
-      const defaultPlaylistName = playlistsName[0];
-      const defaultPlaylist = parsedPlaylists[defaultPlaylistName];
-      const likedSongsIdList = defaultPlaylist.map((item: IMusicContext) =>
-        item.song.id.toString()
-      );
-      setIsLiked(
-        currentPlayingSong
-          ? likedSongsIdList.includes(currentPlayingSong.song.id.toString())
-          : false
-      );
-    }
+    const defaultPlaylistName = getDefaultPlaylistName();
+    const defaultPlaylistData = getPlaylistData(defaultPlaylistName);
+    const likedSongsIdList = extractSongIdsFromPlaylist(defaultPlaylistData);
+    setIsLiked(
+      currentPlayingSong ? checkSongIsLikedInPlaylists(likedSongsIdList, currentPlayingSong) : false
+    );
   }, [likedSongsIdList, playingIndex]);
 
   const toggleLoopMode = () => {

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { IMusicContext } from "@/types/context";
+import usePlaylists from "@/hooks/usePlaylists";
 
 interface GlobalContextProps {
   likedSongsIdList: string[];
@@ -16,14 +17,11 @@ export const GlobalContextProvider: React.FC<{ children: ReactNode }> = ({ child
   const [likedSongsIdList, setLikedSongsIdList] = useState<string[]>([]);
   const [playlistsName, setPlaylistsName] = useState<string[]>([]);
   const [playlistContext, setPlaylistContext] = useState({} as IMusicContext);
+  const { getAllPlaylistsName } = usePlaylists();
 
   useEffect(() => {
-    const playlists = localStorage.getItem("playlists");
-    if (playlists) {
-      const parsedPlaylists = JSON.parse(playlists);
-      const playlistsName = Object.keys(parsedPlaylists);
-      setPlaylistsName(playlistsName);
-    }
+    const playlistsName = getAllPlaylistsName();
+    setPlaylistsName(playlistsName);
   }, []);
 
   return (

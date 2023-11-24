@@ -4,10 +4,11 @@ import { IoTimeOutline } from "react-icons/io5";
 import { FiHeadphones } from "react-icons/fi";
 import { ImPause, ImPlay2 } from "react-icons/im";
 import { MusicContext } from "@/contexts/MusicContext";
-import { IMusicContext, MusicList } from "@/types/context";
+import { MusicList } from "@/types/context";
 import formatTime from "@/utils/formatTime";
 import PlayListManagement from "../playlists";
 import { useGlobalContext } from "@/contexts/GlobalContext";
+import usePlaylists from "@/hooks/usePlaylists";
 
 type AlbumDetailType = {
   musicList: MusicList;
@@ -23,11 +24,20 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
     setIsPlaying,
     setImgUrl,
   } = useContext(MusicContext);
-  const { likedSongsIdList, playlistContext, setPlaylistContext } = useGlobalContext();
+  const { likedSongsIdList, setLikedSongsIdList, playlistContext, setPlaylistContext } =
+    useGlobalContext();
+  const {
+    getPlaylistData,
+    extractSongIdsFromPlaylist,
+    getDefaultPlaylistName,
+    getAlbumSongsLikedList,
+  } = usePlaylists();
   const { musicContext } = musicList;
+
   const [isLikedList, setIsLikedList] = useState(
-    musicContext.map((context) => likedSongsIdList.includes(context.song.id.toString()))
+    getAlbumSongsLikedList(likedSongsIdList, musicContext)
   );
+
   const handleSongPlay = (index: number) => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setImgUrl(musicList.musicContext[0].album.image);
@@ -39,27 +49,17 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
       setIsPlaying((prev) => !prev);
     }
   };
+
   useEffect(() => {
-    setIsLikedList(
-      musicContext.map((context) => likedSongsIdList.includes(context.song.id.toString()))
-    );
+    setIsLikedList(getAlbumSongsLikedList(likedSongsIdList, musicContext));
   }, [likedSongsIdList, musicContext]);
 
   useEffect(() => {
-    const playlists = localStorage.getItem("playlists");
-    if (playlists) {
-      const parsedPlaylists = JSON.parse(playlists);
-      const playlistsName = Object.keys(parsedPlaylists);
-      const defaultPlaylistName = playlistsName[0];
-      const defaultPlaylist = parsedPlaylists[defaultPlaylistName];
-      const likedSongsIdList = defaultPlaylist.map((item: IMusicContext) =>
-        item.song.id.toString()
-      );
-      const likedIdList = musicContext.map((context) =>
-        likedSongsIdList.includes(context.song.id.toString())
-      );
-      setIsLikedList(likedIdList);
-    }
+    const defaultPlaylistName = getDefaultPlaylistName();
+    const defaultPlaylistData = getPlaylistData(defaultPlaylistName);
+    const likedSongsIdList = extractSongIdsFromPlaylist(defaultPlaylistData);
+    setLikedSongsIdList(likedSongsIdList);
+    setIsLikedList(getAlbumSongsLikedList(likedSongsIdList, musicContext));
   }, []);
 
   return (
