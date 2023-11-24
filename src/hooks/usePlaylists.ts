@@ -6,7 +6,7 @@ const usePlaylists = () => {
   const { getDataFromLocalStorage } = useLocalStorage();
 
   function getPlaylistData(playlistName: string) {
-    const parsedPlaylists = getDataFromLocalStorage("playlists");
+    const parsedPlaylists = getDataFromLocalStorage(storedKeyName);
     return parsedPlaylists ? parsedPlaylists[playlistName] : [];
   }
 
@@ -22,12 +22,12 @@ const usePlaylists = () => {
   };
 
   function getDefaultPlaylistName() {
-    const parsedPlaylists = getDataFromLocalStorage("playlists");
+    const parsedPlaylists = getDataFromLocalStorage(storedKeyName);
     return parsedPlaylists ? Object.keys(parsedPlaylists)[0] : "";
   }
 
   function getAllPlaylistsName() {
-    const parsedPlaylists = getDataFromLocalStorage("playlists");
+    const parsedPlaylists = getDataFromLocalStorage(storedKeyName);
     return parsedPlaylists ? Object.keys(parsedPlaylists) : [""];
   }
 
