@@ -3,8 +3,8 @@ const useLocalStorage = () => {
     const data = localStorage.getItem(storageKey);
     return data ? JSON.parse(data) : null;
   };
-  const setDataToLocalStorage = (setKey: string, setValue: string) => {
-    localStorage.setItem(setKey, setValue);
+  const setDataToLocalStorage = (storageKey: string, storageValue: {}) => {
+    localStorage.setItem(storageKey, JSON.stringify(storageValue));
   };
   return {
     getDataFromLocalStorage,

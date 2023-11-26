@@ -29,9 +29,9 @@ const usePlaylists = () => {
   const createEmptyDefaultPlaylistIfNotExisted = () => {
     const defaultPlaylistName = getDefaultPlaylistName();
     if (!defaultPlaylistName) {
-      const defaultPlaylists = JSON.stringify({
+      const defaultPlaylists = {
         [DEFAULT_PLAYLIST_NAME]: [],
-      });
+      };
       setDataToLocalStorage(LOCAL_STORAGE_KEY_NAME, defaultPlaylists);
     }
   };

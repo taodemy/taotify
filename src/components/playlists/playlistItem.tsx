@@ -29,10 +29,9 @@ const PlaylistItem: React.FC<IPlaylistProps> = ({ playlistName, playlistContext 
     const updatedSongs = isSongExistsInPlaylist
       ? removeSongFromPlaylist(playlistContext, playlistToBeEdited)
       : addSongToPlaylist(playlistContext, playlistToBeEdited);
-    const formatUpdatedSongs = JSON.stringify({
+    setDataToLocalStorage("playlists", {
       [playlistName]: updatedSongs,
     });
-    setDataToLocalStorage("playlists", formatUpdatedSongs);
     const likedSongsIdList = extractSongIdsFromPlaylist(updatedSongs);
     setLikedSongsIdList(likedSongsIdList);
   };
