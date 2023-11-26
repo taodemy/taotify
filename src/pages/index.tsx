@@ -5,18 +5,12 @@ import Carousel from "@/components/carousel";
 import AlbumsCollection from "@/components/AlbumsCollection";
 import { AlbumsCollectionProps } from "@/components/AlbumsCollection";
 import { ALL_REGIONS, CHINESE, KOREAN, JAPANESE, ENGLISH } from "@/constant/genres";
+import usePlaylists from "@/hooks/usePlaylists";
 
 export default function Home({ albums }: AlbumsCollectionProps) {
+  const { createEmptyDefaultPlaylistIfNotExisted } = usePlaylists();
   useEffect(() => {
-    const defaultStoredPlaylists = localStorage.getItem("playlists");
-
-    if (!defaultStoredPlaylists) {
-      const defaultPlaylists = {
-        favourites: [],
-      };
-
-      localStorage.setItem("playlists", JSON.stringify(defaultPlaylists));
-    }
+    createEmptyDefaultPlaylistIfNotExisted();
   }, []);
 
   const { englishAlbum } = albums;

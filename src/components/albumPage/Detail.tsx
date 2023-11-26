@@ -24,8 +24,10 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
     setIsPlaying,
     setImgUrl,
   } = useContext(MusicContext);
+
   const { likedSongsIdList, setLikedSongsIdList, playlistContext, setPlaylistContext } =
     useGlobalContext();
+
   const {
     getPlaylistData,
     extractSongIdsFromPlaylist,
