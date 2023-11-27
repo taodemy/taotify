@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { HiLockClosed } from "react-icons/hi";
 import { IMusicContext } from "@/types/context";
 import { useGlobalContext } from "@/contexts/GlobalContext";
-import useLocalStorage from "@/hooks/useLocalStorage";
 import usePlaylists from "@/hooks/usePlaylists";
 
 interface IPlaylistProps {
@@ -12,7 +11,7 @@ interface IPlaylistProps {
 
 const PlaylistItem: React.FC<IPlaylistProps> = ({ playlistName, playlistContext }) => {
   const { setLikedSongsIdList } = useGlobalContext();
-  const { setDataToLocalStorage } = useLocalStorage();
+  const { setPlaylistsData } = usePlaylists();
   const {
     getPlaylistData,
     removeSongFromPlaylist,
@@ -29,7 +28,7 @@ const PlaylistItem: React.FC<IPlaylistProps> = ({ playlistName, playlistContext 
     const updatedSongs = isSongExistsInPlaylist
       ? removeSongFromPlaylist(playlistContext, playlistToBeEdited)
       : addSongToPlaylist(playlistContext, playlistToBeEdited);
-    setDataToLocalStorage("playlists", {
+    setPlaylistsData({
       [playlistName]: updatedSongs,
     });
     const likedSongsIdList = extractSongIdsFromPlaylist(updatedSongs);

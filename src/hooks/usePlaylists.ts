@@ -1,13 +1,17 @@
-import useLocalStorage from "./useLocalStorage";
 import { IMusicContext } from "@/types/context";
 import { LOCAL_STORAGE_KEY_NAME, DEFAULT_PLAYLIST_NAME } from "@/constant/playlists";
+import { useLocalStorage } from "usehooks-ts";
+
+export interface IPlaylists {
+  [playlistName: string]: IMusicContext[];
+}
 
 const usePlaylists = () => {
-  const { getDataFromLocalStorage, setDataToLocalStorage } = useLocalStorage();
+  const [playlistsData, setPlaylistsData] = useLocalStorage<IPlaylists>(LOCAL_STORAGE_KEY_NAME, {});
 
   const getPlaylistData = (playlistName: string) => {
-    const parsedPlaylists = getDataFromLocalStorage(LOCAL_STORAGE_KEY_NAME);
-    return parsedPlaylists ? parsedPlaylists[playlistName] : [];
+    const parsedPlaylists = playlistsData;
+    return parsedPlaylists ? playlistsData[playlistName] : [];
   };
 
   const removeSongFromPlaylist = (playlistContext: IMusicContext, array: IMusicContext[]) => {
@@ -22,7 +26,7 @@ const usePlaylists = () => {
   };
 
   const getDefaultPlaylistName = () => {
-    const parsedPlaylists = getDataFromLocalStorage(LOCAL_STORAGE_KEY_NAME);
+    const parsedPlaylists = playlistsData;
     return parsedPlaylists ? Object.keys(parsedPlaylists)[0] : "";
   };
 
@@ -32,12 +36,12 @@ const usePlaylists = () => {
       const defaultPlaylists = {
         [DEFAULT_PLAYLIST_NAME]: [],
       };
-      setDataToLocalStorage(LOCAL_STORAGE_KEY_NAME, defaultPlaylists);
+      setPlaylistsData(defaultPlaylists);
     }
   };
 
   const getAllPlaylistsName = () => {
-    const parsedPlaylists = getDataFromLocalStorage(LOCAL_STORAGE_KEY_NAME);
+    const parsedPlaylists = playlistsData;
     return parsedPlaylists ? Object.keys(parsedPlaylists) : [""];
   };
 
@@ -46,7 +50,7 @@ const usePlaylists = () => {
   };
 
   const extractSongIdsFromPlaylist = (playlistData: IMusicContext[]) => {
-    return playlistData.map((item: IMusicContext) => item.song.id.toString());
+    return playlistData ? playlistData.map((item: IMusicContext) => item.song.id.toString()) : [];
   };
 
   const checkSongIsLikedInPlaylists = (likedSongsIdList: string[], songDetail: IMusicContext) => {
@@ -70,6 +74,8 @@ const usePlaylists = () => {
     getAllPlaylistsName,
     checkSongIsLikedInPlaylists,
     getAlbumSongsLikedList,
+    playlistsData,
+    setPlaylistsData,
   };
 };
 
