@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import IconButton from "../buttons/IconButton";
 import { IoTimeOutline } from "react-icons/io5";
 import { FiHeadphones } from "react-icons/fi";
@@ -6,11 +6,15 @@ import { ImPause, ImPlay2 } from "react-icons/im";
 import { MusicContext } from "@/contexts/MusicContext";
 import { MusicList } from "@/types/context";
 import formatTime from "@/utils/formatTime";
+import PlayListManagement from "../playlists";
+import { useGlobalContext } from "@/contexts/GlobalContext";
+import usePlaylists from "@/hooks/usePlaylists";
 
 type AlbumDetailType = {
   musicList: MusicList;
 };
 const AlbumDetail = ({ musicList }: AlbumDetailType) => {
+  const [isSongArchived, setIsSongArchived] = useState(false);
   const {
     isPlaying,
     playingQueue,
@@ -20,7 +24,22 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
     setIsPlaying,
     setImgUrl,
   } = useContext(MusicContext);
+
+  const { likedSongsIdList, setLikedSongsIdList, playlistContext, setPlaylistContext } =
+    useGlobalContext();
+
+  const {
+    getPlaylistData,
+    extractSongIdsFromPlaylist,
+    getDefaultPlaylistName,
+    getAlbumSongsLikedList,
+  } = usePlaylists();
   const { musicContext } = musicList;
+
+  const [isLikedList, setIsLikedList] = useState(
+    getAlbumSongsLikedList(likedSongsIdList, musicContext)
+  );
+
   const handleSongPlay = (index: number) => {
     if (playingQueue?.type !== musicList.type || playingQueue?.id !== musicList.id) {
       setImgUrl(musicList.musicContext[0].album.image);
@@ -33,9 +52,21 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
     }
   };
 
+  useEffect(() => {
+    setIsLikedList(getAlbumSongsLikedList(likedSongsIdList, musicContext));
+  }, [likedSongsIdList, musicContext]);
+
+  useEffect(() => {
+    const defaultPlaylistName = getDefaultPlaylistName();
+    const defaultPlaylistData = getPlaylistData(defaultPlaylistName);
+    const likedSongsIdList = extractSongIdsFromPlaylist(defaultPlaylistData);
+    setLikedSongsIdList(likedSongsIdList);
+    setIsLikedList(getAlbumSongsLikedList(likedSongsIdList, musicContext));
+  }, []);
+
   return (
     <>
-      <div className="mb-6 mt-8 flex items-center gap-4">
+      <div className="mt-8 mb-6 flex items-center gap-4">
         <span className="text-3xl">{musicContext[0].album.name}</span>
         <span className="text-sm text-light-200">{musicContext.length} songs</span>
       </div>
@@ -83,7 +114,7 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                   <td className="hidden lg:table-cell">{context.artist?.name}</td>
                   <td>
                     <div className="hidden items-center sm:flex">
-                      <FiHeadphones className=" inline-block h-5 w-5" />
+                      <FiHeadphones className="inline-block h-5 w-5 " />
                       <span className="ml-2">{context.song.time}</span>
                     </div>
                   </td>
@@ -94,7 +125,14 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
                     </div>
                   </td>
                   <td className="hidden sm:table-cell">
-                    <IconButton iconTypes="like" />
+                    <IconButton
+                      iconTypes="like"
+                      className={`${isLikedList[index] ? "text-primary" : ""}`}
+                      onClick={() => {
+                        setIsSongArchived(true);
+                        setPlaylistContext(context);
+                      }}
+                    />
                   </td>
                   <td>
                     <IconButton iconTypes="dot" />
@@ -104,6 +142,15 @@ const AlbumDetail = ({ musicList }: AlbumDetailType) => {
             })}
         </tbody>
       </table>
+      {isSongArchived ? (
+        <PlayListManagement
+          isSongArchived={isSongArchived}
+          setIsSongArchived={setIsSongArchived}
+          playlistContext={playlistContext}
+        />
+      ) : (
+        <></>
+      )}
     </>
   );
 };

@@ -2,7 +2,7 @@ import { SearchedAlbumInContext } from "./SearchTypes";
 
 //custom types & shared types
 export interface MusicList {
-  id: number;
+  id: number | string;
   type: "newSongs" | "playlist" | "album";
   musicContext: IMusicContext[];
 }

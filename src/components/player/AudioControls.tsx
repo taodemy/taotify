@@ -7,19 +7,40 @@ import { MusicContext } from "@/contexts/MusicContext";
 import shuffleSongs from "@/utils/shuffleSongs";
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState, useRef } from "react";
 import { MusicList } from "@/types/context";
+import { useGlobalContext } from "@/contexts/GlobalContext";
+import usePlaylists from "@/hooks/usePlaylists";
 import { WebAudioContext } from "@/contexts/WebAudioContext";
 
 interface AudioControlsProps {
   loopMode?: string;
   setLoopMode: Dispatch<SetStateAction<"none" | "single" | "all">>;
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
+  isSongArchived: boolean;
+  setIsSongArchived: (isSongArchived: boolean) => void;
 }
 
-const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) => {
+const AudioControls = ({
+  loopMode,
+  setLoopMode,
+  audioRef,
+  setIsSongArchived,
+}: AudioControlsProps) => {
   const [isShuffle, setIsShuffle] = useState(false);
   const [originMusicList, setOriginMusicList] = useState<MusicList | null>(null);
   const { playingQueue, playingIndex, setPlayingQueue, setPlayingIndex, setIsPlaying, isPlaying } =
     useContext(MusicContext);
+  const { setPlaylistContext, likedSongsIdList } = useGlobalContext();
+  const {
+    getDefaultPlaylistName,
+    getPlaylistData,
+    extractSongIdsFromPlaylist,
+    checkSongIsLikedInPlaylists,
+  } = usePlaylists();
+  let currentPlayingSong = playingQueue?.musicContext[playingIndex] ?? null;
+  const [isLiked, setIsLiked] = useState(
+    currentPlayingSong ? checkSongIsLikedInPlaylists(likedSongsIdList, currentPlayingSong) : false
+  );
+
   const audio = audioRef.current;
   //if there is a new queue playing, store the copy of it
   useEffect(() => {
@@ -43,6 +64,15 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
       setPlayingQueue(originMusicList);
     }
   }, [isShuffle, originMusicList]);
+
+  useEffect(() => {
+    const defaultPlaylistName = getDefaultPlaylistName();
+    const defaultPlaylistData = getPlaylistData(defaultPlaylistName);
+    const likedSongsIdList = extractSongIdsFromPlaylist(defaultPlaylistData);
+    setIsLiked(
+      currentPlayingSong ? checkSongIsLikedInPlaylists(likedSongsIdList, currentPlayingSong) : false
+    );
+  }, [likedSongsIdList, playingIndex]);
 
   const toggleLoopMode = () => {
     setIsShuffle(false);
@@ -76,10 +106,20 @@ const AudioControls = ({ loopMode, setLoopMode, audioRef }: AudioControlsProps) 
   const handleRewind = () => {
     audio && (audio.currentTime -= 10);
   };
+
   return (
     <div className="flex h-8 w-full items-center justify-between text-light md:h-16">
-      <button type="button" className="flex h-8 w-8 items-center justify-center">
-        <BiHeart className="h-6 w-6" />
+      <button
+        type="button"
+        className="flex h-8 w-8 items-center justify-center"
+        onClick={() => {
+          setIsSongArchived(true);
+          if (playingQueue) {
+            setPlaylistContext(playingQueue.musicContext[playingIndex]);
+          }
+        }}
+      >
+        <BiHeart className={`${isLiked ? "text-primary" : ""} h-6 w-6`} />
       </button>
 
       <div className="flex items-center gap-6">

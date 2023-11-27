@@ -1,11 +1,18 @@
 import Head from "next/head";
+import { useEffect } from "react";
 import { getAlbum } from "@/utils/fetchHandler";
 import Carousel from "@/components/carousel";
 import AlbumsCollection from "@/components/AlbumsCollection";
 import { AlbumsCollectionProps } from "@/components/AlbumsCollection";
 import { ALL_REGIONS, CHINESE, KOREAN, JAPANESE, ENGLISH } from "@/constant/genres";
+import usePlaylists from "@/hooks/usePlaylists";
 
 export default function Home({ albums }: AlbumsCollectionProps) {
+  const { createEmptyDefaultPlaylistIfNotExisted } = usePlaylists();
+  useEffect(() => {
+    createEmptyDefaultPlaylistIfNotExisted();
+  }, []);
+
   const { englishAlbum } = albums;
   return (
     <>
