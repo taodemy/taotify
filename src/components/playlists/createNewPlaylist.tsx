@@ -27,7 +27,7 @@ const CreateNewPlaylist: React.FC<ICreateNewPlaylistProps> = ({
           }}
         >
           <FiPlus className="h-4 w-4 text-dark" />
-          <p className="ml-auto font-roboto text-base">
+          <p className="ml-auto whitespace-nowrap font-roboto text-base">
             Create a new <span className="text-primary">playlist</span>
           </p>
         </div>
