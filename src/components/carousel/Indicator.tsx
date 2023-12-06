@@ -16,25 +16,25 @@ export default function Indicator({
   setPreIndex,
   swiperInstance,
 }: IndicatorProps) {
+  const handleIndicatorClick = (index: number) => {
+    setPreIndex(activeIndex);
+    setActiveIndex(index);
+    if (swiperInstance) {
+      swiperInstance.slideTo(index, 0);
+    }
+  };
+
   return (
     <div className="flex items-center space-x-1 md:-bottom-10">
-      {Array.from(Array(length), (_, index) => {
-        return (
-          <div
-            role="indicator carousel"
-            key={`indicator-${index}`}
-            className={`my-4 h-2 rounded-full bg-white opacity-50  transition-all duration-500 hover:w-4 hover:opacity-100
+      {Array.from(Array(length), (_, index) => (
+        <div
+          role="indicator carousel"
+          key={`indicator-${index}`}
+          className={`my-4 h-2 rounded-full bg-white opacity-50  transition-all duration-500 hover:w-4 hover:opacity-100
             ${activeIndex === index ? "w-4 opacity-100" : "w-2 bg-gray-400"}`}
-            onClick={() => {
-              setPreIndex(activeIndex);
-              setActiveIndex(index); // Set the active index directly
-              if (swiperInstance) {
-                swiperInstance.slideTo(index, 0); // Slide to the clicked index
-              }
-            }}
-          ></div>
-        );
-      })}
+          onClick={() => handleIndicatorClick(index)}
+        ></div>
+      ))}
     </div>
   );
 }
