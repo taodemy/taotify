@@ -114,6 +114,14 @@ const useSwiper = ({ albums }: CarouselProps) => {
     };
   };
 
+  const handleIndicatorClick = (index: number) => {
+    setPreIndex(activeIndex);
+    setActiveIndex(index);
+    if (swiperInstance) {
+      swiperInstance.slideTo(index, 0);
+    }
+  };
+
   return {
     getSwiperOptions,
     handleSwiperInit,
@@ -128,6 +136,7 @@ const useSwiper = ({ albums }: CarouselProps) => {
     getAlbumLength,
     setSwiperContainerWidth,
     setInitialSlideAfterSwiperMounted,
+    handleIndicatorClick,
   };
 };
 

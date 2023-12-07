@@ -1,29 +1,12 @@
-import React, { Dispatch, SetStateAction } from "react";
-import SwiperCore from "swiper";
+import React from "react";
 
 export interface IndicatorProps {
   activeIndex: number;
   length: number;
-  setActiveIndex: Dispatch<SetStateAction<number>>;
-  setPreIndex: Dispatch<SetStateAction<number>>;
-  swiperInstance: SwiperCore | null;
+  handleIndicatorClick: (index: number) => void;
 }
 
-export default function Indicator({
-  activeIndex,
-  length,
-  setActiveIndex,
-  setPreIndex,
-  swiperInstance,
-}: IndicatorProps) {
-  const handleIndicatorClick = (index: number) => {
-    setPreIndex(activeIndex);
-    setActiveIndex(index);
-    if (swiperInstance) {
-      swiperInstance.slideTo(index, 0);
-    }
-  };
-
+export default function Indicator({ activeIndex, length, handleIndicatorClick }: IndicatorProps) {
   return (
     <div className="flex items-center space-x-1 md:-bottom-10">
       {Array.from(Array(length), (_, index) => (

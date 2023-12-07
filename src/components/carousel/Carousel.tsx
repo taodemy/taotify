@@ -23,6 +23,7 @@ const Carousel = ({ albums }: CarouselProps) => {
     getAlbumLength,
     setSwiperContainerWidth,
     setInitialSlideAfterSwiperMounted,
+    handleIndicatorClick,
   } = useSwiper({
     albums,
   });
@@ -69,9 +70,7 @@ const Carousel = ({ albums }: CarouselProps) => {
       <Indicator
         length={getAlbumLength()}
         activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
-        setPreIndex={setPreIndex}
-        swiperInstance={swiperInstance}
+        handleIndicatorClick={handleIndicatorClick}
       />
     </div>
   );
