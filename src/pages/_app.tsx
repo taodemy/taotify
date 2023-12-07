@@ -1,4 +1,5 @@
 import "@/styles/globals.css";
+import "swiper/css";
 import type { AppProps } from "next/app";
 import { MusicContextProvider } from "@/contexts/MusicContext";
 import GlobalLayout from "@/layouts";

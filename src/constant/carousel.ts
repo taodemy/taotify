@@ -1,0 +1,13 @@
+export const SWIPER_WIDTH_RATIO = 0.563;
+export const SLIDE_EFFECT_MODE = "coverflow";
+export const GRAB_CURSOR = true;
+export const CENTERED_SLIDES = true;
+export const SLIDES_PER_VIEW = "auto" as const;
+export const SLIDE_TO_CLICKED_SLIDE = true;
+export const ROTATE = 0;
+export const STRETCH = 0;
+export const DEPTH = 250;
+export const MODIFIER = 3;
+export const SLIDESHOWS = true;
+export const START_CAROUSEL_ALBUM_INDEX = 0;
+export const END_CAROUSEL_ALBUM_INDEX = 0;

@@ -1,20 +1,40 @@
-import { useState } from "react";
-import CarouselItem from "./CarouselItem";
+import { useEffect } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import useSwiper from "@/hooks/useSwiper";
 import { MusicList } from "@/types/context";
 import Indicator from "./Indicator";
-import sliceArray from "@/utils/sliceArray";
 
-interface CarouselProps {
+export interface CarouselProps {
   albums: MusicList[];
-  slidesPerView?: number;
 }
 
-const Carousel = ({ albums, slidesPerView }: CarouselProps) => {
-  const startAlbumIndex = 0;
-  const endAlbumIndex = 7;
-  const slicedAlbum = sliceArray(albums, startAlbumIndex, endAlbumIndex);
-  const initialIndex = Math.floor(slicedAlbum.length / 2);
-  const [activeIndex, setActiveIndex] = useState<number>(initialIndex);
+const Carousel = ({ albums }: CarouselProps) => {
+  const {
+    getSwiperOptions,
+    handleSwiperInit,
+    swiperWidth,
+    swiperInstance,
+    isSwiperReady,
+    activeIndex,
+    setActiveIndex,
+    setPreIndex,
+    handleSlideChange,
+    handleClick,
+    getAlbumLength,
+    setSwiperContainerWidth,
+    setInitialSlideAfterSwiperMounted,
+    handleIndicatorClick,
+  } = useSwiper({
+    albums,
+  });
+
+  useEffect(() => {
+    setSwiperContainerWidth();
+  }, []);
+
+  useEffect(() => {
+    setInitialSlideAfterSwiperMounted();
+  }, [isSwiperReady, swiperInstance]);
 
   if (!Array.isArray(albums)) {
     console.error("Invalid 'albums' prop:", albums);
@@ -23,22 +43,34 @@ const Carousel = ({ albums, slidesPerView }: CarouselProps) => {
 
   return (
     <div className="flex flex-col items-center justify-center">
-      <div className="relative h-[30vh] w-[71%]">
+      <Swiper
+        {...getSwiperOptions(swiperWidth)}
+        onSwiper={handleSwiperInit}
+        onSlideChange={handleSlideChange}
+        className="carousel-container flex h-[30vh] w-full"
+        id="swiper-container"
+      >
         {albums.map((musicList, index) => (
-          <CarouselItem
+          <SwiperSlide
             key={index}
-            index={index}
-            musicList={musicList}
-            activeIndex={activeIndex}
-            setActiveIndex={setActiveIndex}
-            slidesPerView={slidesPerView}
-          />
+            style={{ width: "70%" }}
+            onClick={() => {
+              handleClick(index, musicList);
+            }}
+            className="carousel-item"
+          >
+            <img
+              className="block h-full w-full object-cover"
+              src={musicList.musicContext[0].album.image}
+              alt="album cover"
+            />
+          </SwiperSlide>
         ))}
-      </div>
+      </Swiper>
       <Indicator
-        length={slicedAlbum.length}
+        length={getAlbumLength()}
         activeIndex={activeIndex}
-        setActiveIndex={setActiveIndex}
+        handleIndicatorClick={handleIndicatorClick}
       />
     </div>
   );
